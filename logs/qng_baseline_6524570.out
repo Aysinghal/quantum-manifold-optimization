@@ -1,0 +1,367 @@
+======================================================================
+  Host     : cbcb26.umiacs.umd.edu
+  JobID    : 6524570
+  CPUs     : 80
+  Mem      : 16384 MB
+  Partition: scavenger
+  Start    : 2026-04-05 21:58:14
+======================================================================
+  Python   : /fs/nexus-scratch/aysingha/envs/qng-baseline/bin/python (Python 3.11.15)
+  PennyLane: 0.44.1
+======================================================================
+======================================================================
+  QNG EUCLIDEAN BASELINE -- Parallel runner
+  Workers : 80
+  Jobs    : 80
+  Tasks   : 1D-sin, 2D-quad, VQE, Classification
+  Opts    : GD, Adam, QNG_block, QNG_full
+  Seeds   : [0, 1, 2, 3, 4]
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+  Progress [0m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/Adam      /seed=1  step   0/150  (   0%)  loss=-0.2294  (0m18s)
+                VQE/Adam      /seed=3  step   0/150  (   0%)  loss=-0.9811  (0m18s)
+            2D-quad/Adam      /seed=1  step   0/100  (   0%)  loss=0.4871  (0m18s)
+            2D-quad/GD        /seed=2  step   0/100  (   0%)  loss=0.1406  (0m16s)
+                VQE/GD        /seed=3  step   0/150  (   0%)  loss=-0.9811  (0m16s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [0m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/GD        /seed=0  step   0/150  (   0%)  loss=-0.1217  (0m37s)
+                VQE/QNG_block /seed=1  step   0/150  (   0%)  loss=-0.2294  (0m26s)
+            2D-quad/Adam      /seed=0  step   0/100  (   0%)  loss=0.3229  (0m24s)
+                VQE/Adam      /seed=2  step   0/150  (   0%)  loss=0.4412  (0m20s)
+                VQE/Adam      /seed=1  step   0/150  (   0%)  loss=-0.2294  (0m18s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/GD        /seed=0  step   0/150  (   0%)  loss=-0.1217  (0m37s)
+                VQE/QNG_block /seed=1  step   0/150  (   0%)  loss=-0.2294  (0m26s)
+            2D-quad/Adam      /seed=0  step   0/100  (   0%)  loss=0.3229  (0m24s)
+                VQE/Adam      /seed=2  step   0/150  (   0%)  loss=0.4412  (0m20s)
+                VQE/Adam      /seed=1  step   0/150  (   0%)  loss=-0.2294  (0m18s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/Adam      /seed=3  step   0/100  (   0%)  loss=0.0882  (1m17s)
+            2D-quad/QNG_full  /seed=4  step   0/100  (   0%)  loss=0.2986  (1m16s)
+             1D-sin/Adam      /seed=1  step   0/100  (   0%)  loss=0.8128  (1m15s)
+            2D-quad/GD        /seed=0  step   0/100  (   0%)  loss=0.3229  (1m11s)
+                VQE/QNG_full  /seed=2  step   0/150  (   0%)  loss=0.4412  (1m08s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=4  step  10/100  (  10%)  loss=0.1224  (1m25s)
+            2D-quad/Adam      /seed=3  step   0/100  (   0%)  loss=0.0882  (1m17s)
+            2D-quad/QNG_full  /seed=4  step   0/100  (   0%)  loss=0.2986  (1m16s)
+             1D-sin/Adam      /seed=1  step   0/100  (   0%)  loss=0.8128  (1m15s)
+            2D-quad/GD        /seed=0  step   0/100  (   0%)  loss=0.3229  (1m11s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=2  step  10/100  (  10%)  loss=0.1018  (1m55s)
+            2D-quad/QNG_block /seed=3  step  10/100  (  10%)  loss=0.0805  (1m41s)
+            2D-quad/QNG_full  /seed=3  step   0/100  (   0%)  loss=0.0882  (1m40s)
+            2D-quad/QNG_block /seed=4  step  10/100  (  10%)  loss=0.1224  (1m25s)
+            2D-quad/Adam      /seed=3  step   0/100  (   0%)  loss=0.0882  (1m17s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_full  /seed=0  step   0/100  (   0%)  loss=0.3229  (2m04s)
+            2D-quad/QNG_block /seed=2  step  10/100  (  10%)  loss=0.1018  (1m55s)
+            2D-quad/QNG_block /seed=3  step  10/100  (  10%)  loss=0.0805  (1m41s)
+            2D-quad/QNG_full  /seed=3  step   0/100  (   0%)  loss=0.0882  (1m40s)
+            2D-quad/QNG_block /seed=4  step  10/100  (  10%)  loss=0.1224  (1m25s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/GD        /seed=2  step  10/150  (   7%)  loss=-2.7877  (2m38s)
+     Classification/GD        /seed=0  step   0/100  (   0%)  loss=1.2315  (2m35s)
+            2D-quad/QNG_block /seed=4  step  20/100  (  20%)  loss=0.1059  (2m34s)
+             1D-sin/QNG_block /seed=0  step   0/100  (   0%)  loss=0.8562  (2m29s)
+     Classification/Adam      /seed=3  step   0/100  (   0%)  loss=1.3863  (2m20s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/QNG_block /seed=2  step  10/150  (   7%)  loss=-1.6964  (2m52s)
+             1D-sin/QNG_block /seed=1  step   0/100  (   0%)  loss=0.8128  (2m49s)
+                VQE/GD        /seed=2  step  10/150  (   7%)  loss=-2.7877  (2m38s)
+     Classification/GD        /seed=0  step   0/100  (   0%)  loss=1.2315  (2m35s)
+            2D-quad/QNG_block /seed=4  step  20/100  (  20%)  loss=0.1059  (2m34s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/GD        /seed=1  step  10/150  (   7%)  loss=-4.0186  (3m18s)
+     Classification/Adam      /seed=2  step   0/100  (   0%)  loss=1.2149  (3m16s)
+            2D-quad/QNG_block /seed=2  step  20/100  (  20%)  loss=0.0800  (3m07s)
+            2D-quad/QNG_block /seed=3  step  20/100  (  20%)  loss=0.0756  (3m01s)
+                VQE/QNG_block /seed=0  step  10/150  (   7%)  loss=-2.0399  (3m00s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/GD        /seed=1  step   0/100  (   0%)  loss=0.8128  (3m35s)
+             1D-sin/QNG_full  /seed=3  step   0/100  (   0%)  loss=0.7344  (3m31s)
+                VQE/GD        /seed=1  step  10/150  (   7%)  loss=-4.0186  (3m18s)
+     Classification/Adam      /seed=2  step   0/100  (   0%)  loss=1.2149  (3m16s)
+            2D-quad/QNG_block /seed=2  step  20/100  (  20%)  loss=0.0800  (3m07s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=4  step  30/100  (  30%)  loss=0.0946  (3m51s)
+             1D-sin/Adam      /seed=4  step   0/100  (   0%)  loss=0.9162  (3m45s)
+                VQE/QNG_full  /seed=0  step   0/150  (   0%)  loss=-0.1217  (3m42s)
+             1D-sin/GD        /seed=1  step   0/100  (   0%)  loss=0.8128  (3m35s)
+             1D-sin/QNG_full  /seed=3  step   0/100  (   0%)  loss=0.7344  (3m31s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/QNG_full  /seed=1  step   0/100  (   0%)  loss=0.8128  (4m17s)
+            2D-quad/QNG_block /seed=2  step  30/100  (  30%)  loss=0.0652  (4m12s)
+            2D-quad/QNG_full  /seed=2  step   0/100  (   0%)  loss=0.1406  (4m08s)
+                VQE/GD        /seed=2  step  20/150  (  13%)  loss=-3.5353  (4m04s)
+            2D-quad/QNG_block /seed=4  step  30/100  (  30%)  loss=0.0946  (3m51s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=3  step  30/100  (  30%)  loss=0.0722  (4m27s)
+             1D-sin/QNG_full  /seed=1  step   0/100  (   0%)  loss=0.8128  (4m17s)
+            2D-quad/QNG_block /seed=2  step  30/100  (  30%)  loss=0.0652  (4m12s)
+            2D-quad/QNG_full  /seed=2  step   0/100  (   0%)  loss=0.1406  (4m08s)
+                VQE/GD        /seed=2  step  20/150  (  13%)  loss=-3.5353  (4m04s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/QNG_block /seed=2  step   0/100  (   0%)  loss=0.6246  (4m53s)
+            2D-quad/QNG_block /seed=3  step  30/100  (  30%)  loss=0.0722  (4m27s)
+             1D-sin/QNG_full  /seed=1  step   0/100  (   0%)  loss=0.8128  (4m17s)
+            2D-quad/QNG_block /seed=2  step  30/100  (  30%)  loss=0.0652  (4m12s)
+            2D-quad/QNG_full  /seed=2  step   0/100  (   0%)  loss=0.1406  (4m08s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/Adam      /seed=3  step  10/150  (   7%)  loss=-3.7855  (5m18s)
+            2D-quad/QNG_block /seed=4  step  40/100  (  40%)  loss=0.0851  (5m17s)
+            2D-quad/Adam      /seed=4  step  10/100  (  10%)  loss=0.0707  (5m12s)
+            2D-quad/QNG_block /seed=2  step  40/100  (  40%)  loss=0.0548  (5m10s)
+                VQE/QNG_block /seed=0  step  20/150  (  13%)  loss=-3.0233  (5m05s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/GD        /seed=4  step  10/100  (  10%)  loss=0.1146  (5m35s)
+                VQE/Adam      /seed=3  step  10/150  (   7%)  loss=-3.7855  (5m18s)
+            2D-quad/QNG_block /seed=4  step  40/100  (  40%)  loss=0.0851  (5m17s)
+            2D-quad/Adam      /seed=4  step  10/100  (  10%)  loss=0.0707  (5m12s)
+            2D-quad/QNG_block /seed=2  step  40/100  (  40%)  loss=0.0548  (5m10s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=3  step  40/100  (  40%)  loss=0.0698  (5m47s)
+                VQE/GD        /seed=2  step  30/150  (  20%)  loss=-4.3409  (5m46s)
+            2D-quad/GD        /seed=4  step  10/100  (  10%)  loss=0.1146  (5m35s)
+                VQE/Adam      /seed=3  step  10/150  (   7%)  loss=-3.7855  (5m18s)
+            2D-quad/QNG_block /seed=4  step  40/100  (  40%)  loss=0.0851  (5m17s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=2  step  50/100  (  50%)  loss=0.0474  (6m17s)
+             1D-sin/QNG_block /seed=3  step   0/100  (   0%)  loss=0.7344  (6m02s)
+            2D-quad/QNG_block /seed=3  step  40/100  (  40%)  loss=0.0698  (5m47s)
+                VQE/GD        /seed=2  step  30/150  (  20%)  loss=-4.3409  (5m46s)
+            2D-quad/GD        /seed=4  step  10/100  (  10%)  loss=0.1146  (5m35s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=4  step  50/100  (  50%)  loss=0.0770  (6m36s)
+             1D-sin/Adam      /seed=2  step   0/100  (   0%)  loss=0.6246  (6m32s)
+             1D-sin/GD        /seed=3  step   0/100  (   0%)  loss=0.7344  (6m25s)
+                VQE/QNG_full  /seed=1  step   0/150  (   0%)  loss=-0.2294  (6m21s)
+            2D-quad/QNG_block /seed=2  step  50/100  (  50%)  loss=0.0474  (6m17s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=4  step  50/100  (  50%)  loss=0.0770  (6m36s)
+             1D-sin/Adam      /seed=2  step   0/100  (   0%)  loss=0.6246  (6m32s)
+             1D-sin/GD        /seed=3  step   0/100  (   0%)  loss=0.7344  (6m25s)
+                VQE/QNG_full  /seed=1  step   0/150  (   0%)  loss=-0.2294  (6m21s)
+            2D-quad/QNG_block /seed=2  step  50/100  (  50%)  loss=0.0474  (6m17s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/Adam      /seed=3  step  20/150  (  13%)  loss=-4.3014  (7m16s)
+                VQE/Adam      /seed=1  step  10/150  (   7%)  loss=-3.6634  (7m06s)
+                VQE/QNG_full  /seed=4  step   0/150  (   0%)  loss=0.0705  (7m05s)
+            2D-quad/QNG_block /seed=3  step  50/100  (  50%)  loss=0.0679  (7m00s)
+            2D-quad/QNG_block /seed=4  step  50/100  (  50%)  loss=0.0770  (6m36s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=2  step  60/100  (  60%)  loss=0.0420  (7m37s)
+                VQE/Adam      /seed=3  step  20/150  (  13%)  loss=-4.3014  (7m16s)
+                VQE/Adam      /seed=1  step  10/150  (   7%)  loss=-3.6634  (7m06s)
+                VQE/QNG_full  /seed=4  step   0/150  (   0%)  loss=0.0705  (7m05s)
+            2D-quad/QNG_block /seed=3  step  50/100  (  50%)  loss=0.0679  (7m00s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+                VQE/GD        /seed=1  step  20/150  (  13%)  loss=-4.6141  (7m59s)
+             1D-sin/Adam      /seed=0  step   0/100  (   0%)  loss=0.8562  (7m52s)
+                VQE/QNG_block /seed=0  step  30/150  (  20%)  loss=-3.3242  (7m51s)
+                VQE/QNG_block /seed=2  step  20/150  (  13%)  loss=-2.9788  (7m46s)
+             1D-sin/GD        /seed=2  step   0/100  (   0%)  loss=0.6246  (7m42s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/Adam      /seed=3  step   0/100  (   0%)  loss=0.7344  (8m15s)
+             1D-sin/QNG_full  /seed=4  step   0/100  (   0%)  loss=0.9162  (8m12s)
+                VQE/GD        /seed=2  step  40/150  (  27%)  loss=-4.5544  (8m08s)
+            2D-quad/QNG_block /seed=3  step  60/100  (  60%)  loss=0.0663  (8m06s)
+                VQE/GD        /seed=1  step  20/150  (  13%)  loss=-4.6141  (7m59s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/GD        /seed=4  step   0/100  (   0%)  loss=0.9162  (8m30s)
+                VQE/QNG_full  /seed=3  step   0/150  (   0%)  loss=-0.9811  (8m26s)
+             1D-sin/QNG_block /seed=4  step   0/100  (   0%)  loss=0.9162  (8m24s)
+            2D-quad/QNG_block /seed=4  step  60/100  (  60%)  loss=0.0699  (8m23s)
+             1D-sin/Adam      /seed=3  step   0/100  (   0%)  loss=0.7344  (8m15s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m00s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/GD        /seed=0  step   0/100  (   0%)  loss=0.8562  (8m48s)
+            2D-quad/QNG_block /seed=2  step  70/100  (  70%)  loss=0.0379  (8m48s)
+             1D-sin/GD        /seed=4  step   0/100  (   0%)  loss=0.9162  (8m30s)
+                VQE/QNG_full  /seed=3  step   0/150  (   0%)  loss=-0.9811  (8m26s)
+             1D-sin/QNG_block /seed=4  step   0/100  (   0%)  loss=0.9162  (8m24s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m20s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+             1D-sin/QNG_full  /seed=2  step   0/100  (   0%)  loss=0.6246  (9m02s)
+             1D-sin/GD        /seed=0  step   0/100  (   0%)  loss=0.8562  (8m48s)
+            2D-quad/QNG_block /seed=2  step  70/100  (  70%)  loss=0.0379  (8m48s)
+             1D-sin/GD        /seed=4  step   0/100  (   0%)  loss=0.9162  (8m30s)
+                VQE/QNG_full  /seed=3  step   0/150  (   0%)  loss=-0.9811  (8m26s)
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m40s elapsed]
+  Done: 0/80  |  Running: 80  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Slowest running:
+            2D-quad/QNG_block /seed=3  step  70/100  (  70%)  loss=0.0648  (9m23s)
+                VQE/Adam      /seed=3  step  30/150  (  20%)  loss=-4.4349  (9m21s)
+             1D-sin/QNG_full  /seed=2  step   0/100  (   0%)  loss=0.6246  (9m02s)
+             1D-sin/GD        /seed=0  step   0/100  (   0%)  loss=0.8562  (8m48s)
+            2D-quad/QNG_block /seed=2  step  70/100  (  70%)  loss=0.0379  (8m48s)
+──────────────────────────────────────────────────────────────────────
