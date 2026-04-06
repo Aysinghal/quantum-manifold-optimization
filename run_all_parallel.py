@@ -11,7 +11,10 @@ Usage:
 """
 
 import argparse
+import multiprocessing
 import os
+import sys
+import threading
 import time
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -77,7 +80,12 @@ def _drop_params(result):
     return {k: v for k, v in result.items() if k != "params"}
 
 
-def _run_fit1d(opt_name, lr, seed):
+def _run_fit1d(opt_name, lr, seed, progress):
+    key = ("fit1d", opt_name, seed)
+    t0 = time.perf_counter()
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
+                     "loss": None, "elapsed": 0.0}
+
     x_raw = np.linspace(-np.pi, np.pi, 20)
     y_raw = np.sin(x_raw)
     x_train = [pnp.array(x, requires_grad=False) for x in x_raw]
@@ -86,15 +94,27 @@ def _run_fit1d(opt_name, lr, seed):
     circuit = make_regression_circuit_1d(REG_N_QUBITS, REG_N_LAYERS)
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
+                         "loss": loss, "elapsed": time.perf_counter() - t0}
+
     result = train_with_data(
         circuit, params, x_train, y_train,
         opt_name=opt_name, lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
+        progress_cb=_cb,
     )
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
+                     "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("fit1d", opt_name, seed, _drop_params(result))
 
 
-def _run_fit2d(opt_name, lr, seed):
+def _run_fit2d(opt_name, lr, seed, progress):
+    key = ("fit2d", opt_name, seed)
+    t0 = time.perf_counter()
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
+                     "loss": None, "elapsed": 0.0}
+
     g = np.linspace(-1, 1, 8)
     x1, x2 = np.meshgrid(g, g)
     x_raw = np.stack([x1.ravel(), x2.ravel()], axis=1)
@@ -105,29 +125,53 @@ def _run_fit2d(opt_name, lr, seed):
     circuit = make_regression_circuit_2d(REG_N_QUBITS, REG_N_LAYERS)
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
+                         "loss": loss, "elapsed": time.perf_counter() - t0}
+
     result = train_with_data(
         circuit, params, x_train, y_train,
         opt_name=opt_name, lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
+        progress_cb=_cb,
     )
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
+                     "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("fit2d", opt_name, seed, _drop_params(result))
 
 
-def _run_vqe(opt_name, lr, seed):
+def _run_vqe(opt_name, lr, seed, progress):
+    key = ("vqe", opt_name, seed)
+    t0 = time.perf_counter()
+    progress[key] = {"status": "running", "step": 0, "total_steps": VQE_N_STEPS,
+                     "loss": None, "elapsed": 0.0}
+
     circuit, _H = make_vqe_circuit(VQE_N_QUBITS, VQE_N_LAYERS, VQE_J, VQE_H)
     params = init_params_vqe(VQE_N_QUBITS, VQE_N_LAYERS, seed)
+
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
+                         "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
         opt_name=opt_name, lr=lr, n_steps=VQE_N_STEPS,
         n_layers=VQE_N_LAYERS, verbose=False,
+        progress_cb=_cb,
     )
+    progress[key] = {"status": "done", "step": VQE_N_STEPS, "total_steps": VQE_N_STEPS,
+                     "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe", opt_name, seed, _drop_params(result))
 
 
-def _run_cls(opt_name, lr, seed):
+def _run_cls(opt_name, lr, seed, progress):
     from sklearn.datasets import make_moons
     from sklearn.preprocessing import MinMaxScaler
+
+    key = ("cls", opt_name, seed)
+    t0 = time.perf_counter()
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
+                     "loss": None, "elapsed": 0.0}
 
     X, y = make_moons(n_samples=CLS_N_DATA, noise=0.15, random_state=42)
     scaler = MinMaxScaler(feature_range=(-1, 1))
@@ -140,16 +184,94 @@ def _run_cls(opt_name, lr, seed):
     circuit = make_classification_circuit(REG_N_QUBITS, REG_N_LAYERS)
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
+                         "loss": loss, "elapsed": time.perf_counter() - t0}
+
     result = train_with_data(
         circuit, params, x_train, y_train,
         opt_name=opt_name, lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="hinge", verbose=False,
+        progress_cb=_cb,
     )
 
     preds = [float(circuit(result["params"], x)) for x in x_train]
     result["final_accuracy"] = accuracy(preds, [float(yi) for yi in y])
 
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
+                     "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("cls", opt_name, seed, _drop_params(result))
+
+
+# ── Heartbeat helper ─────────────────────────────────────────────────────
+
+def _fmt_elapsed(seconds):
+    """Format seconds into a compact m:ss or h:mm:ss string."""
+    m, s = divmod(int(seconds), 60)
+    if m < 60:
+        return f"{m}m{s:02d}s"
+    h, m = divmod(m, 60)
+    return f"{h}h{m:02d}m{s:02d}s"
+
+
+def _heartbeat_loop(progress, total_jobs, t_start, stop_event, interval=20):
+    """Print a compact progress summary every *interval* seconds.
+
+    Runs as a daemon thread in the main process.
+    """
+    while not stop_event.wait(interval):
+        elapsed = time.perf_counter() - t_start
+        snap = dict(progress)
+
+        n_done = sum(1 for v in snap.values() if v["status"] == "done")
+        n_fail = sum(1 for v in snap.values() if v["status"] == "failed")
+        n_run  = sum(1 for v in snap.values() if v["status"] == "running")
+        n_pend = total_jobs - len(snap)
+
+        running = [
+            (k, v) for k, v in snap.items() if v["status"] == "running"
+        ]
+
+        def _eta(info):
+            step, tot, el = info["step"], info["total_steps"], info["elapsed"]
+            if step > 0 and tot:
+                return (el / step) * (tot - step)
+            return float("inf")
+
+        max_eta = max((_eta(v) for _, v in running), default=0) if running else 0
+        if max_eta == float("inf") or max_eta == 0:
+            eta_str = "n/a"
+        else:
+            eta_str = f"~{_fmt_elapsed(max_eta)}"
+
+        header = f"Progress [{_fmt_elapsed(elapsed)} elapsed]"
+        print(f"\n{'':─<70}", flush=False)
+        print(f"  {header}")
+        print(
+            f"  Done: {n_done}/{total_jobs}  |  Running: {n_run}"
+            f"  |  Pending: {n_pend}  |  Failed: {n_fail}  |  ETA: {eta_str}"
+        )
+
+        if running:
+            running.sort(key=lambda kv: _eta(kv[1]), reverse=True)
+            print("\n  Highest ETA (bottlenecks):")
+            for (task, opt, seed), info in running[:10]:
+                step = info["step"]
+                tot  = info["total_steps"]
+                loss_s = f"{info['loss']:.4f}" if info["loss"] is not None else "..."
+                el_s = _fmt_elapsed(info["elapsed"])
+                eta = _eta(info)
+                eta_s = _fmt_elapsed(eta) if eta < float("inf") else "n/a"
+                label = TASK_LABELS.get(task, task)
+                pct = step / tot * 100 if tot else 0
+                print(
+                    f"    {label:>15s}/{opt:<10s}/seed={seed}"
+                    f"  step {step:>3d}/{tot}  ({pct:4.0f}%)"
+                    f"  loss={loss_s}  elapsed={el_s}  ETA={eta_s}"
+                )
+
+        print(f"{'':─<70}", flush=True)
+        sys.stdout.flush()
 
 
 # ── Main orchestration ──────────────────────────────────────────────────────
@@ -167,48 +289,104 @@ def main():
     os.makedirs(PLOTS_DIR, exist_ok=True)
     n_workers = args.workers
 
-    # Build job list: one entry per (experiment, optimizer, seed)
     worker_fns = [_run_fit1d, _run_fit2d, _run_vqe, _run_cls]
     jobs = []
-    for opt_name, cfg in OPTIMIZERS.items():
-        for seed in SEEDS:
-            for fn in worker_fns:
+    for seed in SEEDS:
+        for fn in worker_fns:
+            for opt_name, cfg in OPTIMIZERS.items():
                 jobs.append((fn, opt_name, cfg["lr"], seed))
 
     total = len(jobs)
     print("=" * 70)
     print("  QNG EUCLIDEAN BASELINE -- Parallel runner")
-    print(f"  Workers: {n_workers}  |  Total jobs: {total}")
+    print(f"  Workers : {n_workers}")
+    print(f"  Jobs    : {total}")
+    print(f"  Tasks   : {', '.join(TASK_LABELS.values())}")
+    print(f"  Opts    : {', '.join(OPTIMIZERS.keys())}")
+    print(f"  Seeds   : {SEEDS}")
     print("=" * 70)
+    sys.stdout.flush()
 
-    # Submit all jobs to the process pool
+    manager = multiprocessing.Manager()
+    progress = manager.dict()
+
     t_start = time.perf_counter()
     results = []
+    n_failed = 0
+
+    stop_heartbeat = threading.Event()
+    hb_thread = threading.Thread(
+        target=_heartbeat_loop,
+        args=(progress, total, t_start, stop_heartbeat),
+        daemon=True,
+    )
+    hb_thread.start()
 
     with ProcessPoolExecutor(max_workers=n_workers) as pool:
         future_map = {}
         for fn, opt_name, lr, seed in jobs:
-            fut = pool.submit(fn, opt_name, lr, seed)
+            fut = pool.submit(fn, opt_name, lr, seed, progress)
             future_map[fut] = (fn.__name__, opt_name, seed)
 
         done_count = 0
         for fut in as_completed(future_map):
-            info = future_map[fut]
+            fn_name, opt_name, seed = future_map[fut]
             done_count += 1
             try:
                 task, opt_name, seed, result = fut.result()
                 results.append((task, opt_name, seed, result))
                 elapsed = time.perf_counter() - t_start
+                final_loss = result["losses"][-1] if result.get("losses") else "?"
+                wall = result["wall_times"][-1] if result.get("wall_times") else 0
                 print(
-                    f"  [{done_count:3d}/{total}]  "
+                    f"  [{done_count:3d}/{total}] DONE  "
                     f"{TASK_LABELS[task]:>15s} / {opt_name:<10s} / seed={seed}"
-                    f"  ({elapsed:.1f}s)"
+                    f"  loss={final_loss:<10.6f}  job={_fmt_elapsed(wall)}"
+                    f"  @{_fmt_elapsed(elapsed)}",
+                    flush=True,
                 )
             except Exception as exc:
-                print(f"  [{done_count:3d}/{total}]  FAILED {info}: {exc}")
+                n_failed += 1
+                elapsed = time.perf_counter() - t_start
+                print(
+                    f"  [{done_count:3d}/{total}] FAIL  "
+                    f"{fn_name} / {opt_name} / seed={seed}"
+                    f"  error={exc}  @{_fmt_elapsed(elapsed)}",
+                    flush=True,
+                )
+
+    stop_heartbeat.set()
+    hb_thread.join(timeout=2)
 
     total_time = time.perf_counter() - t_start
-    print(f"\nAll {total} jobs finished in {total_time:.1f}s")
+
+    # ── Per-experiment / per-optimizer timing breakdown ────────────────────
+    print("\n" + "=" * 70)
+    print("  TIMING BREAKDOWN")
+    print("=" * 70)
+    timing = defaultdict(lambda: defaultdict(list))
+    for task, opt_name, seed, result in results:
+        wall = result["wall_times"][-1] if result.get("wall_times") else 0
+        timing[task][opt_name].append(wall)
+
+    for task in ["fit1d", "fit2d", "vqe", "cls"]:
+        if task not in timing:
+            continue
+        label = TASK_LABELS[task]
+        print(f"\n  {label}:")
+        for opt in OPTIMIZERS:
+            if opt not in timing[task]:
+                continue
+            walls = timing[task][opt]
+            mean_w = np.mean(walls)
+            max_w = np.max(walls)
+            print(f"    {opt:<10s}  mean={_fmt_elapsed(mean_w)}  max={_fmt_elapsed(max_w)}")
+
+    print(f"\n  Total wall time : {_fmt_elapsed(total_time)}")
+    print(f"  Succeeded       : {len(results)}/{total}")
+    if n_failed:
+        print(f"  Failed          : {n_failed}/{total}")
+    print("=" * 70)
 
     # ── Group results by (task, optimizer, seed) ─────────────────────────
     grouped = defaultdict(lambda: defaultdict(dict))
@@ -280,10 +458,11 @@ def main():
 
     print("\n" + "=" * 70)
     print("  ALL EXPERIMENTS COMPLETE")
-    print(f"  Total wall time: {total_time:.1f}s")
+    print(f"  Total wall time: {_fmt_elapsed(total_time)}")
     print("  Results saved in results/")
     print("  Plots  saved in results/plots/")
     print("=" * 70)
+    sys.stdout.flush()
 
 
 if __name__ == "__main__":

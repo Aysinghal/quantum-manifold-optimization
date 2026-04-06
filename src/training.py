@@ -91,11 +91,15 @@ def _qng_step(mt_fn, cost_fn, params, x_ref, lr, lam=1e-3):
 
 def train_with_data(circuit, params, x_train, y_train,
                     opt_name, lr, n_steps, n_layers,
-                    loss_type="mse", lam=1e-3, verbose=True):
+                    loss_type="mse", lam=1e-3, verbose=True,
+                    progress_cb=None):
     """Train a circuit whose cost aggregates over (x, y) pairs.
 
     Works for GD, Adam (via PennyLane optimizers) and QNG_block / QNG_full
     (via manual metric-tensor step).
+
+    progress_cb: optional callable(step, n_steps, loss) invoked every step
+                 for the first 10 steps, then every 10 steps thereafter.
     """
     if loss_type == "mse":
         cost_fn = mse_cost(circuit, x_train, y_train)
@@ -121,6 +125,8 @@ def train_with_data(circuit, params, x_train, y_train,
             cum_evals.append(total_evals)
             if verbose and step % 25 == 0:
                 print(f"    step {step:4d}  loss={float(loss):.6f}")
+            if progress_cb and (step < 10 or step % 10 == 0):
+                progress_cb(step, n_steps, float(loss))
     else:
         approx = "block-diag" if opt_name == "QNG_block" else None
         mt_fn = qml.metric_tensor(circuit, approx=approx)
@@ -133,6 +139,8 @@ def train_with_data(circuit, params, x_train, y_train,
             cum_evals.append(total_evals)
             if verbose and step % 25 == 0:
                 print(f"    step {step:4d}  loss={loss:.6f}")
+            if progress_cb and (step < 10 or step % 10 == 0):
+                progress_cb(step, n_steps, loss)
 
     return {
         "params": params,
@@ -147,8 +155,12 @@ def train_with_data(circuit, params, x_train, y_train,
 # ---------------------------------------------------------------------------
 
 def train_vqe(circuit, params, opt_name, lr, n_steps, n_layers,
-              lam=1e-3, verbose=True):
-    """Train a VQE circuit where cost = circuit(params) = <H>."""
+              lam=1e-3, verbose=True, progress_cb=None):
+    """Train a VQE circuit where cost = circuit(params) = <H>.
+
+    progress_cb: optional callable(step, n_steps, loss) invoked every step
+                 for the first 10 steps, then every 10 steps thereafter.
+    """
     d = int(np.prod(params.shape))
     L = n_layers
     evals_per_step = EVAL_COST[opt_name](d, L)
@@ -171,6 +183,8 @@ def train_vqe(circuit, params, opt_name, lr, n_steps, n_layers,
         cum_evals.append(total_evals)
         if verbose and step % 25 == 0:
             print(f"    step {step:4d}  energy={float(loss):.6f}")
+        if progress_cb and (step < 10 or step % 10 == 0):
+            progress_cb(step, n_steps, float(loss))
 
     return {
         "params": params,
