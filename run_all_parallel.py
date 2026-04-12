@@ -35,7 +35,7 @@ from src.models import (
     exact_ground_energy,
 )
 from src.training import train_with_data, train_vqe
-from src.metrics import aggregate_seeds, save_results, accuracy
+from src.metrics import aggregate_seeds, save_results, accuracy, make_run_dir
 from src.visualization import convergence_plot, resource_plot, final_loss_bar
 
 
@@ -46,8 +46,8 @@ SEEDS = [0, 1, 2, 3, 4]
 OPTIMIZERS = {
     "GD":        {"lr": 0.1},
     "Adam":      {"lr": 0.05},
-    "QNG_block": {"lr": 0.01},
-    "QNG_full":  {"lr": 0.01},
+    "QNG_block": {"lr": 0.05},
+    "QNG_full":  {"lr": 0.05},
 }
 
 REG_N_QUBITS = 2
@@ -62,8 +62,7 @@ VQE_H        = 1.0
 
 CLS_N_DATA   = 100
 
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
-PLOTS_DIR   = os.path.join(RESULTS_DIR, "plots")
+RESULTS_BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 
 TASK_LABELS = {
     "fit1d": "1D-sin",
@@ -286,7 +285,7 @@ def main():
     )
     args = parser.parse_args()
 
-    os.makedirs(PLOTS_DIR, exist_ok=True)
+    results_dir, plots_dir = make_run_dir(RESULTS_BASE)
     n_workers = args.workers
 
     worker_fns = [_run_fit1d, _run_fit2d, _run_vqe, _run_cls]
@@ -397,25 +396,25 @@ def main():
     if "fit1d" in grouped:
         print("\nSaving 1D function fitting results...")
         agg = {opt: aggregate_seeds(seeds) for opt, seeds in grouped["fit1d"].items()}
-        save_results(agg, os.path.join(RESULTS_DIR, "function_fitting_1d.json"))
+        save_results(agg, os.path.join(results_dir, "function_fitting_1d.json"))
         convergence_plot(agg, title="1D Regression: sin(x)", log_y=True,
-                         save_path=os.path.join(PLOTS_DIR, "fit1d_convergence.png"))
+                         save_path=os.path.join(plots_dir, "fit1d_convergence.png"))
         resource_plot(agg, title="1D Regression: sin(x) (resource-normalised)", log_y=True,
-                      save_path=os.path.join(PLOTS_DIR, "fit1d_resource.png"))
+                      save_path=os.path.join(plots_dir, "fit1d_resource.png"))
         final_loss_bar(agg, title="1D Regression: final MSE",
-                       save_path=os.path.join(PLOTS_DIR, "fit1d_final.png"))
+                       save_path=os.path.join(plots_dir, "fit1d_final.png"))
 
     # ── 2D Function Fitting ──────────────────────────────────────────────
     if "fit2d" in grouped:
         print("\nSaving 2D function fitting results...")
         agg = {opt: aggregate_seeds(seeds) for opt, seeds in grouped["fit2d"].items()}
-        save_results(agg, os.path.join(RESULTS_DIR, "function_fitting_2d.json"))
+        save_results(agg, os.path.join(results_dir, "function_fitting_2d.json"))
         convergence_plot(agg, title="2D Regression: (x1\u00b2+x2\u00b2)/2", log_y=True,
-                         save_path=os.path.join(PLOTS_DIR, "fit2d_convergence.png"))
+                         save_path=os.path.join(plots_dir, "fit2d_convergence.png"))
         resource_plot(agg, title="2D Regression (resource-normalised)", log_y=True,
-                      save_path=os.path.join(PLOTS_DIR, "fit2d_resource.png"))
+                      save_path=os.path.join(plots_dir, "fit2d_resource.png"))
         final_loss_bar(agg, title="2D Regression: final MSE",
-                       save_path=os.path.join(PLOTS_DIR, "fit2d_final.png"))
+                       save_path=os.path.join(plots_dir, "fit2d_final.png"))
 
     # ── VQE ──────────────────────────────────────────────────────────────
     if "vqe" in grouped:
@@ -426,17 +425,17 @@ def main():
             {"config": {"n_qubits": VQE_N_QUBITS, "n_layers": VQE_N_LAYERS,
                          "J": VQE_J, "h": VQE_H, "E_exact": E_exact},
              **agg},
-            os.path.join(RESULTS_DIR, "vqe.json"),
+            os.path.join(results_dir, "vqe.json"),
         )
         convergence_plot(agg, title=f"VQE Ising {VQE_N_QUBITS}q  (E*={E_exact:.3f})",
                          ylabel="Energy \u27e8H\u27e9",
-                         save_path=os.path.join(PLOTS_DIR, "vqe_convergence.png"))
+                         save_path=os.path.join(plots_dir, "vqe_convergence.png"))
         resource_plot(agg, title="VQE (resource-normalised)",
                       ylabel="Energy \u27e8H\u27e9",
-                      save_path=os.path.join(PLOTS_DIR, "vqe_resource.png"))
+                      save_path=os.path.join(plots_dir, "vqe_resource.png"))
         final_loss_bar(agg, title="VQE: final energy",
                        ylabel="Energy \u27e8H\u27e9",
-                       save_path=os.path.join(PLOTS_DIR, "vqe_final.png"))
+                       save_path=os.path.join(plots_dir, "vqe_final.png"))
 
     # ── Classification ───────────────────────────────────────────────────
     if "cls" in grouped:
@@ -448,19 +447,19 @@ def main():
             agg_opt["final_acc_mean"] = float(np.mean(accs))
             agg_opt["final_acc_std"]  = float(np.std(accs))
             agg[opt] = agg_opt
-        save_results(agg, os.path.join(RESULTS_DIR, "classification.json"))
+        save_results(agg, os.path.join(results_dir, "classification.json"))
         convergence_plot(agg, title="Classification (make_moons)", log_y=True,
-                         save_path=os.path.join(PLOTS_DIR, "cls_convergence.png"))
+                         save_path=os.path.join(plots_dir, "cls_convergence.png"))
         resource_plot(agg, title="Classification (resource-normalised)", log_y=True,
-                      save_path=os.path.join(PLOTS_DIR, "cls_resource.png"))
+                      save_path=os.path.join(plots_dir, "cls_resource.png"))
         final_loss_bar(agg, title="Classification: final hinge loss",
-                       save_path=os.path.join(PLOTS_DIR, "cls_final.png"))
+                       save_path=os.path.join(plots_dir, "cls_final.png"))
 
     print("\n" + "=" * 70)
     print("  ALL EXPERIMENTS COMPLETE")
     print(f"  Total wall time: {_fmt_elapsed(total_time)}")
-    print("  Results saved in results/")
-    print("  Plots  saved in results/plots/")
+    print(f"  Results saved in {results_dir}")
+    print(f"  Plots  saved in {plots_dir}")
     print("=" * 70)
     sys.stdout.flush()
 

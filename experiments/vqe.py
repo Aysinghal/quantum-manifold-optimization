@@ -14,7 +14,7 @@ from pennylane import numpy as pnp
 
 from src.models import make_vqe_circuit, init_params_vqe, exact_ground_energy
 from src.training import train_vqe
-from src.metrics import aggregate_seeds, save_results
+from src.metrics import aggregate_seeds, save_results, make_run_dir
 from src.visualization import convergence_plot, resource_plot, final_loss_bar
 
 # ── Config ──────────────────────────────────────────────────────────────────
@@ -27,16 +27,20 @@ J, H_FIELD = 1.0, 1.0
 OPTIMIZERS = {
     "GD":        {"lr": 0.1},
     "Adam":      {"lr": 0.05},
-    "QNG_block": {"lr": 0.01},
-    "QNG_full":  {"lr": 0.01},
+    "QNG_block": {"lr": 0.05},
+    "QNG_full":  {"lr": 0.05},
 }
 
-RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
-PLOTS_DIR = os.path.join(RESULTS_DIR, "plots")
-os.makedirs(PLOTS_DIR, exist_ok=True)
+RESULTS_BASE = os.path.join(os.path.dirname(__file__), "..", "results")
 
 
-def run():
+def run(results_dir=None):
+    if results_dir is None:
+        results_dir, plots_dir = make_run_dir(RESULTS_BASE)
+    else:
+        plots_dir = os.path.join(results_dir, "plots")
+        os.makedirs(plots_dir, exist_ok=True)
+
     E_exact = exact_ground_energy(N_QUBITS, J, H_FIELD)
     print("=" * 60)
     print(f"TASK: VQE  Ising model  {N_QUBITS} qubits")
@@ -65,23 +69,22 @@ def run():
 
         all_agg[opt_name] = aggregate_seeds(seed_results)
 
-    # Save + plot
     save_results(
         {"config": {"n_qubits": N_QUBITS, "n_layers": N_LAYERS,
                      "J": J, "h": H_FIELD, "E_exact": E_exact},
          **all_agg},
-        os.path.join(RESULTS_DIR, "vqe.json"),
+        os.path.join(results_dir, "vqe.json"),
     )
 
     convergence_plot(all_agg, title=f"VQE Ising {N_QUBITS}q  (E*={E_exact:.3f})",
                      ylabel="Energy ⟨H⟩",
-                     save_path=os.path.join(PLOTS_DIR, "vqe_convergence.png"))
+                     save_path=os.path.join(plots_dir, "vqe_convergence.png"))
     resource_plot(all_agg, title="VQE (resource-normalised)",
                   ylabel="Energy ⟨H⟩",
-                  save_path=os.path.join(PLOTS_DIR, "vqe_resource.png"))
+                  save_path=os.path.join(plots_dir, "vqe_resource.png"))
     final_loss_bar(all_agg, title="VQE: final energy",
                    ylabel="Energy ⟨H⟩",
-                   save_path=os.path.join(PLOTS_DIR, "vqe_final.png"))
+                   save_path=os.path.join(plots_dir, "vqe_final.png"))
     return all_agg
 
 

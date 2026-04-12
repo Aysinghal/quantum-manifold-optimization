@@ -18,7 +18,7 @@ from src.models import (
     init_params_regression,
 )
 from src.training import train_with_data
-from src.metrics import aggregate_seeds, save_results
+from src.metrics import aggregate_seeds, save_results, make_run_dir
 from src.visualization import convergence_plot, resource_plot, final_loss_bar
 
 # ── Config ──────────────────────────────────────────────────────────────────
@@ -30,13 +30,11 @@ SEEDS = [0, 1, 2, 3, 4]
 OPTIMIZERS = {
     "GD":        {"lr": 0.1},
     "Adam":      {"lr": 0.05},
-    "QNG_block": {"lr": 0.01},
-    "QNG_full":  {"lr": 0.01},
+    "QNG_block": {"lr": 0.05},
+    "QNG_full":  {"lr": 0.05},
 }
 
-RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
-PLOTS_DIR = os.path.join(RESULTS_DIR, "plots")
-os.makedirs(PLOTS_DIR, exist_ok=True)
+RESULTS_BASE = os.path.join(os.path.dirname(__file__), "..", "results")
 
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
@@ -71,7 +69,13 @@ def run_task(task_name, circuit, x_train, y_train, loss_type="mse"):
 
 # ── 1D Regression: sin(x) ──────────────────────────────────────────────────
 
-def run_1d():
+def run_1d(results_dir=None):
+    if results_dir is None:
+        results_dir, plots_dir = make_run_dir(RESULTS_BASE)
+    else:
+        plots_dir = os.path.join(results_dir, "plots")
+        os.makedirs(plots_dir, exist_ok=True)
+
     print("=" * 60)
     print("TASK: 1D Function Fitting  f(x) = sin(x)")
     print("=" * 60)
@@ -85,19 +89,25 @@ def run_1d():
     circuit = make_regression_circuit_1d(N_QUBITS, N_LAYERS)
     agg = run_task("1D-sin", circuit, x_train, y_train)
 
-    save_results(agg, os.path.join(RESULTS_DIR, "function_fitting_1d.json"))
+    save_results(agg, os.path.join(results_dir, "function_fitting_1d.json"))
     convergence_plot(agg, title="1D Regression: sin(x)", log_y=True,
-                     save_path=os.path.join(PLOTS_DIR, "fit1d_convergence.png"))
+                     save_path=os.path.join(plots_dir, "fit1d_convergence.png"))
     resource_plot(agg, title="1D Regression: sin(x) (resource-normalised)", log_y=True,
-                  save_path=os.path.join(PLOTS_DIR, "fit1d_resource.png"))
+                  save_path=os.path.join(plots_dir, "fit1d_resource.png"))
     final_loss_bar(agg, title="1D Regression: final MSE",
-                   save_path=os.path.join(PLOTS_DIR, "fit1d_final.png"))
+                   save_path=os.path.join(plots_dir, "fit1d_final.png"))
     return agg
 
 
 # ── 2D Regression: (x1^2+x2^2)/2 ──────────────────────────────────────────
 
-def run_2d():
+def run_2d(results_dir=None):
+    if results_dir is None:
+        results_dir, plots_dir = make_run_dir(RESULTS_BASE)
+    else:
+        plots_dir = os.path.join(results_dir, "plots")
+        os.makedirs(plots_dir, exist_ok=True)
+
     print("\n" + "=" * 60)
     print("TASK: 2D Function Fitting  f(x1,x2) = (x1^2+x2^2)/2")
     print("=" * 60)
@@ -113,13 +123,13 @@ def run_2d():
     circuit = make_regression_circuit_2d(N_QUBITS, N_LAYERS)
     agg = run_task("2D-quad", circuit, x_train, y_train)
 
-    save_results(agg, os.path.join(RESULTS_DIR, "function_fitting_2d.json"))
+    save_results(agg, os.path.join(results_dir, "function_fitting_2d.json"))
     convergence_plot(agg, title="2D Regression: (x1²+x2²)/2", log_y=True,
-                     save_path=os.path.join(PLOTS_DIR, "fit2d_convergence.png"))
+                     save_path=os.path.join(plots_dir, "fit2d_convergence.png"))
     resource_plot(agg, title="2D Regression (resource-normalised)", log_y=True,
-                  save_path=os.path.join(PLOTS_DIR, "fit2d_resource.png"))
+                  save_path=os.path.join(plots_dir, "fit2d_resource.png"))
     final_loss_bar(agg, title="2D Regression: final MSE",
-                   save_path=os.path.join(PLOTS_DIR, "fit2d_final.png"))
+                   save_path=os.path.join(plots_dir, "fit2d_final.png"))
     return agg
 
 
