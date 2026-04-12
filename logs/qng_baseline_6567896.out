@@ -1,0 +1,1100 @@
+======================================================================
+  Host     : cbcb26.umiacs.umd.edu
+  JobID    : 6567896
+  CPUs     : 80
+  Workers  : 80
+  Mem      : 16384 MB
+  Partition: scavenger
+  Start    : 2026-04-11 22:38:45
+======================================================================
+  Python   : /fs/nexus-scratch/aysingha/envs/qng-baseline/bin/python (Python 3.11.15)
+  PennyLane: 0.44.1
+======================================================================
+======================================================================
+  QNG EUCLIDEAN BASELINE -- Parallel runner
+  Workers : 80
+  Jobs    : 80
+  Tasks   : 1D-sin, 2D-quad, VQE, Classification
+  Opts    : GD, Adam, QNG_block, QNG_full
+  Seeds   : [0, 1, 2, 3, 4]
+======================================================================
+  [  1/80] DONE              VQE / GD         / seed=1  loss=-4.754738   job=0m16s  @0m16s
+  [  2/80] DONE              VQE / Adam       / seed=0  loss=-4.725805   job=0m16s  @0m16s
+  [  3/80] DONE              VQE / GD         / seed=2  loss=-4.717810   job=0m16s  @0m17s
+  [  4/80] DONE              VQE / Adam       / seed=4  loss=-4.757480   job=0m16s  @0m17s
+  [  5/80] DONE              VQE / Adam       / seed=3  loss=-4.757865   job=0m16s  @0m17s
+  [  6/80] DONE              VQE / Adam       / seed=2  loss=-4.758137   job=0m16s  @0m17s
+  [  7/80] DONE              VQE / GD         / seed=3  loss=-4.742764   job=0m16s  @0m17s
+  [  8/80] DONE              VQE / GD         / seed=0  loss=-4.746722   job=0m16s  @0m17s
+  [  9/80] DONE              VQE / Adam       / seed=1  loss=-4.758454   job=0m16s  @0m17s
+  [ 10/80] DONE              VQE / GD         / seed=4  loss=-4.730716   job=0m16s  @0m17s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [0m20s elapsed]
+  Done: 10/80  |  Running: 70  |  Pending: 0  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+            2D-quad/QNG_full  /seed=0  step   0/100  (   0%)  loss=0.3229  elapsed=0m10s  ETA=n/a
+            2D-quad/QNG_full  /seed=1  step   0/100  (   0%)  loss=0.4871  elapsed=0m10s  ETA=n/a
+            2D-quad/QNG_full  /seed=3  step   0/100  (   0%)  loss=0.0882  elapsed=0m10s  ETA=n/a
+     Classification/QNG_block /seed=4  step   0/100  (   0%)  loss=0.9239  elapsed=0m09s  ETA=n/a
+     Classification/QNG_full  /seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m13s  ETA=n/a
+     Classification/QNG_block /seed=2  step   0/100  (   0%)  loss=1.2149  elapsed=0m09s  ETA=n/a
+     Classification/QNG_full  /seed=0  step   0/100  (   0%)  loss=1.2315  elapsed=0m13s  ETA=n/a
+     Classification/QNG_block /seed=0  step   0/100  (   0%)  loss=1.2315  elapsed=0m09s  ETA=n/a
+     Classification/QNG_block /seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m09s  ETA=n/a
+     Classification/QNG_full  /seed=3  step   0/100  (   0%)  loss=1.3863  elapsed=0m13s  ETA=n/a
+──────────────────────────────────────────────────────────────────────
+  [ 11/80] DONE              VQE / QNG_block  / seed=4  loss=-4.651831   job=0m28s  @0m29s
+  [ 12/80] DONE              VQE / QNG_block  / seed=0  loss=-4.451336   job=0m29s  @0m29s
+  [ 13/80] DONE              VQE / QNG_block  / seed=1  loss=-4.718212   job=0m29s  @0m29s
+  [ 14/80] DONE              VQE / QNG_block  / seed=3  loss=-4.718692   job=0m29s  @0m29s
+  [ 15/80] DONE              VQE / QNG_block  / seed=2  loss=-4.615043   job=0m29s  @0m30s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [0m40s elapsed]
+  Done: 15/80  |  Running: 65  |  Pending: 0  |  Failed: 0  |  ETA: ~43m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=2  step   1/100  (   1%)  loss=0.8161  elapsed=0m26s  ETA=43m46s
+     Classification/QNG_full  /seed=1  step   1/100  (   1%)  loss=1.2583  elapsed=0m26s  ETA=43m01s
+     Classification/QNG_full  /seed=3  step   1/100  (   1%)  loss=0.7600  elapsed=0m26s  ETA=42m59s
+     Classification/QNG_full  /seed=0  step   1/100  (   1%)  loss=0.9002  elapsed=0m25s  ETA=42m40s
+     Classification/QNG_full  /seed=4  step   1/100  (   1%)  loss=0.5849  elapsed=0m25s  ETA=42m08s
+            2D-quad/QNG_full  /seed=1  step   3/100  (   3%)  loss=0.1674  elapsed=0m39s  ETA=21m19s
+            2D-quad/QNG_full  /seed=0  step   3/100  (   3%)  loss=0.0587  elapsed=0m39s  ETA=21m14s
+            2D-quad/QNG_full  /seed=3  step   3/100  (   3%)  loss=0.0650  elapsed=0m39s  ETA=21m03s
+            2D-quad/QNG_full  /seed=4  step   3/100  (   3%)  loss=0.0620  elapsed=0m38s  ETA=20m57s
+            2D-quad/QNG_full  /seed=2  step   3/100  (   3%)  loss=0.0767  elapsed=0m38s  ETA=20m35s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m00s elapsed]
+  Done: 15/80  |  Running: 65  |  Pending: 0  |  Failed: 0  |  ETA: ~27m53s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=2  step   3/100  (   3%)  loss=0.4894  elapsed=0m51s  ETA=27m53s
+     Classification/QNG_full  /seed=1  step   3/100  (   3%)  loss=0.6179  elapsed=0m51s  ETA=27m50s
+     Classification/QNG_full  /seed=3  step   3/100  (   3%)  loss=0.4597  elapsed=0m51s  ETA=27m50s
+     Classification/QNG_full  /seed=0  step   3/100  (   3%)  loss=0.5318  elapsed=0m51s  ETA=27m37s
+     Classification/QNG_full  /seed=4  step   3/100  (   3%)  loss=0.4451  elapsed=0m51s  ETA=27m30s
+            2D-quad/QNG_full  /seed=1  step   5/100  (   5%)  loss=0.0862  elapsed=0m59s  ETA=18m43s
+            2D-quad/QNG_full  /seed=0  step   5/100  (   5%)  loss=0.0343  elapsed=0m58s  ETA=18m35s
+            2D-quad/QNG_full  /seed=3  step   5/100  (   5%)  loss=0.0575  elapsed=0m58s  ETA=18m25s
+            2D-quad/QNG_full  /seed=4  step   5/100  (   5%)  loss=0.0443  elapsed=0m58s  ETA=18m23s
+            2D-quad/QNG_full  /seed=2  step   5/100  (   5%)  loss=0.0574  elapsed=0m57s  ETA=18m06s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m20s elapsed]
+  Done: 15/80  |  Running: 65  |  Pending: 0  |  Failed: 0  |  ETA: ~24m27s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step   5/100  (   5%)  loss=0.4345  elapsed=1m17s  ETA=24m27s
+     Classification/QNG_full  /seed=3  step   5/100  (   5%)  loss=0.4030  elapsed=1m17s  ETA=24m27s
+     Classification/QNG_full  /seed=2  step   5/100  (   5%)  loss=0.3987  elapsed=1m16s  ETA=24m21s
+     Classification/QNG_full  /seed=0  step   5/100  (   5%)  loss=0.4102  elapsed=1m16s  ETA=24m14s
+     Classification/QNG_full  /seed=4  step   5/100  (   5%)  loss=0.4077  elapsed=1m16s  ETA=24m10s
+            2D-quad/QNG_full  /seed=1  step   7/100  (   7%)  loss=0.0473  elapsed=1m18s  ETA=17m27s
+            2D-quad/QNG_full  /seed=0  step   7/100  (   7%)  loss=0.0227  elapsed=1m18s  ETA=17m16s
+            2D-quad/QNG_full  /seed=4  step   7/100  (   7%)  loss=0.0409  elapsed=1m17s  ETA=17m09s
+            2D-quad/QNG_full  /seed=3  step   7/100  (   7%)  loss=0.0525  elapsed=1m17s  ETA=17m07s
+            2D-quad/QNG_full  /seed=2  step   7/100  (   7%)  loss=0.0458  elapsed=1m16s  ETA=16m51s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m40s elapsed]
+  Done: 15/80  |  Running: 65  |  Pending: 0  |  Failed: 0  |  ETA: ~23m29s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step   6/100  (   6%)  loss=0.4106  elapsed=1m29s  ETA=23m29s
+     Classification/QNG_full  /seed=3  step   6/100  (   6%)  loss=0.3928  elapsed=1m29s  ETA=23m29s
+     Classification/QNG_full  /seed=2  step   6/100  (   6%)  loss=0.3881  elapsed=1m29s  ETA=23m20s
+     Classification/QNG_full  /seed=0  step   6/100  (   6%)  loss=0.3960  elapsed=1m29s  ETA=23m18s
+     Classification/QNG_full  /seed=4  step   6/100  (   6%)  loss=0.3999  elapsed=1m28s  ETA=23m13s
+            2D-quad/QNG_full  /seed=1  step   9/100  (   9%)  loss=0.0295  elapsed=1m38s  ETA=16m35s
+            2D-quad/QNG_full  /seed=0  step   9/100  (   9%)  loss=0.0172  elapsed=1m37s  ETA=16m24s
+            2D-quad/QNG_full  /seed=4  step   9/100  (   9%)  loss=0.0393  elapsed=1m36s  ETA=16m20s
+            2D-quad/QNG_full  /seed=3  step   9/100  (   9%)  loss=0.0470  elapsed=1m36s  ETA=16m15s
+            2D-quad/QNG_full  /seed=2  step   9/100  (   9%)  loss=0.0352  elapsed=1m35s  ETA=16m01s
+──────────────────────────────────────────────────────────────────────
+  [ 16/80] DONE           1D-sin / GD         / seed=2  loss=0.003099    job=1m58s  @1m58s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m00s elapsed]
+  Done: 16/80  |  Running: 64  |  Pending: 0  |  Failed: 0  |  ETA: ~22m09s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step   8/100  (   8%)  loss=0.3820  elapsed=1m55s  ETA=22m09s
+     Classification/QNG_full  /seed=1  step   8/100  (   8%)  loss=0.3882  elapsed=1m55s  ETA=22m09s
+     Classification/QNG_full  /seed=2  step   8/100  (   8%)  loss=0.3762  elapsed=1m54s  ETA=21m57s
+     Classification/QNG_full  /seed=0  step   8/100  (   8%)  loss=0.3754  elapsed=1m54s  ETA=21m57s
+     Classification/QNG_full  /seed=4  step   8/100  (   8%)  loss=0.3900  elapsed=1m54s  ETA=21m54s
+            2D-quad/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.0250  elapsed=1m48s  ETA=16m14s
+            2D-quad/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.0160  elapsed=1m47s  ETA=16m03s
+            2D-quad/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.0388  elapsed=1m46s  ETA=15m59s
+            2D-quad/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.0449  elapsed=1m45s  ETA=15m53s
+            2D-quad/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.0318  elapsed=1m44s  ETA=15m41s
+──────────────────────────────────────────────────────────────────────
+  [ 17/80] DONE           1D-sin / GD         / seed=3  loss=0.002314    job=2m00s  @2m01s
+  [ 18/80] DONE           1D-sin / Adam       / seed=2  loss=0.000304    job=2m00s  @2m01s
+  [ 19/80] DONE           1D-sin / GD         / seed=0  loss=0.009959    job=2m01s  @2m01s
+  [ 20/80] DONE           1D-sin / Adam       / seed=1  loss=0.001414    job=2m01s  @2m01s
+  [ 21/80] DONE           1D-sin / GD         / seed=1  loss=0.023659    job=2m01s  @2m02s
+  [ 22/80] DONE           1D-sin / GD         / seed=4  loss=0.015861    job=2m01s  @2m02s
+  [ 23/80] DONE           1D-sin / Adam       / seed=4  loss=0.002169    job=2m02s  @2m02s
+  [ 24/80] DONE           1D-sin / Adam       / seed=3  loss=0.000088    job=2m02s  @2m02s
+  [ 25/80] DONE           1D-sin / Adam       / seed=0  loss=0.002085    job=2m02s  @2m03s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m20s elapsed]
+  Done: 25/80  |  Running: 55  |  Pending: 0  |  Failed: 0  |  ETA: ~21m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step   9/100  (   9%)  loss=0.3814  elapsed=2m08s  ETA=21m36s
+     Classification/QNG_full  /seed=3  step   9/100  (   9%)  loss=0.3796  elapsed=2m08s  ETA=21m36s
+     Classification/QNG_full  /seed=0  step   9/100  (   9%)  loss=0.3691  elapsed=2m07s  ETA=21m25s
+     Classification/QNG_full  /seed=2  step   9/100  (   9%)  loss=0.3729  elapsed=2m07s  ETA=21m25s
+     Classification/QNG_full  /seed=4  step   9/100  (   9%)  loss=0.3864  elapsed=2m06s  ETA=21m23s
+            2D-quad/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.0250  elapsed=1m48s  ETA=16m14s
+            2D-quad/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.0160  elapsed=1m47s  ETA=16m03s
+            2D-quad/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.0388  elapsed=1m46s  ETA=15m59s
+            2D-quad/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.0449  elapsed=1m45s  ETA=15m53s
+            2D-quad/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.0318  elapsed=1m44s  ETA=15m41s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m40s elapsed]
+  Done: 25/80  |  Running: 55  |  Pending: 0  |  Failed: 0  |  ETA: ~21m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.3755  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.3769  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.3612  elapsed=2m19s  ETA=20m57s
+     Classification/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.3690  elapsed=2m19s  ETA=20m56s
+     Classification/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.3829  elapsed=2m19s  ETA=20m54s
+            2D-quad/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.0250  elapsed=1m48s  ETA=16m14s
+            2D-quad/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.0160  elapsed=1m47s  ETA=16m03s
+            2D-quad/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.0388  elapsed=1m46s  ETA=15m59s
+            2D-quad/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.0449  elapsed=1m45s  ETA=15m53s
+            2D-quad/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.0318  elapsed=1m44s  ETA=15m41s
+──────────────────────────────────────────────────────────────────────
+  [ 26/80] DONE           1D-sin / QNG_block  / seed=2  loss=0.001002    job=2m51s  @2m51s
+  [ 27/80] DONE           1D-sin / QNG_block  / seed=1  loss=0.004214    job=2m51s  @2m51s
+  [ 28/80] DONE           1D-sin / QNG_block  / seed=0  loss=0.004487    job=2m51s  @2m51s
+  [ 29/80] DONE           1D-sin / QNG_block  / seed=4  loss=0.004001    job=2m52s  @2m52s
+  [ 30/80] DONE           1D-sin / QNG_block  / seed=3  loss=0.000700    job=2m53s  @2m54s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m00s elapsed]
+  Done: 30/80  |  Running: 50  |  Pending: 0  |  Failed: 0  |  ETA: ~21m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.3755  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.3769  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.3612  elapsed=2m19s  ETA=20m57s
+     Classification/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.3690  elapsed=2m19s  ETA=20m56s
+     Classification/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.3829  elapsed=2m19s  ETA=20m54s
+            2D-quad/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.0250  elapsed=1m48s  ETA=16m14s
+            2D-quad/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.0160  elapsed=1m47s  ETA=16m03s
+            2D-quad/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.0388  elapsed=1m46s  ETA=15m59s
+            2D-quad/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.0449  elapsed=1m45s  ETA=15m53s
+            2D-quad/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.0318  elapsed=1m44s  ETA=15m41s
+──────────────────────────────────────────────────────────────────────
+  [ 31/80] DONE              VQE / QNG_full   / seed=0  loss=-4.758765   job=3m04s  @3m04s
+  [ 32/80] DONE              VQE / QNG_full   / seed=2  loss=-4.758770   job=3m05s  @3m06s
+  [ 33/80] DONE              VQE / QNG_full   / seed=3  loss=-4.758770   job=3m05s  @3m06s
+  [ 34/80] DONE              VQE / QNG_full   / seed=1  loss=-4.758770   job=3m06s  @3m06s
+  [ 35/80] DONE              VQE / QNG_full   / seed=4  loss=-4.758770   job=3m06s  @3m07s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m20s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~21m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.3755  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.3769  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.3612  elapsed=2m19s  ETA=20m57s
+     Classification/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.3690  elapsed=2m19s  ETA=20m56s
+     Classification/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.3829  elapsed=2m19s  ETA=20m54s
+            2D-quad/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.0250  elapsed=1m48s  ETA=16m14s
+            2D-quad/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.0160  elapsed=1m47s  ETA=16m03s
+            2D-quad/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.0388  elapsed=1m46s  ETA=15m59s
+            2D-quad/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.0449  elapsed=1m45s  ETA=15m53s
+            2D-quad/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.0099  elapsed=3m19s  ETA=13m18s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m40s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~21m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.3755  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.3769  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.3612  elapsed=2m19s  ETA=20m57s
+     Classification/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.3690  elapsed=2m19s  ETA=20m56s
+     Classification/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.3829  elapsed=2m19s  ETA=20m54s
+            2D-quad/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.0100  elapsed=3m25s  ETA=13m40s
+            2D-quad/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.0321  elapsed=3m23s  ETA=13m33s
+            2D-quad/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.0092  elapsed=3m22s  ETA=13m31s
+            2D-quad/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.0233  elapsed=3m21s  ETA=13m25s
+            2D-quad/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.0099  elapsed=3m19s  ETA=13m18s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m00s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~21m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.3755  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.3769  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.3612  elapsed=2m19s  ETA=20m57s
+     Classification/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.3690  elapsed=2m19s  ETA=20m56s
+     Classification/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.3829  elapsed=2m19s  ETA=20m54s
+            2D-quad/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.0100  elapsed=3m25s  ETA=13m40s
+            2D-quad/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.0321  elapsed=3m23s  ETA=13m33s
+            2D-quad/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.0092  elapsed=3m22s  ETA=13m31s
+            2D-quad/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.0233  elapsed=3m21s  ETA=13m25s
+            2D-quad/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.0099  elapsed=3m19s  ETA=13m18s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m20s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~21m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=1  step  10/100  (  10%)  loss=0.3755  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=3  step  10/100  (  10%)  loss=0.3769  elapsed=2m20s  ETA=21m07s
+     Classification/QNG_full  /seed=0  step  10/100  (  10%)  loss=0.3612  elapsed=2m19s  ETA=20m57s
+     Classification/QNG_full  /seed=2  step  10/100  (  10%)  loss=0.3690  elapsed=2m19s  ETA=20m56s
+     Classification/QNG_full  /seed=4  step  10/100  (  10%)  loss=0.3829  elapsed=2m19s  ETA=20m54s
+            2D-quad/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.0100  elapsed=3m25s  ETA=13m40s
+            2D-quad/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.0321  elapsed=3m23s  ETA=13m33s
+            2D-quad/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.0092  elapsed=3m22s  ETA=13m31s
+            2D-quad/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.0233  elapsed=3m21s  ETA=13m25s
+            2D-quad/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.0099  elapsed=3m19s  ETA=13m18s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m40s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.3684  elapsed=4m26s  ETA=17m46s
+     Classification/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.3625  elapsed=4m26s  ETA=17m45s
+     Classification/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.3418  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.3676  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.3593  elapsed=4m23s  ETA=17m33s
+            2D-quad/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.0100  elapsed=3m25s  ETA=13m40s
+            2D-quad/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.0321  elapsed=3m23s  ETA=13m33s
+            2D-quad/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.0092  elapsed=3m22s  ETA=13m31s
+            2D-quad/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.0233  elapsed=3m21s  ETA=13m25s
+            2D-quad/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.0099  elapsed=3m19s  ETA=13m18s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m00s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.3684  elapsed=4m26s  ETA=17m46s
+     Classification/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.3625  elapsed=4m26s  ETA=17m45s
+     Classification/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.3418  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.3676  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.3593  elapsed=4m23s  ETA=17m33s
+            2D-quad/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.0100  elapsed=3m25s  ETA=13m40s
+            2D-quad/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.0241  elapsed=4m59s  ETA=11m39s
+            2D-quad/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.0078  elapsed=4m57s  ETA=11m35s
+            2D-quad/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.0117  elapsed=4m56s  ETA=11m30s
+            2D-quad/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.0071  elapsed=4m54s  ETA=11m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m20s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.3684  elapsed=4m26s  ETA=17m46s
+     Classification/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.3625  elapsed=4m26s  ETA=17m45s
+     Classification/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.3418  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.3676  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.3593  elapsed=4m23s  ETA=17m33s
+            2D-quad/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.0078  elapsed=5m00s  ETA=11m41s
+            2D-quad/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.0241  elapsed=4m59s  ETA=11m39s
+            2D-quad/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.0078  elapsed=4m57s  ETA=11m35s
+            2D-quad/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.0117  elapsed=4m56s  ETA=11m30s
+            2D-quad/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.0071  elapsed=4m54s  ETA=11m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m40s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.3684  elapsed=4m26s  ETA=17m46s
+     Classification/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.3625  elapsed=4m26s  ETA=17m45s
+     Classification/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.3418  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.3676  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.3593  elapsed=4m23s  ETA=17m33s
+            2D-quad/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.0078  elapsed=5m00s  ETA=11m41s
+            2D-quad/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.0241  elapsed=4m59s  ETA=11m39s
+            2D-quad/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.0078  elapsed=4m57s  ETA=11m35s
+            2D-quad/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.0117  elapsed=4m56s  ETA=11m30s
+            2D-quad/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.0071  elapsed=4m54s  ETA=11m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m00s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.3684  elapsed=4m26s  ETA=17m46s
+     Classification/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.3625  elapsed=4m26s  ETA=17m45s
+     Classification/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.3418  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.3676  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.3593  elapsed=4m23s  ETA=17m33s
+            2D-quad/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.0078  elapsed=5m00s  ETA=11m41s
+            2D-quad/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.0241  elapsed=4m59s  ETA=11m39s
+            2D-quad/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.0078  elapsed=4m57s  ETA=11m35s
+            2D-quad/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.0117  elapsed=4m56s  ETA=11m30s
+            2D-quad/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.0071  elapsed=4m54s  ETA=11m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m20s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  20/100  (  20%)  loss=0.3684  elapsed=4m26s  ETA=17m46s
+     Classification/QNG_full  /seed=1  step  20/100  (  20%)  loss=0.3625  elapsed=4m26s  ETA=17m45s
+     Classification/QNG_full  /seed=0  step  20/100  (  20%)  loss=0.3418  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=4  step  20/100  (  20%)  loss=0.3676  elapsed=4m23s  ETA=17m35s
+     Classification/QNG_full  /seed=2  step  20/100  (  20%)  loss=0.3593  elapsed=4m23s  ETA=17m33s
+            2D-quad/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.0078  elapsed=5m00s  ETA=11m41s
+            2D-quad/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.0241  elapsed=4m59s  ETA=11m39s
+            2D-quad/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.0078  elapsed=4m57s  ETA=11m35s
+            2D-quad/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.0117  elapsed=4m56s  ETA=11m30s
+            2D-quad/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.0071  elapsed=4m54s  ETA=11m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m40s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.3591  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.3366  elapsed=6m28s  ETA=15m05s
+     Classification/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.3628  elapsed=6m27s  ETA=15m05s
+     Classification/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.3548  elapsed=6m26s  ETA=15m02s
+            2D-quad/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.0069  elapsed=6m36s  ETA=9m54s
+            2D-quad/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.0193  elapsed=6m35s  ETA=9m53s
+            2D-quad/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.0072  elapsed=6m32s  ETA=9m49s
+            2D-quad/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.0093  elapsed=6m30s  ETA=9m46s
+            2D-quad/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.0057  elapsed=6m28s  ETA=9m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m00s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.3591  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.3366  elapsed=6m28s  ETA=15m05s
+     Classification/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.3628  elapsed=6m27s  ETA=15m05s
+     Classification/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.3548  elapsed=6m26s  ETA=15m02s
+            2D-quad/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.0069  elapsed=6m36s  ETA=9m54s
+            2D-quad/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.0193  elapsed=6m35s  ETA=9m53s
+            2D-quad/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.0072  elapsed=6m32s  ETA=9m49s
+            2D-quad/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.0093  elapsed=6m30s  ETA=9m46s
+            2D-quad/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.0057  elapsed=6m28s  ETA=9m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m20s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.3591  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.3366  elapsed=6m28s  ETA=15m05s
+     Classification/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.3628  elapsed=6m27s  ETA=15m05s
+     Classification/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.3548  elapsed=6m26s  ETA=15m02s
+            2D-quad/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.0069  elapsed=6m36s  ETA=9m54s
+            2D-quad/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.0193  elapsed=6m35s  ETA=9m53s
+            2D-quad/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.0072  elapsed=6m32s  ETA=9m49s
+            2D-quad/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.0093  elapsed=6m30s  ETA=9m46s
+            2D-quad/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.0057  elapsed=6m28s  ETA=9m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m40s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.3591  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.3366  elapsed=6m28s  ETA=15m05s
+     Classification/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.3628  elapsed=6m27s  ETA=15m05s
+     Classification/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.3548  elapsed=6m26s  ETA=15m02s
+            2D-quad/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.0069  elapsed=6m36s  ETA=9m54s
+            2D-quad/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.0193  elapsed=6m35s  ETA=9m53s
+            2D-quad/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.0072  elapsed=6m32s  ETA=9m49s
+            2D-quad/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.0093  elapsed=6m30s  ETA=9m46s
+            2D-quad/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.0057  elapsed=6m28s  ETA=9m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m00s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.3591  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.3366  elapsed=6m28s  ETA=15m05s
+     Classification/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.3628  elapsed=6m27s  ETA=15m05s
+     Classification/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.3548  elapsed=6m26s  ETA=15m02s
+            2D-quad/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.0069  elapsed=6m36s  ETA=9m54s
+            2D-quad/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.0193  elapsed=6m35s  ETA=9m53s
+            2D-quad/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.0072  elapsed=6m32s  ETA=9m49s
+            2D-quad/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.0093  elapsed=6m30s  ETA=9m46s
+            2D-quad/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.0057  elapsed=6m28s  ETA=9m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m20s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  30/100  (  30%)  loss=0.3591  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=0  step  30/100  (  30%)  loss=0.3366  elapsed=6m28s  ETA=15m05s
+     Classification/QNG_full  /seed=4  step  30/100  (  30%)  loss=0.3628  elapsed=6m27s  ETA=15m05s
+     Classification/QNG_full  /seed=2  step  30/100  (  30%)  loss=0.3548  elapsed=6m26s  ETA=15m02s
+            2D-quad/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.0064  elapsed=8m12s  ETA=8m12s
+            2D-quad/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.0157  elapsed=8m11s  ETA=8m11s
+            2D-quad/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.0069  elapsed=8m07s  ETA=8m07s
+            2D-quad/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.0083  elapsed=8m05s  ETA=8m05s
+            2D-quad/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.0048  elapsed=8m02s  ETA=8m02s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m40s elapsed]
+  Done: 35/80  |  Running: 45  |  Pending: 0  |  Failed: 0  |  ETA: ~15m15s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  30/100  (  30%)  loss=0.3623  elapsed=6m32s  ETA=15m15s
+     Classification/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.3564  elapsed=8m37s  ETA=12m56s
+     Classification/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.3342  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.3611  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.3499  elapsed=8m30s  ETA=12m45s
+            2D-quad/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.0064  elapsed=8m12s  ETA=8m12s
+            2D-quad/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.0157  elapsed=8m11s  ETA=8m11s
+            2D-quad/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.0069  elapsed=8m07s  ETA=8m07s
+            2D-quad/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.0083  elapsed=8m05s  ETA=8m05s
+            2D-quad/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.0048  elapsed=8m02s  ETA=8m02s
+──────────────────────────────────────────────────────────────────────
+  [ 36/80] DONE          2D-quad / GD         / seed=0  loss=0.042230    job=8m48s  @8m49s
+  [ 37/80] DONE           1D-sin / QNG_full   / seed=2  loss=0.000271    job=8m50s  @8m50s
+  [ 38/80] DONE           1D-sin / QNG_full   / seed=0  loss=0.000346    job=8m51s  @8m52s
+  [ 39/80] DONE           1D-sin / QNG_full   / seed=1  loss=0.000646    job=8m52s  @8m53s
+  [ 40/80] DONE           1D-sin / QNG_full   / seed=4  loss=0.000477    job=8m53s  @8m53s
+  [ 41/80] DONE          2D-quad / GD         / seed=1  loss=0.010614    job=8m53s  @8m54s
+  [ 42/80] DONE           1D-sin / QNG_full   / seed=3  loss=0.000251    job=8m54s  @8m55s
+  [ 43/80] DONE          2D-quad / GD         / seed=4  loss=0.022555    job=8m54s  @8m55s
+  [ 44/80] DONE          2D-quad / Adam       / seed=3  loss=0.003038    job=8m56s  @8m57s
+  [ 45/80] DONE          2D-quad / Adam       / seed=1  loss=0.006282    job=8m56s  @8m57s
+  [ 46/80] DONE          2D-quad / Adam       / seed=2  loss=0.002965    job=8m57s  @8m58s
+  [ 47/80] DONE          2D-quad / Adam       / seed=0  loss=0.004314    job=8m58s  @8m58s
+  [ 48/80] DONE          2D-quad / Adam       / seed=4  loss=0.004409    job=8m58s  @8m59s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m00s elapsed]
+  Done: 48/80  |  Running: 32  |  Pending: 0  |  Failed: 0  |  ETA: ~12m57s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.3546  elapsed=8m38s  ETA=12m57s
+     Classification/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.3564  elapsed=8m37s  ETA=12m56s
+     Classification/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.3342  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.3611  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.3499  elapsed=8m30s  ETA=12m45s
+            2D-quad/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.0064  elapsed=8m12s  ETA=8m12s
+            2D-quad/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.0157  elapsed=8m11s  ETA=8m11s
+            2D-quad/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.0069  elapsed=8m07s  ETA=8m07s
+            2D-quad/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.0083  elapsed=8m05s  ETA=8m05s
+            2D-quad/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.0048  elapsed=8m02s  ETA=8m02s
+──────────────────────────────────────────────────────────────────────
+  [ 49/80] DONE          2D-quad / GD         / seed=3  loss=0.050934    job=9m00s  @9m00s
+  [ 50/80] DONE          2D-quad / GD         / seed=2  loss=0.023354    job=9m00s  @9m01s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m20s elapsed]
+  Done: 50/80  |  Running: 30  |  Pending: 0  |  Failed: 0  |  ETA: ~12m57s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.3546  elapsed=8m38s  ETA=12m57s
+     Classification/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.3564  elapsed=8m37s  ETA=12m56s
+     Classification/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.3342  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.3611  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.3499  elapsed=8m30s  ETA=12m45s
+            2D-quad/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.0064  elapsed=8m12s  ETA=8m12s
+            2D-quad/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.0157  elapsed=8m11s  ETA=8m11s
+            2D-quad/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.0069  elapsed=8m07s  ETA=8m07s
+            2D-quad/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.0083  elapsed=8m05s  ETA=8m05s
+            2D-quad/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.0048  elapsed=8m02s  ETA=8m02s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m40s elapsed]
+  Done: 50/80  |  Running: 30  |  Pending: 0  |  Failed: 0  |  ETA: ~12m57s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.3546  elapsed=8m38s  ETA=12m57s
+     Classification/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.3564  elapsed=8m37s  ETA=12m56s
+     Classification/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.3342  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.3611  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.3499  elapsed=8m30s  ETA=12m45s
+            2D-quad/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.0064  elapsed=8m12s  ETA=8m12s
+            2D-quad/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.0157  elapsed=8m11s  ETA=8m11s
+            2D-quad/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.0069  elapsed=8m07s  ETA=8m07s
+            2D-quad/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.0076  elapsed=9m39s  ETA=6m26s
+            2D-quad/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.0041  elapsed=9m36s  ETA=6m24s
+──────────────────────────────────────────────────────────────────────
+  [ 51/80] DONE          2D-quad / QNG_block  / seed=1  loss=0.007632    job=9m49s  @9m49s
+  [ 52/80] DONE          2D-quad / QNG_block  / seed=2  loss=0.010292    job=9m53s  @9m54s
+  [ 53/80] DONE          2D-quad / QNG_block  / seed=4  loss=0.007437    job=9m58s  @9m58s
+  [ 54/80] DONE          2D-quad / QNG_block  / seed=0  loss=0.014296    job=9m59s  @9m59s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [10m00s elapsed]
+  Done: 54/80  |  Running: 26  |  Pending: 0  |  Failed: 0  |  ETA: ~12m57s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.3546  elapsed=8m38s  ETA=12m57s
+     Classification/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.3564  elapsed=8m37s  ETA=12m56s
+     Classification/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.3342  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.3611  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.3499  elapsed=8m30s  ETA=12m45s
+            2D-quad/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.0124  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.0060  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.0067  elapsed=9m42s  ETA=6m28s
+            2D-quad/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.0076  elapsed=9m39s  ETA=6m26s
+            2D-quad/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.0041  elapsed=9m36s  ETA=6m24s
+──────────────────────────────────────────────────────────────────────
+  [ 55/80] DONE          2D-quad / QNG_block  / seed=3  loss=0.030536    job=9m59s  @10m00s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [10m20s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~12m57s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  40/100  (  40%)  loss=0.3546  elapsed=8m38s  ETA=12m57s
+     Classification/QNG_full  /seed=1  step  40/100  (  40%)  loss=0.3564  elapsed=8m37s  ETA=12m56s
+     Classification/QNG_full  /seed=0  step  40/100  (  40%)  loss=0.3342  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=4  step  40/100  (  40%)  loss=0.3611  elapsed=8m32s  ETA=12m48s
+     Classification/QNG_full  /seed=2  step  40/100  (  40%)  loss=0.3499  elapsed=8m30s  ETA=12m45s
+            2D-quad/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.0124  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.0060  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.0067  elapsed=9m42s  ETA=6m28s
+            2D-quad/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.0076  elapsed=9m39s  ETA=6m26s
+            2D-quad/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.0041  elapsed=9m36s  ETA=6m24s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [10m40s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.3348  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.3509  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.3598  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.3435  elapsed=10m32s  ETA=10m32s
+            2D-quad/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.0124  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.0060  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.0067  elapsed=9m42s  ETA=6m28s
+            2D-quad/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.0076  elapsed=9m39s  ETA=6m26s
+            2D-quad/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.0041  elapsed=9m36s  ETA=6m24s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [11m00s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.3348  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.3509  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.3598  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.3435  elapsed=10m32s  ETA=10m32s
+            2D-quad/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.0124  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.0060  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.0067  elapsed=9m42s  ETA=6m28s
+            2D-quad/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.0076  elapsed=9m39s  ETA=6m26s
+            2D-quad/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.0041  elapsed=9m36s  ETA=6m24s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [11m20s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.3348  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.3509  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.3598  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.3435  elapsed=10m32s  ETA=10m32s
+            2D-quad/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.0124  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.0060  elapsed=9m47s  ETA=6m31s
+            2D-quad/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.0065  elapsed=11m16s  ETA=4m49s
+            2D-quad/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.0071  elapsed=11m02s  ETA=4m44s
+            2D-quad/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.0037  elapsed=10m59s  ETA=4m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [11m40s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.3348  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.3509  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.3598  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.3435  elapsed=10m32s  ETA=10m32s
+            2D-quad/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.0091  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.0058  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.0065  elapsed=11m16s  ETA=4m49s
+            2D-quad/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.0071  elapsed=11m02s  ETA=4m44s
+            2D-quad/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.0037  elapsed=10m59s  ETA=4m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [12m00s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.3348  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.3509  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.3598  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.3435  elapsed=10m32s  ETA=10m32s
+            2D-quad/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.0091  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.0058  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.0065  elapsed=11m16s  ETA=4m49s
+            2D-quad/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.0071  elapsed=11m02s  ETA=4m44s
+            2D-quad/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.0037  elapsed=10m59s  ETA=4m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [12m20s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m36s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=3  step  50/100  (  50%)  loss=0.3348  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=1  step  50/100  (  50%)  loss=0.3509  elapsed=10m36s  ETA=10m36s
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  50/100  (  50%)  loss=0.3598  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=2  step  50/100  (  50%)  loss=0.3435  elapsed=10m32s  ETA=10m32s
+            2D-quad/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.0091  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.0058  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.0065  elapsed=11m16s  ETA=4m49s
+            2D-quad/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.0071  elapsed=11m02s  ETA=4m44s
+            2D-quad/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.0037  elapsed=10m59s  ETA=4m42s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [12m40s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~10m35s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  50/100  (  50%)  loss=0.3330  elapsed=10m35s  ETA=10m35s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.3355  elapsed=12m35s  ETA=8m23s
+     Classification/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.3201  elapsed=12m26s  ETA=8m17s
+     Classification/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.3440  elapsed=12m25s  ETA=8m17s
+            2D-quad/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.0091  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.0058  elapsed=11m22s  ETA=4m52s
+            2D-quad/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.0065  elapsed=11m16s  ETA=4m49s
+            2D-quad/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.0067  elapsed=12m23s  ETA=3m05s
+            2D-quad/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.0033  elapsed=12m20s  ETA=3m05s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [13m00s elapsed]
+  Done: 55/80  |  Running: 25  |  Pending: 0  |  Failed: 0  |  ETA: ~8m26s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.3319  elapsed=12m39s  ETA=8m26s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.3355  elapsed=12m35s  ETA=8m23s
+     Classification/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.3201  elapsed=12m26s  ETA=8m17s
+     Classification/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.3440  elapsed=12m25s  ETA=8m17s
+            2D-quad/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.0066  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.0056  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.0064  elapsed=12m50s  ETA=3m12s
+            2D-quad/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.0067  elapsed=12m23s  ETA=3m05s
+            2D-quad/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.0033  elapsed=12m20s  ETA=3m05s
+──────────────────────────────────────────────────────────────────────
+  [ 56/80] DONE   Classification / GD         / seed=1  loss=0.378296    job=12m58s  @13m00s
+  [ 57/80] DONE   Classification / Adam       / seed=3  loss=0.354875    job=13m05s  @13m08s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [13m20s elapsed]
+  Done: 57/80  |  Running: 23  |  Pending: 0  |  Failed: 0  |  ETA: ~8m26s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.3319  elapsed=12m39s  ETA=8m26s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.3355  elapsed=12m35s  ETA=8m23s
+     Classification/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.3201  elapsed=12m26s  ETA=8m17s
+     Classification/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.3440  elapsed=12m25s  ETA=8m17s
+            2D-quad/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.0066  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.0056  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.0064  elapsed=12m50s  ETA=3m12s
+            2D-quad/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.0067  elapsed=12m23s  ETA=3m05s
+            2D-quad/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.0033  elapsed=12m20s  ETA=3m05s
+──────────────────────────────────────────────────────────────────────
+  [ 58/80] DONE   Classification / GD         / seed=4  loss=0.405034    job=13m32s  @13m34s
+  [ 59/80] DONE   Classification / Adam       / seed=0  loss=0.351134    job=13m34s  @13m36s
+  [ 60/80] DONE   Classification / GD         / seed=3  loss=0.373421    job=13m36s  @13m39s
+  [ 61/80] DONE   Classification / Adam       / seed=2  loss=0.359239    job=13m37s  @13m40s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [13m40s elapsed]
+  Done: 61/80  |  Running: 19  |  Pending: 0  |  Failed: 0  |  ETA: ~8m26s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.3319  elapsed=12m39s  ETA=8m26s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.3355  elapsed=12m35s  ETA=8m23s
+     Classification/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.3201  elapsed=12m26s  ETA=8m17s
+     Classification/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.3440  elapsed=12m25s  ETA=8m17s
+            2D-quad/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.0066  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.0056  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.0064  elapsed=12m50s  ETA=3m12s
+            2D-quad/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.0067  elapsed=12m23s  ETA=3m05s
+            2D-quad/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.0033  elapsed=12m20s  ETA=3m05s
+──────────────────────────────────────────────────────────────────────
+  [ 62/80] DONE   Classification / Adam       / seed=1  loss=0.340271    job=13m42s  @13m44s
+  [ 63/80] DONE   Classification / GD         / seed=2  loss=0.398605    job=13m42s  @13m44s
+  [ 64/80] DONE   Classification / GD         / seed=0  loss=0.379609    job=13m44s  @13m46s
+  [ 65/80] DONE   Classification / Adam       / seed=4  loss=0.339459    job=13m44s  @13m47s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [14m00s elapsed]
+  Done: 65/80  |  Running: 15  |  Pending: 0  |  Failed: 0  |  ETA: ~8m26s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.3319  elapsed=12m39s  ETA=8m26s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.3355  elapsed=12m35s  ETA=8m23s
+     Classification/QNG_full  /seed=3  step  60/100  (  60%)  loss=0.3201  elapsed=12m26s  ETA=8m17s
+     Classification/QNG_full  /seed=1  step  60/100  (  60%)  loss=0.3440  elapsed=12m25s  ETA=8m17s
+            2D-quad/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.0066  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.0056  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.0064  elapsed=12m50s  ETA=3m12s
+            2D-quad/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.0065  elapsed=13m45s  ETA=1m31s
+            2D-quad/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.0031  elapsed=13m42s  ETA=1m31s
+──────────────────────────────────────────────────────────────────────
+  [ 66/80] DONE   Classification / QNG_block  / seed=2  loss=0.383333    job=14m00s  @14m02s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [14m20s elapsed]
+  Done: 66/80  |  Running: 14  |  Pending: 0  |  Failed: 0  |  ETA: ~8m26s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.3319  elapsed=12m39s  ETA=8m26s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  60/100  (  60%)  loss=0.3355  elapsed=12m35s  ETA=8m23s
+     Classification/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.3169  elapsed=14m16s  ETA=6m07s
+     Classification/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.3389  elapsed=14m15s  ETA=6m06s
+            2D-quad/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.0066  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.0056  elapsed=12m57s  ETA=3m14s
+            2D-quad/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.0064  elapsed=12m50s  ETA=3m12s
+            2D-quad/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.0065  elapsed=13m45s  ETA=1m31s
+            2D-quad/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.0031  elapsed=13m42s  ETA=1m31s
+──────────────────────────────────────────────────────────────────────
+  [ 67/80] DONE   Classification / QNG_block  / seed=3  loss=0.362792    job=14m34s  @14m36s
+  [ 68/80] DONE   Classification / QNG_block  / seed=4  loss=0.376328    job=14m37s  @14m39s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [14m40s elapsed]
+  Done: 68/80  |  Running: 12  |  Pending: 0  |  Failed: 0  |  ETA: ~8m26s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  60/100  (  60%)  loss=0.3319  elapsed=12m39s  ETA=8m26s
+     Classification/QNG_full  /seed=4  step  60/100  (  60%)  loss=0.3581  elapsed=12m37s  ETA=8m25s
+     Classification/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.3318  elapsed=14m37s  ETA=6m16s
+     Classification/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.3169  elapsed=14m16s  ETA=6m07s
+     Classification/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.3389  elapsed=14m15s  ETA=6m06s
+            2D-quad/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.0055  elapsed=14m32s  ETA=1m36s
+            2D-quad/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.0055  elapsed=14m31s  ETA=1m36s
+            2D-quad/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.0063  elapsed=14m24s  ETA=1m36s
+            2D-quad/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.0065  elapsed=13m45s  ETA=1m31s
+            2D-quad/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.0031  elapsed=13m42s  ETA=1m31s
+──────────────────────────────────────────────────────────────────────
+  [ 69/80] DONE   Classification / QNG_block  / seed=1  loss=0.366231    job=14m42s  @14m44s
+  [ 70/80] DONE   Classification / QNG_block  / seed=0  loss=0.359145    job=14m46s  @14m48s
+  [ 71/80] DONE          2D-quad / QNG_full   / seed=2  loss=0.002905    job=14m55s  @14m56s
+  [ 72/80] DONE          2D-quad / QNG_full   / seed=3  loss=0.006263    job=14m58s  @14m59s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [15m00s elapsed]
+  Done: 72/80  |  Running: 8  |  Pending: 0  |  Failed: 0  |  ETA: ~6m17s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.3310  elapsed=14m41s  ETA=6m17s
+     Classification/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.3561  elapsed=14m40s  ETA=6m17s
+     Classification/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.3318  elapsed=14m37s  ETA=6m16s
+     Classification/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.3169  elapsed=14m16s  ETA=6m07s
+     Classification/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.3389  elapsed=14m15s  ETA=6m06s
+            2D-quad/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.0055  elapsed=14m32s  ETA=1m36s
+            2D-quad/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.0055  elapsed=14m31s  ETA=1m36s
+            2D-quad/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.0063  elapsed=14m24s  ETA=1m36s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [15m20s elapsed]
+  Done: 72/80  |  Running: 8  |  Pending: 0  |  Failed: 0  |  ETA: ~6m17s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.3310  elapsed=14m41s  ETA=6m17s
+     Classification/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.3561  elapsed=14m40s  ETA=6m17s
+     Classification/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.3318  elapsed=14m37s  ETA=6m16s
+     Classification/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.3169  elapsed=14m16s  ETA=6m07s
+     Classification/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.3389  elapsed=14m15s  ETA=6m06s
+            2D-quad/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.0055  elapsed=14m32s  ETA=1m36s
+            2D-quad/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.0055  elapsed=14m31s  ETA=1m36s
+            2D-quad/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.0063  elapsed=14m24s  ETA=1m36s
+──────────────────────────────────────────────────────────────────────
+  [ 73/80] DONE          2D-quad / QNG_full   / seed=0  loss=0.006214    job=15m39s  @15m40s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [15m40s elapsed]
+  Done: 73/80  |  Running: 7  |  Pending: 0  |  Failed: 0  |  ETA: ~6m17s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.3310  elapsed=14m41s  ETA=6m17s
+     Classification/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.3561  elapsed=14m40s  ETA=6m17s
+     Classification/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.3318  elapsed=14m37s  ETA=6m16s
+     Classification/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.3169  elapsed=14m16s  ETA=6m07s
+     Classification/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.3389  elapsed=14m15s  ETA=6m06s
+            2D-quad/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.0055  elapsed=14m32s  ETA=1m36s
+            2D-quad/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.0055  elapsed=14m31s  ETA=1m36s
+──────────────────────────────────────────────────────────────────────
+  [ 74/80] DONE          2D-quad / QNG_full   / seed=4  loss=0.004877    job=15m47s  @15m48s
+  [ 75/80] DONE          2D-quad / QNG_full   / seed=1  loss=0.005343    job=15m48s  @15m49s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [16m00s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~6m17s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.3310  elapsed=14m41s  ETA=6m17s
+     Classification/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.3561  elapsed=14m40s  ETA=6m17s
+     Classification/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.3318  elapsed=14m37s  ETA=6m16s
+     Classification/QNG_full  /seed=3  step  70/100  (  70%)  loss=0.3169  elapsed=14m16s  ETA=6m07s
+     Classification/QNG_full  /seed=1  step  70/100  (  70%)  loss=0.3389  elapsed=14m15s  ETA=6m06s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [16m20s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~6m17s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  70/100  (  70%)  loss=0.3310  elapsed=14m41s  ETA=6m17s
+     Classification/QNG_full  /seed=4  step  70/100  (  70%)  loss=0.3561  elapsed=14m40s  ETA=6m17s
+     Classification/QNG_full  /seed=2  step  70/100  (  70%)  loss=0.3318  elapsed=14m37s  ETA=6m16s
+     Classification/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.3157  elapsed=16m01s  ETA=4m00s
+     Classification/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.3338  elapsed=16m01s  ETA=4m00s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [16m40s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~4m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.3298  elapsed=16m30s  ETA=4m07s
+     Classification/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.3536  elapsed=16m27s  ETA=4m06s
+     Classification/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.3290  elapsed=16m24s  ETA=4m06s
+     Classification/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.3157  elapsed=16m01s  ETA=4m00s
+     Classification/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.3338  elapsed=16m01s  ETA=4m00s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [17m00s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~4m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.3298  elapsed=16m30s  ETA=4m07s
+     Classification/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.3536  elapsed=16m27s  ETA=4m06s
+     Classification/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.3290  elapsed=16m24s  ETA=4m06s
+     Classification/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.3157  elapsed=16m01s  ETA=4m00s
+     Classification/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.3338  elapsed=16m01s  ETA=4m00s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [17m20s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~4m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.3298  elapsed=16m30s  ETA=4m07s
+     Classification/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.3536  elapsed=16m27s  ETA=4m06s
+     Classification/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.3290  elapsed=16m24s  ETA=4m06s
+     Classification/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.3157  elapsed=16m01s  ETA=4m00s
+     Classification/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.3338  elapsed=16m01s  ETA=4m00s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [17m40s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~4m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.3298  elapsed=16m30s  ETA=4m07s
+     Classification/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.3536  elapsed=16m27s  ETA=4m06s
+     Classification/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.3290  elapsed=16m24s  ETA=4m06s
+     Classification/QNG_full  /seed=3  step  80/100  (  80%)  loss=0.3157  elapsed=16m01s  ETA=4m00s
+     Classification/QNG_full  /seed=1  step  80/100  (  80%)  loss=0.3338  elapsed=16m01s  ETA=4m00s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [18m00s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~4m07s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  80/100  (  80%)  loss=0.3298  elapsed=16m30s  ETA=4m07s
+     Classification/QNG_full  /seed=4  step  80/100  (  80%)  loss=0.3536  elapsed=16m27s  ETA=4m06s
+     Classification/QNG_full  /seed=2  step  80/100  (  80%)  loss=0.3290  elapsed=16m24s  ETA=4m06s
+     Classification/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.3148  elapsed=17m47s  ETA=1m58s
+     Classification/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.3289  elapsed=17m47s  ETA=1m58s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [18m20s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~2m01s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.3283  elapsed=18m16s  ETA=2m01s
+     Classification/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.3499  elapsed=18m14s  ETA=2m01s
+     Classification/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.3268  elapsed=18m10s  ETA=2m01s
+     Classification/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.3148  elapsed=17m47s  ETA=1m58s
+     Classification/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.3289  elapsed=17m47s  ETA=1m58s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [18m40s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~2m01s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.3283  elapsed=18m16s  ETA=2m01s
+     Classification/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.3499  elapsed=18m14s  ETA=2m01s
+     Classification/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.3268  elapsed=18m10s  ETA=2m01s
+     Classification/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.3148  elapsed=17m47s  ETA=1m58s
+     Classification/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.3289  elapsed=17m47s  ETA=1m58s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [19m00s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~2m01s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.3283  elapsed=18m16s  ETA=2m01s
+     Classification/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.3499  elapsed=18m14s  ETA=2m01s
+     Classification/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.3268  elapsed=18m10s  ETA=2m01s
+     Classification/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.3148  elapsed=17m47s  ETA=1m58s
+     Classification/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.3289  elapsed=17m47s  ETA=1m58s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [19m20s elapsed]
+  Done: 75/80  |  Running: 5  |  Pending: 0  |  Failed: 0  |  ETA: ~2m01s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.3283  elapsed=18m16s  ETA=2m01s
+     Classification/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.3499  elapsed=18m14s  ETA=2m01s
+     Classification/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.3268  elapsed=18m10s  ETA=2m01s
+     Classification/QNG_full  /seed=3  step  90/100  (  90%)  loss=0.3148  elapsed=17m47s  ETA=1m58s
+     Classification/QNG_full  /seed=1  step  90/100  (  90%)  loss=0.3289  elapsed=17m47s  ETA=1m58s
+──────────────────────────────────────────────────────────────────────
+  [ 76/80] DONE   Classification / QNG_full   / seed=1  loss=0.324629    job=19m22s  @19m24s
+  [ 77/80] DONE   Classification / QNG_full   / seed=3  loss=0.314200    job=19m22s  @19m24s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [19m40s elapsed]
+  Done: 77/80  |  Running: 3  |  Pending: 0  |  Failed: 0  |  ETA: ~2m01s
+
+  Highest ETA (bottlenecks):
+     Classification/QNG_full  /seed=0  step  90/100  (  90%)  loss=0.3283  elapsed=18m16s  ETA=2m01s
+     Classification/QNG_full  /seed=4  step  90/100  (  90%)  loss=0.3499  elapsed=18m14s  ETA=2m01s
+     Classification/QNG_full  /seed=2  step  90/100  (  90%)  loss=0.3268  elapsed=18m10s  ETA=2m01s
+──────────────────────────────────────────────────────────────────────
+  [ 78/80] DONE   Classification / QNG_full   / seed=2  loss=0.324201    job=19m46s  @19m48s
+  [ 79/80] DONE   Classification / QNG_full   / seed=4  loss=0.345166    job=19m50s  @19m52s
+  [ 80/80] DONE   Classification / QNG_full   / seed=0  loss=0.326453    job=19m52s  @19m54s
+
+======================================================================
+  TIMING BREAKDOWN
+======================================================================
+
+  1D-sin:
+    GD          mean=2m00s  max=2m01s
+    Adam        mean=2m01s  max=2m02s
+    QNG_block   mean=2m51s  max=2m53s
+    QNG_full    mean=8m52s  max=8m54s
+
+  2D-quad:
+    GD          mean=8m55s  max=9m00s
+    Adam        mean=8m57s  max=8m58s
+    QNG_block   mean=9m56s  max=9m59s
+    QNG_full    mean=15m26s  max=15m48s
+
+  VQE:
+    GD          mean=0m16s  max=0m16s
+    Adam        mean=0m16s  max=0m16s
+    QNG_block   mean=0m29s  max=0m29s
+    QNG_full    mean=3m05s  max=3m06s
+
+  Classification:
+    GD          mean=13m30s  max=13m44s
+    Adam        mean=13m33s  max=13m44s
+    QNG_block   mean=14m32s  max=14m46s
+    QNG_full    mean=19m38s  max=19m52s
+
+  Total wall time : 19m54s
+  Succeeded       : 80/80
+======================================================================
+
+Saving 1D function fitting results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/function_fitting_1d.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/fit1d_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/fit1d_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/fit1d_final.png
+
+Saving 2D function fitting results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/function_fitting_2d.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/fit2d_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/fit2d_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/fit2d_final.png
+
+Saving VQE results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/vqe.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/vqe_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/vqe_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/vqe_final.png
+
+Saving classification results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/classification.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/cls_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/cls_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/plots/cls_final.png
+
+======================================================================
+  ALL EXPERIMENTS COMPLETE
+  Total wall time: 19m54s
+  Results saved in results/
+  Plots  saved in results/plots/
+======================================================================
+======================================================================
+  End      : 2026-04-11 22:59:06
+======================================================================

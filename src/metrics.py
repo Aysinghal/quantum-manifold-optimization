@@ -46,6 +46,29 @@ def aggregate_seeds(results_by_seed):
     }
 
 
+def make_run_dir(base_dir):
+    """Create a timestamped run directory and update the ``latest`` symlink.
+
+    Returns (run_dir, plots_dir).
+    """
+    from datetime import datetime
+
+    stamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+    run_dir = os.path.join(base_dir, stamp)
+    plots_dir = os.path.join(run_dir, "plots")
+    os.makedirs(plots_dir, exist_ok=True)
+
+    link = os.path.join(base_dir, "latest")
+    tmp = link + ".tmp"
+    if os.path.islink(tmp) or os.path.exists(tmp):
+        os.remove(tmp)
+    os.symlink(stamp, tmp)
+    os.replace(tmp, link)
+
+    print(f"  Run directory -> {run_dir}")
+    return run_dir, plots_dir
+
+
 def save_results(results, path):
     """Save results dict to JSON (numpy arrays are converted to lists)."""
     os.makedirs(os.path.dirname(path), exist_ok=True)

@@ -3,8 +3,8 @@ Generic training loops for all four optimizers.
 
 For VQE (no data), PennyLane's QNGOptimizer works directly on the QNode.
 For regression/classification (data-dependent circuits), QNG is implemented
-manually: metric tensor is computed at a fixed reference input (x=0), gradient
-is computed for the aggregate cost, and the update is G^{-1} @ grad.
+manually: metric tensor is averaged over a subsample of training inputs,
+gradient is computed for the aggregate cost, and the update is G^{-1} @ grad.
 """
 
 import time
@@ -61,18 +61,35 @@ def hinge_cost(circuit, x_train, y_train):
 # Manual QNG step (for circuits with data arguments)
 # ---------------------------------------------------------------------------
 
-def _qng_step(mt_fn, cost_fn, params, x_ref, lr, lam=1e-3):
+_MT_SUBSAMPLE = 10
+
+
+def _qng_step(mt_fn, cost_fn, params, x_train, lr, lam=1e-3, rng=None):
     """One QNG update using pre-built metric-tensor function.
 
     mt_fn:   output of qml.metric_tensor(circuit, approx=...)
     cost_fn: scalar cost that closes over data
-    x_ref:   reference input for metric-tensor evaluation
+    x_train: list of training inputs; metric tensor is averaged over a subsample
     """
-    mt = mt_fn(params, x_ref)
+    if rng is None:
+        rng = np.random.default_rng()
 
-    shape = mt.shape
+    n = len(x_train)
+    k = min(n, _MT_SUBSAMPLE)
+    indices = rng.choice(n, size=k, replace=False)
+
+    mt0 = mt_fn(params, x_train[indices[0]])
+    shape = mt0.shape
     d = int(np.prod(shape[: len(shape) // 2]))
-    G = np.array(mt).reshape(d, d) + lam * np.eye(d)
+    G_sum = np.array(mt0).reshape(d, d)
+
+    for idx in indices[1:]:
+        mt_i = mt_fn(params, x_train[idx])
+        G_sum += np.array(mt_i).reshape(d, d)
+
+    G = G_sum / k
+    reg = max(lam, 1e-4 * np.max(np.abs(np.diag(G))))
+    G = G + reg * np.eye(d)
 
     grad = qml.grad(cost_fn)(params)
     grad_flat = np.array(grad).flatten()
@@ -109,7 +126,6 @@ def train_with_data(circuit, params, x_train, y_train,
     d = int(np.prod(params.shape))
     L = n_layers
     evals_per_step = EVAL_COST[opt_name](d, L)
-    x_ref = pnp.array(np.zeros_like(x_train[0]), requires_grad=False)
 
     losses, wall_times, cum_evals = [], [], []
     total_evals = 0
@@ -130,9 +146,10 @@ def train_with_data(circuit, params, x_train, y_train,
     else:
         approx = "block-diag" if opt_name == "QNG_block" else None
         mt_fn = qml.metric_tensor(circuit, approx=approx)
+        rng = np.random.default_rng(42)
         for step in range(n_steps):
             loss = float(cost_fn(params))
-            params = _qng_step(mt_fn, cost_fn, params, x_ref, lr, lam)
+            params = _qng_step(mt_fn, cost_fn, params, x_train, lr, lam, rng)
             total_evals += evals_per_step
             losses.append(loss)
             wall_times.append(time.perf_counter() - t0)

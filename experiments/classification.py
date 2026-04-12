@@ -15,7 +15,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 from src.models import make_classification_circuit, init_params_regression
 from src.training import train_with_data
-from src.metrics import aggregate_seeds, save_results, accuracy
+from src.metrics import aggregate_seeds, save_results, accuracy, make_run_dir
 from src.visualization import convergence_plot, resource_plot, final_loss_bar
 
 # ── Config ──────────────────────────────────────────────────────────────────
@@ -28,13 +28,11 @@ SEEDS = [0, 1, 2, 3, 4]
 OPTIMIZERS = {
     "GD":        {"lr": 0.1},
     "Adam":      {"lr": 0.05},
-    "QNG_block": {"lr": 0.01},
-    "QNG_full":  {"lr": 0.01},
+    "QNG_block": {"lr": 0.05},
+    "QNG_full":  {"lr": 0.05},
 }
 
-RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
-PLOTS_DIR = os.path.join(RESULTS_DIR, "plots")
-os.makedirs(PLOTS_DIR, exist_ok=True)
+RESULTS_BASE = os.path.join(os.path.dirname(__file__), "..", "results")
 
 
 def make_dataset(n_samples=100, noise=0.15, random_state=42):
@@ -46,7 +44,13 @@ def make_dataset(n_samples=100, noise=0.15, random_state=42):
     return X, y
 
 
-def run():
+def run(results_dir=None):
+    if results_dir is None:
+        results_dir, plots_dir = make_run_dir(RESULTS_BASE)
+    else:
+        plots_dir = os.path.join(results_dir, "plots")
+        os.makedirs(plots_dir, exist_ok=True)
+
     print("=" * 60)
     print("TASK: Classification  (make_moons, 2 qubits)")
     print("=" * 60)
@@ -75,8 +79,7 @@ def run():
                 loss_type="hinge",
                 verbose=True,
             )
-            # compute final accuracy
-            preds = [float(circuit(result["params"], x)) for x in x_train]  # use params key if present
+            preds = [float(circuit(result["params"], x)) for x in x_train]
             result["final_accuracy"] = accuracy(preds, [float(yi) for yi in y])
             seed_results[seed] = result
 
@@ -86,13 +89,13 @@ def run():
         agg["final_acc_std"] = float(np.std(accs))
         all_agg[opt_name] = agg
 
-    save_results(all_agg, os.path.join(RESULTS_DIR, "classification.json"))
+    save_results(all_agg, os.path.join(results_dir, "classification.json"))
     convergence_plot(all_agg, title="Classification (make_moons)", log_y=True,
-                     save_path=os.path.join(PLOTS_DIR, "cls_convergence.png"))
+                     save_path=os.path.join(plots_dir, "cls_convergence.png"))
     resource_plot(all_agg, title="Classification (resource-normalised)", log_y=True,
-                  save_path=os.path.join(PLOTS_DIR, "cls_resource.png"))
+                  save_path=os.path.join(plots_dir, "cls_resource.png"))
     final_loss_bar(all_agg, title="Classification: final hinge loss",
-                   save_path=os.path.join(PLOTS_DIR, "cls_final.png"))
+                   save_path=os.path.join(plots_dir, "cls_final.png"))
     return all_agg
 
 
