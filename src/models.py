@@ -10,16 +10,36 @@ from pennylane import numpy as pnp
 import numpy as np
 
 
+def _resolve_diff_method(shots, force=None):
+    """Pick diff_method for a QNode.
+
+    `shots` > 0 forces parameter-shift (adjoint can't sample).
+    `force` overrides automatic selection (used by QNG-variant workers,
+    since qml.metric_tensor builds tapes that lightning.qubit's adjoint
+    implementation rejects). Pass force="parameter-shift" for QNG.
+    """
+    if force is not None:
+        return force
+    return "parameter-shift" if shots else "adjoint"
+
+
+def _maybe_with_shots(qnode, shots):
+    """Attach a shot count to a QNode via the non-deprecated set_shots transform."""
+    if shots:
+        return qml.set_shots(qnode, shots=shots)
+    return qnode
+
+
 # ---------------------------------------------------------------------------
 # Task 1: Function Fitting
 # ---------------------------------------------------------------------------
 
-def make_regression_circuit_1d(n_qubits=2, n_layers=4):
+def make_regression_circuit_1d(n_qubits=2, n_layers=4, shots=None, diff_method=None):
     """Return a QNode that maps a scalar x -> expectation value (1D regression)."""
     # +1 wire for Hadamard-test auxiliary qubit (needed by full metric tensor)
     dev = qml.device("lightning.qubit", wires=n_qubits + 1)
 
-    @qml.qnode(dev, interface="autograd", diff_method="parameter-shift")
+    @qml.qnode(dev, interface="autograd", diff_method=_resolve_diff_method(shots, diff_method))
     def circuit(params, x):
         # params shape: (n_layers+1, n_qubits, 3)  -- StronglyEntanglingLayers
         n_w = n_qubits
@@ -37,14 +57,14 @@ def make_regression_circuit_1d(n_qubits=2, n_layers=4):
         )
         return qml.expval(qml.PauliZ(0))
 
-    return circuit
+    return _maybe_with_shots(circuit, shots)
 
 
-def make_regression_circuit_2d(n_qubits=2, n_layers=4):
+def make_regression_circuit_2d(n_qubits=2, n_layers=4, shots=None, diff_method=None):
     """Return a QNode that maps (x1, x2) -> expectation value (2D regression)."""
     dev = qml.device("lightning.qubit", wires=n_qubits + 1)
 
-    @qml.qnode(dev, interface="autograd", diff_method="parameter-shift")
+    @qml.qnode(dev, interface="autograd", diff_method=_resolve_diff_method(shots, diff_method))
     def circuit(params, x):
         n_w = n_qubits
         n_rot = 3
@@ -58,7 +78,7 @@ def make_regression_circuit_2d(n_qubits=2, n_layers=4):
         )
         return qml.expval(qml.PauliZ(0) @ qml.PauliZ(1))
 
-    return circuit
+    return _maybe_with_shots(circuit, shots)
 
 
 # ---------------------------------------------------------------------------
@@ -85,28 +105,28 @@ def exact_ground_energy(n_qubits, J=1.0, h=1.0):
     return float(np.min(np.linalg.eigvalsh(mat)))
 
 
-def make_vqe_circuit(n_qubits=4, n_layers=4, J=1.0, h=1.0):
+def make_vqe_circuit(n_qubits=4, n_layers=4, J=1.0, h=1.0, shots=None, diff_method=None):
     """Return (circuit, hamiltonian) for VQE on the Ising model."""
     dev = qml.device("lightning.qubit", wires=n_qubits + 1)
     H = make_ising_hamiltonian(n_qubits, J, h)
 
-    @qml.qnode(dev, interface="autograd", diff_method="parameter-shift")
+    @qml.qnode(dev, interface="autograd", diff_method=_resolve_diff_method(shots, diff_method))
     def circuit(params):
         qml.StronglyEntanglingLayers(params, wires=range(n_qubits))
         return qml.expval(H)
 
-    return circuit, H
+    return _maybe_with_shots(circuit, shots), H
 
 
 # ---------------------------------------------------------------------------
 # Task 3: Classification
 # ---------------------------------------------------------------------------
 
-def make_classification_circuit(n_qubits=2, n_layers=4):
+def make_classification_circuit(n_qubits=2, n_layers=4, shots=None, diff_method=None):
     """Return a QNode that maps 2D input -> expectation value for binary classification."""
     dev = qml.device("lightning.qubit", wires=n_qubits + 1)
 
-    @qml.qnode(dev, interface="autograd", diff_method="parameter-shift")
+    @qml.qnode(dev, interface="autograd", diff_method=_resolve_diff_method(shots, diff_method))
     def circuit(params, x):
         # params shape: (n_layers+1, n_qubits, 3)
         n_w = n_qubits
@@ -121,7 +141,7 @@ def make_classification_circuit(n_qubits=2, n_layers=4):
         )
         return qml.expval(qml.PauliZ(0))
 
-    return circuit
+    return _maybe_with_shots(circuit, shots)
 
 
 # ---------------------------------------------------------------------------

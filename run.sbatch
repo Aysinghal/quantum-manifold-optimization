@@ -3,9 +3,13 @@
 #SBATCH --account=scavenger
 #SBATCH --partition=scavenger
 #SBATCH --qos=scavenger
-#SBATCH --time=01:00:00
-#SBATCH --mem=16G
-#SBATCH --cpus-per-task=80
+#SBATCH --time=4:00:00
+#SBATCH --mem=32G
+#SBATCH --cpus-per-task=76
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --nodelist=cbcb26,vulcan46,cml35,quics00
+#SBATCH --requeue
 #SBATCH --output=logs/%x_%j.out
 #SBATCH --error=logs/%x_%j.err
 
@@ -33,9 +37,11 @@ conda activate qng-baseline
 
 echo "  Python   : $(which python) ($(python --version 2>&1))"
 echo "  PennyLane: $(python -c 'import pennylane; print(pennylane.__version__)')"
+SHOTS="${SHOTS:-1000}"
+echo "  Shots    : $SHOTS  (0 = analytic noiseless + adjoint; >0 = shot-noisy + parameter-shift)"
 echo "======================================================================"
 
-python -u run_all_parallel.py --workers $SLURM_CPUS_PER_TASK
+python -u run_all_parallel.py --workers $SLURM_CPUS_PER_TASK --shots $SHOTS
 
 echo "======================================================================"
 echo "  End      : $(date '+%Y-%m-%d %H:%M:%S')"

@@ -1,10 +1,15 @@
 """
 Generic training loops for all four optimizers.
 
-For VQE (no data), PennyLane's QNGOptimizer works directly on the QNode.
-For regression/classification (data-dependent circuits), QNG is implemented
-manually: metric tensor is averaged over a subsample of training inputs,
-gradient is computed for the aggregate cost, and the update is G^{-1} @ grad.
+Both QNG variants (QNG_block, QNG_full) use a manual update that applies
+Fix 1 (adaptive trace-scaled Tikhonov damping) and Fix 5 (EMA on the metric
+tensor) to stabilize natural-gradient steps under shot noise. The only
+difference between the two is the metric-tensor approximation passed to
+qml.metric_tensor ("block-diag" vs None).
+
+For regression/classification (data-dependent circuits), the metric tensor
+is averaged over a subsample of training inputs; gradient is computed for
+the aggregate cost; update is (G_ema + reg*I)^{-1} @ grad.
 """
 
 import time
@@ -64,12 +69,18 @@ def hinge_cost(circuit, x_train, y_train):
 _MT_SUBSAMPLE = 10
 
 
-def _qng_step(mt_fn, cost_fn, params, x_train, lr, lam=1e-3, rng=None):
+def _qng_step(mt_fn, cost_fn, params, x_train, lr, lam=1e-3, rng=None,
+              ema_state=None, opt_name="QNG_block"):
     """One QNG update using pre-built metric-tensor function.
 
-    mt_fn:   output of qml.metric_tensor(circuit, approx=...)
-    cost_fn: scalar cost that closes over data
-    x_train: list of training inputs; metric tensor is averaged over a subsample
+    mt_fn:     output of qml.metric_tensor(circuit, approx=...)
+    cost_fn:   scalar cost that closes over data
+    x_train:   list of training inputs; metric tensor is averaged over a subsample
+    ema_state: dict holding {"G": array_or_None, "alpha": float} -- updated in place
+               to enable EMA smoothing of the metric tensor (Fix 5).
+    opt_name:  "QNG_block" or "QNG_full" -- only affects which metric-tensor
+               approximation mt_fn was built with; the stabilization (Fix 1 +
+               Fix 5) is applied to both.
     """
     if rng is None:
         rng = np.random.default_rng()
@@ -87,8 +98,21 @@ def _qng_step(mt_fn, cost_fn, params, x_train, lr, lam=1e-3, rng=None):
         mt_i = mt_fn(params, x_train[idx])
         G_sum += np.array(mt_i).reshape(d, d)
 
-    G = G_sum / k
-    reg = max(lam, 1e-4 * np.max(np.abs(np.diag(G))))
+    G_new = G_sum / k
+
+    # Fix 5: exponential moving average of G across steps.
+    if ema_state is not None:
+        if ema_state["G"] is None:
+            ema_state["G"] = G_new
+        else:
+            a = ema_state["alpha"]
+            ema_state["G"] = a * ema_state["G"] + (1.0 - a) * G_new
+        G = ema_state["G"]
+    else:
+        G = G_new
+    # Fix 1: adaptive trace-scaled Tikhonov damping.
+    reg = max(lam, 0.05 * np.mean(np.abs(np.diag(G))))
+
     G = G + reg * np.eye(d)
 
     grad = qml.grad(cost_fn)(params)
@@ -147,9 +171,14 @@ def train_with_data(circuit, params, x_train, y_train,
         approx = "block-diag" if opt_name == "QNG_block" else None
         mt_fn = qml.metric_tensor(circuit, approx=approx)
         rng = np.random.default_rng(42)
+        # Fix 5: EMA state shared by QNG_block and QNG_full.
+        ema_state = {"G": None, "alpha": 0.9}
         for step in range(n_steps):
             loss = float(cost_fn(params))
-            params = _qng_step(mt_fn, cost_fn, params, x_train, lr, lam, rng)
+            params = _qng_step(
+                mt_fn, cost_fn, params, x_train, lr, lam, rng,
+                ema_state=ema_state, opt_name=opt_name,
+            )
             total_evals += evals_per_step
             losses.append(loss)
             wall_times.append(time.perf_counter() - t0)
@@ -188,12 +217,38 @@ def train_vqe(circuit, params, opt_name, lr, n_steps, n_layers,
 
     if opt_name in ("GD", "Adam"):
         opt = make_optimizer(opt_name, lr)
-    else:
+    elif opt_name in ("QNG_block", "QNG_full"):
+        # Shared manual loop: applies Fix 1 (adaptive Tikhonov) + Fix 5 (EMA on G)
+        # to both QNG variants. The only difference is the metric-tensor
+        # approximation passed to qml.metric_tensor.
+        opt = None
         approx = "block-diag" if opt_name == "QNG_block" else None
-        opt = qml.QNGOptimizer(stepsize=lr, approx=approx, lam=lam)
+        mt_fn = qml.metric_tensor(circuit, approx=approx)
+        G_ema = None
+        ema_alpha = 0.9
+    else:
+        raise ValueError(f"Unknown optimizer: {opt_name}")
 
     for step in range(n_steps):
-        params, loss = opt.step_and_cost(circuit, params)
+        if opt is not None:
+            params, loss = opt.step_and_cost(circuit, params)
+        else:
+            loss = float(circuit(params))
+            mt_raw = mt_fn(params)
+            G_new = np.array(mt_raw).reshape(d, d)
+            if G_ema is None:
+                G_ema = G_new
+            else:
+                G_ema = ema_alpha * G_ema + (1.0 - ema_alpha) * G_new
+            reg = max(lam, 0.05 * np.mean(np.abs(np.diag(G_ema))))
+            G = G_ema + reg * np.eye(d)
+            grad = qml.grad(circuit)(params)
+            grad_flat = np.array(grad).flatten()
+            update = np.linalg.solve(G, grad_flat)
+            params = pnp.array(
+                np.array(params) - lr * update.reshape(params.shape),
+                requires_grad=True,
+            )
         total_evals += evals_per_step
         losses.append(float(loss))
         wall_times.append(time.perf_counter() - t0)
