@@ -44,17 +44,54 @@ from src.visualization import convergence_plot, resource_plot, final_loss_bar
 SEEDS = [0, 1, 2, 3, 4]
 
 OPTIMIZERS = {
-    "GD":        {"lr": 0.1},
-    "Adam":      {"lr": 0.05},
-    "QNG_block": {"lr": 0.05},
-    "QNG_full":  {"lr": 0.05},
+    "GD":              {"lr": 0.1},
+    "Adam":            {"lr": 0.05},
+    "QNG_block":       {"lr": 0.05},
+    "QNG_block_lr01":  {"lr": 0.1},
+    "QNG_block_lr02":  {"lr": 0.2},
+    "QNG_full":        {"lr": 0.01},
 }
+
+# LPT scheduling priorities. Higher = scheduled earlier so the longest-running
+# jobs grab workers first and short jobs pack into the gaps. Numbers are
+# relative; tweak by adding/replacing entries when introducing a new optimizer
+# or task in the future.
+OPT_PRIORITY = {
+    "QNG_full":        100,
+    "QNG_block":        50,
+    "QNG_block_lr01":   50,
+    "QNG_block_lr02":   50,
+    "Adam":             10,
+    "GD":               10,
+}
+TASK_PRIORITY = {
+    "vqe":   10,
+    "fit2d":  3,
+    "cls":    3,
+    "fit1d":  1,
+}
+
+
+def _canonical_opt(opt_name):
+    """Map optimizer-variant names back to the base optimizer the train_*
+    functions know how to dispatch on (e.g. 'QNG_block_lr01' -> 'QNG_block').
+    """
+    if opt_name.startswith("QNG_block"):
+        return "QNG_block"
+    if opt_name.startswith("QNG_full"):
+        return "QNG_full"
+    return opt_name
+
+
+def job_priority(task, opt_name):
+    """LPT score for a (task, optimizer) pair."""
+    return OPT_PRIORITY[opt_name] * TASK_PRIORITY[task]
 
 REG_N_QUBITS = 2
 REG_N_LAYERS = 4
 REG_N_STEPS  = 100
 
-VQE_N_QUBITS = 4
+VQE_N_QUBITS = 11
 VQE_N_LAYERS = 4
 VQE_N_STEPS  = 150
 VQE_J        = 1.0
@@ -79,7 +116,16 @@ def _drop_params(result):
     return {k: v for k, v in result.items() if k != "params"}
 
 
-def _run_fit1d(opt_name, lr, seed, progress):
+def _diff_method_for(opt_name, shots):
+    """QNG optimizers need parameter-shift regardless of shots, because
+    qml.metric_tensor builds tapes that lightning.qubit's adjoint does
+    not support. GD/Adam can use adjoint in analytic mode for a big speedup."""
+    if opt_name.startswith("QNG"):
+        return "parameter-shift"
+    return None  # let _resolve_diff_method pick based on shots
+
+
+def _run_fit1d(opt_name, lr, seed, progress, shots):
     key = ("fit1d", opt_name, seed)
     t0 = time.perf_counter()
     progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
@@ -90,7 +136,10 @@ def _run_fit1d(opt_name, lr, seed, progress):
     x_train = [pnp.array(x, requires_grad=False) for x in x_raw]
     y_train = [pnp.array(y, requires_grad=False) for y in y_raw]
 
-    circuit = make_regression_circuit_1d(REG_N_QUBITS, REG_N_LAYERS)
+    circuit = make_regression_circuit_1d(
+        REG_N_QUBITS, REG_N_LAYERS,
+        shots=shots, diff_method=_diff_method_for(opt_name, shots),
+    )
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
     def _cb(step, n_steps, loss):
@@ -99,7 +148,7 @@ def _run_fit1d(opt_name, lr, seed, progress):
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=opt_name, lr=lr, n_steps=REG_N_STEPS,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
         progress_cb=_cb,
     )
@@ -108,7 +157,7 @@ def _run_fit1d(opt_name, lr, seed, progress):
     return ("fit1d", opt_name, seed, _drop_params(result))
 
 
-def _run_fit2d(opt_name, lr, seed, progress):
+def _run_fit2d(opt_name, lr, seed, progress, shots):
     key = ("fit2d", opt_name, seed)
     t0 = time.perf_counter()
     progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
@@ -121,7 +170,10 @@ def _run_fit2d(opt_name, lr, seed, progress):
     x_train = [pnp.array(x, requires_grad=False) for x in x_raw]
     y_train = [pnp.array(y, requires_grad=False) for y in y_raw]
 
-    circuit = make_regression_circuit_2d(REG_N_QUBITS, REG_N_LAYERS)
+    circuit = make_regression_circuit_2d(
+        REG_N_QUBITS, REG_N_LAYERS,
+        shots=shots, diff_method=_diff_method_for(opt_name, shots),
+    )
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
     def _cb(step, n_steps, loss):
@@ -130,7 +182,7 @@ def _run_fit2d(opt_name, lr, seed, progress):
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=opt_name, lr=lr, n_steps=REG_N_STEPS,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
         progress_cb=_cb,
     )
@@ -139,13 +191,16 @@ def _run_fit2d(opt_name, lr, seed, progress):
     return ("fit2d", opt_name, seed, _drop_params(result))
 
 
-def _run_vqe(opt_name, lr, seed, progress):
+def _run_vqe(opt_name, lr, seed, progress, shots):
     key = ("vqe", opt_name, seed)
     t0 = time.perf_counter()
     progress[key] = {"status": "running", "step": 0, "total_steps": VQE_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
-    circuit, _H = make_vqe_circuit(VQE_N_QUBITS, VQE_N_LAYERS, VQE_J, VQE_H)
+    circuit, _H = make_vqe_circuit(
+        VQE_N_QUBITS, VQE_N_LAYERS, VQE_J, VQE_H,
+        shots=shots, diff_method=_diff_method_for(opt_name, shots),
+    )
     params = init_params_vqe(VQE_N_QUBITS, VQE_N_LAYERS, seed)
 
     def _cb(step, n_steps, loss):
@@ -154,7 +209,7 @@ def _run_vqe(opt_name, lr, seed, progress):
 
     result = train_vqe(
         circuit, params,
-        opt_name=opt_name, lr=lr, n_steps=VQE_N_STEPS,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=VQE_N_STEPS,
         n_layers=VQE_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
@@ -163,7 +218,7 @@ def _run_vqe(opt_name, lr, seed, progress):
     return ("vqe", opt_name, seed, _drop_params(result))
 
 
-def _run_cls(opt_name, lr, seed, progress):
+def _run_cls(opt_name, lr, seed, progress, shots):
     from sklearn.datasets import make_moons
     from sklearn.preprocessing import MinMaxScaler
 
@@ -180,7 +235,10 @@ def _run_cls(opt_name, lr, seed, progress):
     x_train = [pnp.array(xi, requires_grad=False) for xi in X]
     y_train = [pnp.array(float(yi), requires_grad=False) for yi in y]
 
-    circuit = make_classification_circuit(REG_N_QUBITS, REG_N_LAYERS)
+    circuit = make_classification_circuit(
+        REG_N_QUBITS, REG_N_LAYERS,
+        shots=shots, diff_method=_diff_method_for(opt_name, shots),
+    )
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
     def _cb(step, n_steps, loss):
@@ -189,7 +247,7 @@ def _run_cls(opt_name, lr, seed, progress):
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=opt_name, lr=lr, n_steps=REG_N_STEPS,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="hinge", verbose=False,
         progress_cb=_cb,
     )
@@ -283,19 +341,43 @@ def main():
         "--workers", type=int, default=os.cpu_count(),
         help="Number of parallel worker processes (default: all CPU cores)",
     )
+    parser.add_argument(
+        "--shots", type=int, default=0,
+        help="Measurement shots per circuit (0 = analytic noiseless). "
+             "When >0, forces diff_method=parameter-shift (adjoint is incompatible with shots).",
+    )
     args = parser.parse_args()
 
     results_dir, plots_dir = make_run_dir(RESULTS_BASE)
     n_workers = args.workers
+    shots = args.shots if args.shots > 0 else None
+    # GD/Adam: adjoint (analytic) or parameter-shift (shots).
+    # QNG_block/QNG_full: always parameter-shift, since qml.metric_tensor
+    # tapes aren't compatible with lightning.qubit's adjoint implementation.
+    diff_method_gd_adam = "parameter-shift" if shots else "adjoint"
+    diff_method_qng = "parameter-shift"
 
-    worker_fns = [_run_fit1d, _run_fit2d, _run_vqe, _run_cls]
+    worker_specs = [
+        (_run_fit1d, "fit1d"),
+        (_run_fit2d, "fit2d"),
+        (_run_vqe,   "vqe"),
+        (_run_cls,   "cls"),
+    ]
     jobs = []
     for seed in SEEDS:
-        for fn in worker_fns:
+        for fn, task in worker_specs:
             for opt_name, cfg in OPTIMIZERS.items():
-                jobs.append((fn, opt_name, cfg["lr"], seed))
+                jobs.append((fn, task, opt_name, cfg["lr"], seed))
+
+    # LPT heuristic: longest-running jobs first so workers grab them immediately
+    # and shorter jobs naturally pack into the gaps as workers free up.
+    jobs.sort(key=lambda j: -job_priority(j[1], j[2]))
 
     total = len(jobs)
+    if shots is None:
+        shots_banner = "None (analytic); GD/Adam=adjoint, QNG=parameter-shift"
+    else:
+        shots_banner = f"{shots} (hardware-realistic, parameter-shift)"
     print("=" * 70)
     print("  QNG EUCLIDEAN BASELINE -- Parallel runner")
     print(f"  Workers : {n_workers}")
@@ -303,6 +385,8 @@ def main():
     print(f"  Tasks   : {', '.join(TASK_LABELS.values())}")
     print(f"  Opts    : {', '.join(OPTIMIZERS.keys())}")
     print(f"  Seeds   : {SEEDS}")
+    print(f"  Shots   : {shots_banner}")
+    print(f"  VQE     : {VQE_N_QUBITS} qubits, {VQE_N_LAYERS} layers")
     print("=" * 70)
     sys.stdout.flush()
 
@@ -323,8 +407,8 @@ def main():
 
     with ProcessPoolExecutor(max_workers=n_workers) as pool:
         future_map = {}
-        for fn, opt_name, lr, seed in jobs:
-            fut = pool.submit(fn, opt_name, lr, seed, progress)
+        for fn, _task, opt_name, lr, seed in jobs:
+            fut = pool.submit(fn, opt_name, lr, seed, progress, shots)
             future_map[fut] = (fn.__name__, opt_name, seed)
 
         done_count = 0
@@ -396,7 +480,15 @@ def main():
     if "fit1d" in grouped:
         print("\nSaving 1D function fitting results...")
         agg = {opt: aggregate_seeds(seeds) for opt, seeds in grouped["fit1d"].items()}
-        save_results(agg, os.path.join(results_dir, "function_fitting_1d.json"))
+        save_results(
+            {"config": {"n_qubits": REG_N_QUBITS, "n_layers": REG_N_LAYERS,
+                         "n_steps": REG_N_STEPS,
+                         "shots": shots,
+                         "diff_method_gd_adam": diff_method_gd_adam,
+                         "diff_method_qng": diff_method_qng},
+             **agg},
+            os.path.join(results_dir, "function_fitting_1d.json"),
+        )
         convergence_plot(agg, title="1D Regression: sin(x)", log_y=True,
                          save_path=os.path.join(plots_dir, "fit1d_convergence.png"))
         resource_plot(agg, title="1D Regression: sin(x) (resource-normalised)", log_y=True,
@@ -408,7 +500,15 @@ def main():
     if "fit2d" in grouped:
         print("\nSaving 2D function fitting results...")
         agg = {opt: aggregate_seeds(seeds) for opt, seeds in grouped["fit2d"].items()}
-        save_results(agg, os.path.join(results_dir, "function_fitting_2d.json"))
+        save_results(
+            {"config": {"n_qubits": REG_N_QUBITS, "n_layers": REG_N_LAYERS,
+                         "n_steps": REG_N_STEPS,
+                         "shots": shots,
+                         "diff_method_gd_adam": diff_method_gd_adam,
+                         "diff_method_qng": diff_method_qng},
+             **agg},
+            os.path.join(results_dir, "function_fitting_2d.json"),
+        )
         convergence_plot(agg, title="2D Regression: (x1\u00b2+x2\u00b2)/2", log_y=True,
                          save_path=os.path.join(plots_dir, "fit2d_convergence.png"))
         resource_plot(agg, title="2D Regression (resource-normalised)", log_y=True,
@@ -423,7 +523,11 @@ def main():
         agg = {opt: aggregate_seeds(seeds) for opt, seeds in grouped["vqe"].items()}
         save_results(
             {"config": {"n_qubits": VQE_N_QUBITS, "n_layers": VQE_N_LAYERS,
-                         "J": VQE_J, "h": VQE_H, "E_exact": E_exact},
+                         "n_steps": VQE_N_STEPS,
+                         "J": VQE_J, "h": VQE_H, "E_exact": E_exact,
+                         "shots": shots,
+                         "diff_method_gd_adam": diff_method_gd_adam,
+                         "diff_method_qng": diff_method_qng},
              **agg},
             os.path.join(results_dir, "vqe.json"),
         )
@@ -447,7 +551,15 @@ def main():
             agg_opt["final_acc_mean"] = float(np.mean(accs))
             agg_opt["final_acc_std"]  = float(np.std(accs))
             agg[opt] = agg_opt
-        save_results(agg, os.path.join(results_dir, "classification.json"))
+        save_results(
+            {"config": {"n_qubits": REG_N_QUBITS, "n_layers": REG_N_LAYERS,
+                         "n_steps": REG_N_STEPS, "n_data": CLS_N_DATA,
+                         "shots": shots,
+                         "diff_method_gd_adam": diff_method_gd_adam,
+                         "diff_method_qng": diff_method_qng},
+             **agg},
+            os.path.join(results_dir, "classification.json"),
+        )
         convergence_plot(agg, title="Classification (make_moons)", log_y=True,
                          save_path=os.path.join(plots_dir, "cls_convergence.png"))
         resource_plot(agg, title="Classification (resource-normalised)", log_y=True,

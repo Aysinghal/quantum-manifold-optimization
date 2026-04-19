@@ -3,19 +3,24 @@ Plotting utilities for QNG baseline experiments.
 """
 
 import os
+import textwrap
 import numpy as np
 import matplotlib.pyplot as plt
 
 COLORS = {
     "GD": "#1f77b4",
     "Adam": "#ff7f0e",
-    "QNG_block": "#2ca02c",
+    "QNG_block": "#98df8a",         # light green: lr=0.05 control
+    "QNG_block_lr01": "#2ca02c",    # solid green: lr=0.1
+    "QNG_block_lr02": "#006400",    # dark green: lr=0.2
     "QNG_full": "#d62728",
 }
 LABELS = {
     "GD": "Vanilla GD",
     "Adam": "Adam",
-    "QNG_block": "QNG (block-diag)",
+    "QNG_block": "QNG block (lr=0.05, ctrl)",
+    "QNG_block_lr01": "QNG block (lr=0.1)",
+    "QNG_block_lr02": "QNG block (lr=0.2)",
     "QNG_full": "QNG (full)",
 }
 
@@ -102,19 +107,80 @@ def walltime_plot(agg_by_opt, title="", ylabel="Loss", log_y=False, save_path=No
     return fig, ax
 
 
+def _fit_xtick_labels(ax, labels, fig, max_lines=3, min_fontsize=7,
+                      base_fontsize=10):
+    """Wrap and shrink x-tick labels so they don't overlap.
+
+    Strategy:
+      1. Compute a per-tick width budget in pixels.
+      2. Wrap each label with textwrap so each line fits the budget at
+         the base font size, up to ``max_lines`` lines.
+      3. If wrapping alone isn't enough (label still too wide or too
+         many lines needed), shrink the font size down to ``min_fontsize``.
+      4. If still too wide at the minimum font size, rotate 30deg as a
+         last resort so labels remain legible.
+    """
+    n = len(labels)
+    if n == 0:
+        return
+
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+
+    bbox = ax.get_window_extent(renderer=renderer)
+    per_tick_px = bbox.width / max(n, 1) * 0.95
+
+    def text_px(s, fontsize):
+        t = ax.text(0, 0, s, fontsize=fontsize, transform=ax.transAxes)
+        w = t.get_window_extent(renderer=renderer).width
+        t.remove()
+        return w
+
+    avg_char_px = max(text_px("M" * 10, base_fontsize) / 10.0, 1.0)
+    chars_per_line = max(int(per_tick_px / avg_char_px), 4)
+
+    wrapped = [textwrap.fill(lbl, width=chars_per_line, break_long_words=False)
+               for lbl in labels]
+
+    fontsize = base_fontsize
+    rotation = 0
+    while True:
+        widest = max(text_px(w.split("\n")[0] if "\n" in w else w, fontsize)
+                     for w in wrapped)
+        max_used_lines = max(w.count("\n") + 1 for w in wrapped)
+        if widest <= per_tick_px and max_used_lines <= max_lines:
+            break
+        if fontsize > min_fontsize:
+            fontsize -= 1
+            continue
+        rotation = 30
+        break
+
+    ax.set_xticks(range(n))
+    ax.set_xticklabels(wrapped, fontsize=fontsize, rotation=rotation,
+                       ha="right" if rotation else "center")
+
+
 def final_loss_bar(agg_by_opt, title="", ylabel="Final loss", save_path=None):
     """Bar chart of final loss/energy for each optimizer."""
-    fig, ax = plt.subplots(figsize=(6, 4))
     names = list(agg_by_opt.keys())
     means = [agg_by_opt[n]["final_loss_mean"] for n in names]
     stds = [agg_by_opt[n]["final_loss_std"] for n in names]
     colors = [COLORS.get(n, "#999") for n in names]
     labels = [LABELS.get(n, n) for n in names]
 
-    bars = ax.bar(labels, means, yerr=stds, color=colors, capsize=5, alpha=0.85)
+    width = max(6.0, 1.4 * len(names))
+    fig, ax = plt.subplots(figsize=(width, 4.5))
+
+    xs = np.arange(len(names))
+    ax.bar(xs, means, yerr=stds, color=colors, capsize=5, alpha=0.85)
+    ax.set_xticks(xs)
+    ax.set_xticklabels(labels)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.grid(True, axis="y", alpha=0.3)
+
+    _fit_xtick_labels(ax, labels, fig)
     fig.tight_layout()
     if save_path:
         _save(fig, save_path)
