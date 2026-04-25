@@ -19,7 +19,7 @@ from src.models import (
 )
 from src.training import train_with_data
 from src.metrics import aggregate_seeds, save_results, make_run_dir
-from src.visualization import convergence_plot, resource_plot, final_loss_bar
+from src.visualization import convergence_plot, resource_plot, final_loss_bar, task_plot_path
 
 # ── Config ──────────────────────────────────────────────────────────────────
 N_QUBITS = 2
@@ -91,11 +91,11 @@ def run_1d(results_dir=None):
 
     save_results(agg, os.path.join(results_dir, "function_fitting_1d.json"))
     convergence_plot(agg, title="1D Regression: sin(x)", log_y=True,
-                     save_path=os.path.join(plots_dir, "fit1d_convergence.png"))
+                     save_path=task_plot_path(plots_dir, "function_fitting_1d", "convergence"))
     resource_plot(agg, title="1D Regression: sin(x) (resource-normalised)", log_y=True,
-                  save_path=os.path.join(plots_dir, "fit1d_resource.png"))
+                  save_path=task_plot_path(plots_dir, "function_fitting_1d", "resource"))
     final_loss_bar(agg, title="1D Regression: final MSE",
-                   save_path=os.path.join(plots_dir, "fit1d_final.png"))
+                   save_path=task_plot_path(plots_dir, "function_fitting_1d", "final"))
     return agg
 
 
@@ -125,11 +125,11 @@ def run_2d(results_dir=None):
 
     save_results(agg, os.path.join(results_dir, "function_fitting_2d.json"))
     convergence_plot(agg, title="2D Regression: (x1²+x2²)/2", log_y=True,
-                     save_path=os.path.join(plots_dir, "fit2d_convergence.png"))
+                     save_path=task_plot_path(plots_dir, "function_fitting_2d", "convergence"))
     resource_plot(agg, title="2D Regression (resource-normalised)", log_y=True,
-                  save_path=os.path.join(plots_dir, "fit2d_resource.png"))
+                  save_path=task_plot_path(plots_dir, "function_fitting_2d", "resource"))
     final_loss_bar(agg, title="2D Regression: final MSE",
-                   save_path=os.path.join(plots_dir, "fit2d_final.png"))
+                   save_path=task_plot_path(plots_dir, "function_fitting_2d", "final"))
     return agg
 
 
