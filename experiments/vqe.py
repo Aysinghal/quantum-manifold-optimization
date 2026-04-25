@@ -15,7 +15,7 @@ from pennylane import numpy as pnp
 from src.models import make_vqe_circuit, init_params_vqe, exact_ground_energy
 from src.training import train_vqe
 from src.metrics import aggregate_seeds, save_results, make_run_dir
-from src.visualization import convergence_plot, resource_plot, final_loss_bar
+from src.visualization import convergence_plot, resource_plot, final_loss_bar, task_plot_path
 
 # ── Config ──────────────────────────────────────────────────────────────────
 N_QUBITS = 11
@@ -102,13 +102,13 @@ def run(results_dir=None, shots=None):
 
     convergence_plot(all_agg, title=f"VQE Ising {N_QUBITS}q  (E*={E_exact:.3f})",
                      ylabel="Energy ⟨H⟩",
-                     save_path=os.path.join(plots_dir, "vqe_convergence.png"))
+                     save_path=task_plot_path(plots_dir, "vqe", "convergence"))
     resource_plot(all_agg, title="VQE (resource-normalised)",
                   ylabel="Energy ⟨H⟩",
-                  save_path=os.path.join(plots_dir, "vqe_resource.png"))
+                  save_path=task_plot_path(plots_dir, "vqe", "resource"))
     final_loss_bar(all_agg, title="VQE: final energy",
                    ylabel="Energy ⟨H⟩",
-                   save_path=os.path.join(plots_dir, "vqe_final.png"))
+                   save_path=task_plot_path(plots_dir, "vqe", "final"))
     return all_agg
 
 

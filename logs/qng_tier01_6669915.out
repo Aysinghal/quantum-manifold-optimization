@@ -1,0 +1,1419 @@
+======================================================================
+  Host     : cbcb26.umiacs.umd.edu
+  JobID    : 6669915
+  CPUs     : 96
+  Workers  : 96
+  Mem      : 32768 MB
+  Partition: scavenger
+  Start    : 2026-04-24 03:05:24
+======================================================================
+  Python   : /fs/nexus-scratch/aysingha/envs/qng-baseline/bin/python (Python 3.11.15)
+  PennyLane: 0.44.1
+  Shots    : 0  (0 = analytic noiseless + adjoint; >0 = shot-noisy + parameter-shift)
+  Tier     : 0,1  (comma-separated tier IDs; 'all' for everything currently defined)
+======================================================================
+  Run directory -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537
+======================================================================
+  QNG EUCLIDEAN BASELINE -- Parallel runner
+  Workers : 96
+  Jobs    : 320
+  Tiers   : [0, 1] -> tasks: fit1d, fit2d, vqe, cls, vqe_stokes, vqe_heis_ring, fit_multifreq1d, cls_moons_hard
+  Opts    : GD, Adam, QNG_block, QNG_block_lr01, QNG_block_lr02, MomentumQNG_block, QNGAdam_v1_block, QNGAdam_v2_block
+  Seeds   : [0, 1, 2, 3, 4]
+  Shots   : None (analytic); GD/Adam=adjoint, QNG=parameter-shift
+  QNG_full: off (use --include-full-qng to enable)
+  VQE     : 11 qubits, 4 layers
+======================================================================
+  [  1/320] DONE  VQE-Heis-ring-4q / QNGAdam_v2_block / seed=0  loss=-7.998924   job=0m19s  @0m19s
+  [  2/320] DONE  VQE-Heis-ring-4q / QNG_block_lr01 / seed=3  loss=-4.196757   job=0m19s  @0m20s
+  [  3/320] DONE  VQE-Heis-ring-4q / QNG_block_lr02 / seed=4  loss=-0.367283   job=0m19s  @0m20s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [0m20s elapsed]
+  Done: 3/320  |  Running: 93  |  Pending: 224  |  Failed: 0  |  ETA: ~15m53s
+
+  Highest ETA (bottlenecks):
+            2D-quad/QNG_block_lr01/seed=0  step   2/100  (   2%)  loss=0.1196  elapsed=0m19s  ETA=15m53s
+            2D-quad/QNG_block /seed=0  step   2/100  (   2%)  loss=0.1797  elapsed=0m19s  ETA=15m53s
+            2D-quad/MomentumQNG_block/seed=0  step   2/100  (   2%)  loss=0.1402  elapsed=0m19s  ETA=15m49s
+            2D-quad/QNGAdam_v2_block/seed=0  step   2/100  (   2%)  loss=0.1425  elapsed=0m19s  ETA=15m43s
+            2D-quad/QNG_block_lr02/seed=0  step   2/100  (   2%)  loss=0.0918  elapsed=0m18s  ETA=15m30s
+            2D-quad/QNGAdam_v1_block/seed=0  step   2/100  (   2%)  loss=0.1480  elapsed=0m18s  ETA=14m56s
+       VQE-TFIM-11q/QNG_block_lr01/seed=1  step  10/150  (   7%)  loss=-1.1924  elapsed=0m13s  ETA=3m14s
+       VQE-TFIM-11q/QNG_block_lr01/seed=0  step  10/150  (   7%)  loss=-1.0419  elapsed=0m13s  ETA=3m14s
+       VQE-TFIM-11q/QNG_block_lr01/seed=2  step  10/150  (   7%)  loss=-1.4189  elapsed=0m13s  ETA=3m14s
+       VQE-TFIM-11q/QNG_block /seed=2  step  10/150  (   7%)  loss=-0.8856  elapsed=0m13s  ETA=3m14s
+──────────────────────────────────────────────────────────────────────
+  [  4/320] DONE  VQE-Heis-ring-4q / QNGAdam_v2_block / seed=1  loss=-7.997660   job=0m19s  @0m20s
+  [  5/320] DONE  VQE-Heis-ring-4q / QNG_block_lr02 / seed=3  loss=-1.765005   job=0m19s  @0m20s
+  [  6/320] DONE  VQE-Heis-ring-4q / QNGAdam_v1_block / seed=3  loss=-7.998673   job=0m19s  @0m20s
+  [  7/320] DONE  VQE-Heis-ring-4q / QNGAdam_v1_block / seed=0  loss=-7.999900   job=0m19s  @0m20s
+  [  8/320] DONE  VQE-Heis-ring-4q / QNG_block  / seed=4  loss=-5.838279   job=0m20s  @0m21s
+  [  9/320] DONE  VQE-Heis-ring-4q / QNG_block_lr01 / seed=4  loss=-3.134044   job=0m20s  @0m21s
+  [ 10/320] DONE  VQE-Heis-ring-4q / QNG_block_lr01 / seed=2  loss=-3.458096   job=0m20s  @0m21s
+  [ 11/320] DONE  VQE-Heis-ring-4q / QNG_block  / seed=2  loss=-6.687060   job=0m20s  @0m21s
+  [ 12/320] DONE  VQE-Heis-ring-4q / QNGAdam_v2_block / seed=3  loss=-7.986862   job=0m20s  @0m21s
+  [ 13/320] DONE  VQE-Heis-ring-4q / QNGAdam_v1_block / seed=1  loss=-7.999857   job=0m20s  @0m21s
+  [ 14/320] DONE  VQE-Heis-ring-4q / MomentumQNG_block / seed=3  loss=-7.885963   job=0m20s  @0m21s
+  [ 15/320] DONE  VQE-Heis-ring-4q / QNG_block_lr02 / seed=1  loss=0.403470    job=0m20s  @0m21s
+  [ 16/320] DONE  VQE-Heis-ring-4q / QNGAdam_v1_block / seed=2  loss=-7.999835   job=0m20s  @0m21s
+  [ 17/320] DONE  VQE-Heis-ring-4q / MomentumQNG_block / seed=1  loss=-4.449809   job=0m20s  @0m21s
+  [ 18/320] DONE  VQE-Heis-ring-4q / QNG_block_lr02 / seed=2  loss=-0.332213   job=0m20s  @0m21s
+  [ 19/320] DONE  VQE-Heis-ring-4q / QNG_block_lr01 / seed=1  loss=-1.956058   job=0m20s  @0m21s
+  [ 20/320] DONE  VQE-Heis-ring-4q / MomentumQNG_block / seed=4  loss=-1.295985   job=0m20s  @0m21s
+  [ 21/320] DONE  VQE-Heis-ring-4q / QNGAdam_v2_block / seed=2  loss=-7.995967   job=0m20s  @0m21s
+  [ 22/320] DONE  VQE-Heis-ring-4q / MomentumQNG_block / seed=0  loss=-4.743978   job=0m20s  @0m21s
+  [ 23/320] DONE  VQE-Heis-ring-4q / MomentumQNG_block / seed=2  loss=-7.427545   job=0m20s  @0m21s
+  [ 24/320] DONE  VQE-Heis-ring-4q / QNG_block  / seed=0  loss=-4.791354   job=0m21s  @0m21s
+  [ 25/320] DONE  VQE-Heis-ring-4q / QNG_block_lr02 / seed=0  loss=-0.185103   job=0m20s  @0m21s
+  [ 26/320] DONE  VQE-Heis-ring-4q / QNG_block  / seed=3  loss=-4.748917   job=0m21s  @0m21s
+  [ 27/320] DONE  VQE-Heis-ring-4q / QNG_block  / seed=1  loss=-6.051950   job=0m21s  @0m21s
+  [ 28/320] DONE  VQE-Heis-ring-4q / QNGAdam_v1_block / seed=4  loss=-7.999565   job=0m21s  @0m21s
+  [ 29/320] DONE  VQE-Heis-ring-4q / QNG_block_lr01 / seed=0  loss=-2.422211   job=0m21s  @0m21s
+  [ 30/320] DONE  VQE-Heis-ring-4q / QNGAdam_v2_block / seed=4  loss=-7.996890   job=0m21s  @0m21s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [0m40s elapsed]
+  Done: 30/320  |  Running: 96  |  Pending: 194  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/QNG_block_lr02/seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m09s  ETA=n/a
+     Cls-moons-easy/QNGAdam_v2_block/seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNG_block_lr01/seed=1  step   0/100  (   0%)  loss=1.6364  elapsed=0m09s  ETA=n/a
+     Cls-moons-easy/QNG_block_lr01/seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m09s  ETA=n/a
+     Cls-moons-easy/QNGAdam_v1_block/seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m09s  ETA=n/a
+     Cls-moons-easy/QNG_block /seed=1  step   0/100  (   0%)  loss=1.5942  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/MomentumQNG_block/seed=1  step   0/100  (   0%)  loss=1.6364  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNG_block_lr02/seed=1  step   0/100  (   0%)  loss=1.6364  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=1  step   0/100  (   0%)  loss=1.6364  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v2_block/seed=1  step   0/100  (   0%)  loss=1.6364  elapsed=0m09s  ETA=n/a
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m00s elapsed]
+  Done: 30/320  |  Running: 96  |  Pending: 194  |  Failed: 0  |  ETA: ~20m35s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/QNG_block /seed=1  step   3/100  (   3%)  loss=0.4994  elapsed=0m38s  ETA=20m35s
+     Cls-moons-hard/QNGAdam_v1_block/seed=1  step   3/100  (   3%)  loss=0.5964  elapsed=0m37s  ETA=20m19s
+     Cls-moons-easy/QNGAdam_v2_block/seed=1  step   3/100  (   3%)  loss=0.7802  elapsed=0m37s  ETA=20m17s
+     Cls-moons-easy/QNG_block_lr02/seed=1  step   3/100  (   3%)  loss=0.9187  elapsed=0m37s  ETA=20m16s
+     Cls-moons-hard/QNG_block_lr01/seed=1  step   3/100  (   3%)  loss=0.6847  elapsed=0m37s  ETA=20m16s
+     Cls-moons-hard/QNG_block_lr02/seed=1  step   3/100  (   3%)  loss=1.5504  elapsed=0m37s  ETA=20m14s
+     Cls-moons-easy/QNG_block_lr01/seed=1  step   3/100  (   3%)  loss=0.4527  elapsed=0m37s  ETA=20m09s
+     Cls-moons-hard/MomentumQNG_block/seed=1  step   3/100  (   3%)  loss=1.0696  elapsed=0m37s  ETA=20m03s
+     Cls-moons-hard/MomentumQNG_block/seed=0  step   3/100  (   3%)  loss=0.7073  elapsed=0m37s  ETA=20m03s
+     Cls-moons-easy/QNGAdam_v1_block/seed=1  step   3/100  (   3%)  loss=0.5459  elapsed=0m37s  ETA=20m01s
+──────────────────────────────────────────────────────────────────────
+  [ 31/320] DONE    VQE-Stokes-6q / QNG_block  / seed=0  loss=-0.989617   job=1m13s  @1m13s
+  [ 32/320] DONE    VQE-Stokes-6q / MomentumQNG_block / seed=0  loss=-0.999909   job=1m13s  @1m13s
+  [ 33/320] DONE    VQE-Stokes-6q / MomentumQNG_block / seed=2  loss=-0.999935   job=1m13s  @1m13s
+  [ 34/320] DONE    VQE-Stokes-6q / QNGAdam_v1_block / seed=2  loss=-0.999980   job=1m13s  @1m13s
+  [ 35/320] DONE    VQE-Stokes-6q / QNG_block  / seed=1  loss=-0.990166   job=1m13s  @1m13s
+  [ 36/320] DONE    VQE-Stokes-6q / QNG_block  / seed=4  loss=-0.985816   job=1m13s  @1m13s
+  [ 37/320] DONE    VQE-Stokes-6q / MomentumQNG_block / seed=1  loss=-0.998940   job=1m13s  @1m14s
+  [ 38/320] DONE    VQE-Stokes-6q / QNGAdam_v1_block / seed=4  loss=-0.999983   job=1m13s  @1m14s
+  [ 39/320] DONE    VQE-Stokes-6q / QNG_block_lr01 / seed=0  loss=-0.996715   job=1m13s  @1m14s
+  [ 40/320] DONE    VQE-Stokes-6q / MomentumQNG_block / seed=4  loss=-0.999902   job=1m13s  @1m14s
+  [ 41/320] DONE    VQE-Stokes-6q / QNGAdam_v1_block / seed=3  loss=-0.999983   job=1m13s  @1m14s
+  [ 42/320] DONE    VQE-Stokes-6q / QNGAdam_v1_block / seed=1  loss=-0.999985   job=1m13s  @1m14s
+  [ 43/320] DONE    VQE-Stokes-6q / QNG_block  / seed=2  loss=-0.990750   job=1m13s  @1m14s
+  [ 44/320] DONE    VQE-Stokes-6q / QNG_block_lr02 / seed=1  loss=-0.970169   job=1m13s  @1m14s
+  [ 45/320] DONE    VQE-Stokes-6q / QNG_block_lr02 / seed=3  loss=-0.972994   job=1m13s  @1m14s
+  [ 46/320] DONE    VQE-Stokes-6q / QNGAdam_v2_block / seed=0  loss=-0.999740   job=1m13s  @1m14s
+  [ 47/320] DONE    VQE-Stokes-6q / QNGAdam_v2_block / seed=3  loss=-0.999983   job=1m14s  @1m14s
+  [ 48/320] DONE    VQE-Stokes-6q / QNGAdam_v2_block / seed=1  loss=-0.999956   job=1m15s  @1m16s
+  [ 49/320] DONE    VQE-Stokes-6q / QNG_block_lr01 / seed=3  loss=-0.997205   job=1m16s  @1m16s
+  [ 50/320] DONE    VQE-Stokes-6q / MomentumQNG_block / seed=3  loss=-0.999970   job=1m16s  @1m16s
+  [ 51/320] DONE    VQE-Stokes-6q / QNGAdam_v2_block / seed=2  loss=-0.999914   job=1m16s  @1m17s
+  [ 52/320] DONE    VQE-Stokes-6q / QNG_block_lr02 / seed=2  loss=-0.967451   job=1m16s  @1m17s
+  [ 53/320] DONE    VQE-Stokes-6q / QNG_block_lr02 / seed=4  loss=-0.967556   job=1m16s  @1m17s
+  [ 54/320] DONE    VQE-Stokes-6q / QNG_block_lr01 / seed=1  loss=-0.998252   job=1m16s  @1m17s
+  [ 55/320] DONE    VQE-Stokes-6q / QNG_block_lr01 / seed=4  loss=-0.992923   job=1m16s  @1m17s
+  [ 56/320] DONE    VQE-Stokes-6q / QNGAdam_v1_block / seed=0  loss=-0.999982   job=1m16s  @1m17s
+  [ 57/320] DONE    VQE-Stokes-6q / QNG_block_lr01 / seed=2  loss=-0.996665   job=1m16s  @1m17s
+  [ 58/320] DONE    VQE-Stokes-6q / QNGAdam_v2_block / seed=4  loss=-0.999980   job=1m16s  @1m17s
+  [ 59/320] DONE    VQE-Stokes-6q / QNG_block  / seed=3  loss=-0.992353   job=1m16s  @1m17s
+  [ 60/320] DONE    VQE-Stokes-6q / QNG_block_lr02 / seed=0  loss=-0.965298   job=1m17s  @1m17s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m20s elapsed]
+  Done: 60/320  |  Running: 95  |  Pending: 165  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+            2D-quad/QNG_block /seed=2  step   0/100  (   0%)  loss=0.1406  elapsed=0m06s  ETA=n/a
+            2D-quad/QNG_block_lr02/seed=2  step   0/100  (   0%)  loss=0.1406  elapsed=0m06s  ETA=n/a
+            2D-quad/QNG_block_lr01/seed=2  step   0/100  (   0%)  loss=0.1406  elapsed=0m05s  ETA=n/a
+            2D-quad/MomentumQNG_block/seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+            2D-quad/QNGAdam_v1_block/seed=2  step   0/100  (   0%)  loss=0.1406  elapsed=0m06s  ETA=n/a
+            2D-quad/QNGAdam_v2_block/seed=2  step   0/100  (   0%)  loss=0.1406  elapsed=0m06s  ETA=n/a
+     Cls-moons-easy/QNG_block /seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-easy/QNG_block_lr02/seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-easy/MomentumQNG_block/seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-easy/QNG_block_lr01/seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [1m40s elapsed]
+  Done: 60/320  |  Running: 96  |  Pending: 164  |  Failed: 0  |  ETA: ~32m08s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/MomentumQNG_block/seed=3  step   1/100  (   1%)  loss=0.9911  elapsed=0m19s  ETA=32m08s
+     Cls-moons-hard/QNGAdam_v1_block/seed=2  step   1/100  (   1%)  loss=1.1137  elapsed=0m19s  ETA=31m21s
+     Cls-moons-easy/QNG_block_lr02/seed=3  step   1/100  (   1%)  loss=0.6177  elapsed=0m18s  ETA=30m46s
+     Cls-moons-easy/QNGAdam_v2_block/seed=3  step   1/100  (   1%)  loss=1.1754  elapsed=0m18s  ETA=30m37s
+     Cls-moons-hard/QNG_block_lr01/seed=2  step   1/100  (   1%)  loss=1.1010  elapsed=0m18s  ETA=30m33s
+     Cls-moons-easy/QNGAdam_v1_block/seed=3  step   1/100  (   1%)  loss=1.1444  elapsed=0m18s  ETA=30m26s
+     Cls-moons-hard/QNGAdam_v2_block/seed=2  step   1/100  (   1%)  loss=0.9481  elapsed=0m18s  ETA=30m26s
+     Cls-moons-easy/QNG_block /seed=3  step   1/100  (   1%)  loss=0.9911  elapsed=0m18s  ETA=30m21s
+     Cls-moons-easy/QNG_block_lr01/seed=3  step   1/100  (   1%)  loss=0.6999  elapsed=0m18s  ETA=30m11s
+     Cls-moons-easy/QNGAdam_v2_block/seed=2  step   1/100  (   1%)  loss=0.8358  elapsed=0m18s  ETA=30m09s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m00s elapsed]
+  Done: 60/320  |  Running: 96  |  Pending: 164  |  Failed: 0  |  ETA: ~21m02s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/MomentumQNG_block/seed=3  step   3/100  (   3%)  loss=0.5173  elapsed=0m39s  ETA=21m02s
+     Cls-moons-easy/QNG_block_lr02/seed=3  step   3/100  (   3%)  loss=1.3789  elapsed=0m37s  ETA=20m13s
+     Cls-moons-hard/QNGAdam_v1_block/seed=2  step   3/100  (   3%)  loss=0.6263  elapsed=0m37s  ETA=20m02s
+     Cls-moons-hard/QNGAdam_v2_block/seed=2  step   3/100  (   3%)  loss=0.7068  elapsed=0m37s  ETA=20m00s
+     Cls-moons-easy/QNGAdam_v1_block/seed=3  step   3/100  (   3%)  loss=0.7340  elapsed=0m37s  ETA=19m58s
+     Cls-moons-easy/QNG_block /seed=3  step   3/100  (   3%)  loss=0.5521  elapsed=0m36s  ETA=19m52s
+     Cls-moons-hard/QNG_block_lr01/seed=2  step   3/100  (   3%)  loss=0.6995  elapsed=0m36s  ETA=19m51s
+     Cls-moons-easy/QNG_block_lr01/seed=3  step   3/100  (   3%)  loss=0.4608  elapsed=0m36s  ETA=19m49s
+     Cls-moons-easy/QNGAdam_v2_block/seed=3  step   3/100  (   3%)  loss=0.7783  elapsed=0m36s  ETA=19m26s
+     Cls-moons-hard/MomentumQNG_block/seed=2  step   4/100  (   4%)  loss=0.6367  elapsed=0m45s  ETA=18m09s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m20s elapsed]
+  Done: 60/320  |  Running: 96  |  Pending: 164  |  Failed: 0  |  ETA: ~18m32s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/MomentumQNG_block/seed=3  step   5/100  (   5%)  loss=0.5154  elapsed=0m58s  ETA=18m32s
+     Cls-moons-easy/QNG_block_lr02/seed=3  step   5/100  (   5%)  loss=0.8518  elapsed=0m56s  ETA=17m50s
+     Cls-moons-hard/QNGAdam_v2_block/seed=2  step   5/100  (   5%)  loss=0.7474  elapsed=0m55s  ETA=17m41s
+     Cls-moons-easy/QNGAdam_v1_block/seed=3  step   5/100  (   5%)  loss=0.5019  elapsed=0m55s  ETA=17m35s
+     Cls-moons-easy/QNG_block /seed=3  step   5/100  (   5%)  loss=0.4754  elapsed=0m55s  ETA=17m30s
+     Cls-moons-easy/QNG_block_lr01/seed=3  step   5/100  (   5%)  loss=0.4251  elapsed=0m55s  ETA=17m29s
+     Cls-moons-easy/QNGAdam_v2_block/seed=3  step   5/100  (   5%)  loss=0.5185  elapsed=0m53s  ETA=16m57s
+     Cls-moons-hard/QNG_block_lr01/seed=2  step   6/100  (   6%)  loss=0.5429  elapsed=1m04s  ETA=16m47s
+     Cls-moons-hard/QNGAdam_v1_block/seed=2  step   6/100  (   6%)  loss=0.6346  elapsed=1m04s  ETA=16m47s
+     Cls-moons-hard/MomentumQNG_block/seed=2  step   6/100  (   6%)  loss=0.6840  elapsed=1m03s  ETA=16m31s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [2m40s elapsed]
+  Done: 60/320  |  Running: 96  |  Pending: 164  |  Failed: 0  |  ETA: ~17m23s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/MomentumQNG_block/seed=3  step   7/100  (   7%)  loss=0.5576  elapsed=1m18s  ETA=17m23s
+     Cls-moons-easy/QNG_block_lr02/seed=3  step   7/100  (   7%)  loss=0.3641  elapsed=1m15s  ETA=16m37s
+     Cls-moons-easy/QNGAdam_v1_block/seed=3  step   7/100  (   7%)  loss=0.3968  elapsed=1m14s  ETA=16m23s
+     Cls-moons-easy/QNG_block /seed=3  step   7/100  (   7%)  loss=0.4469  elapsed=1m13s  ETA=16m20s
+     Cls-moons-hard/QNGAdam_v2_block/seed=2  step   8/100  (   8%)  loss=0.5986  elapsed=1m23s  ETA=16m02s
+     Cls-moons-easy/QNG_block_lr01/seed=3  step   8/100  (   8%)  loss=0.4014  elapsed=1m22s  ETA=15m52s
+     Cls-moons-hard/QNG_block_lr01/seed=2  step   8/100  (   8%)  loss=0.5356  elapsed=1m22s  ETA=15m50s
+     Cls-moons-hard/QNGAdam_v1_block/seed=2  step   8/100  (   8%)  loss=0.5835  elapsed=1m22s  ETA=15m47s
+     Cls-moons-easy/QNGAdam_v2_block/seed=3  step   7/100  (   7%)  loss=0.4676  elapsed=1m11s  ETA=15m44s
+     Cls-moons-easy/QNGAdam_v2_block/seed=2  step   8/100  (   8%)  loss=0.4579  elapsed=1m21s  ETA=15m42s
+──────────────────────────────────────────────────────────────────────
+  [ 61/320] DONE     VQE-TFIM-11q / QNG_block_lr02 / seed=4  loss=-0.819243   job=2m54s  @2m54s
+  [ 62/320] DONE     VQE-TFIM-11q / QNGAdam_v2_block / seed=3  loss=-8.998359   job=2m54s  @2m54s
+  [ 63/320] DONE     VQE-TFIM-11q / QNGAdam_v1_block / seed=3  loss=-6.999699   job=2m54s  @2m54s
+  [ 64/320] DONE     VQE-TFIM-11q / MomentumQNG_block / seed=4  loss=-7.414196   job=2m54s  @2m55s
+  [ 65/320] DONE     VQE-TFIM-11q / MomentumQNG_block / seed=0  loss=-4.414205   job=2m54s  @2m55s
+  [ 66/320] DONE     VQE-TFIM-11q / QNGAdam_v2_block / seed=4  loss=-7.999882   job=2m54s  @2m55s
+  [ 67/320] DONE     VQE-TFIM-11q / QNGAdam_v1_block / seed=1  loss=-5.502832   job=2m55s  @2m55s
+  [ 68/320] DONE     VQE-TFIM-11q / QNG_block  / seed=0  loss=-3.292414   job=2m56s  @2m56s
+  [ 69/320] DONE     VQE-TFIM-11q / QNG_block_lr02 / seed=1  loss=-2.175303   job=2m56s  @2m56s
+  [ 70/320] DONE     VQE-TFIM-11q / QNGAdam_v1_block / seed=0  loss=-5.828181   job=2m56s  @2m56s
+  [ 71/320] DONE     VQE-TFIM-11q / QNGAdam_v2_block / seed=0  loss=-6.441251   job=2m56s  @2m56s
+  [ 72/320] DONE     VQE-TFIM-11q / MomentumQNG_block / seed=2  loss=-5.556566   job=2m56s  @2m56s
+  [ 73/320] DONE     VQE-TFIM-11q / QNG_block_lr02 / seed=3  loss=-2.907509   job=2m56s  @2m56s
+  [ 74/320] DONE     VQE-TFIM-11q / QNG_block  / seed=1  loss=-3.684265   job=2m56s  @2m56s
+  [ 75/320] DONE     VQE-TFIM-11q / QNGAdam_v2_block / seed=1  loss=-7.598648   job=2m58s  @2m59s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m00s elapsed]
+  Done: 75/320  |  Running: 96  |  Pending: 149  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNG_block_lr01/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNG_block /seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNG_block_lr02/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+            2D-quad/QNG_block /seed=4  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/MomentumQNG_block/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v2_block/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+            2D-quad/QNG_block_lr01/seed=4  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+            2D-quad/QNG_block_lr02/seed=4  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+            2D-quad/MomentumQNG_block/seed=4  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+──────────────────────────────────────────────────────────────────────
+  [ 76/320] DONE     VQE-TFIM-11q / QNG_block_lr01 / seed=3  loss=-7.499453   job=3m00s  @3m00s
+  [ 77/320] DONE     VQE-TFIM-11q / QNGAdam_v2_block / seed=2  loss=-9.405208   job=3m00s  @3m01s
+  [ 78/320] DONE     VQE-TFIM-11q / QNG_block_lr02 / seed=0  loss=-1.642351   job=3m01s  @3m01s
+  [ 79/320] DONE     VQE-TFIM-11q / QNG_block  / seed=3  loss=-5.608934   job=3m01s  @3m02s
+  [ 80/320] DONE     VQE-TFIM-11q / QNGAdam_v1_block / seed=4  loss=-7.997471   job=3m02s  @3m02s
+  [ 81/320] DONE     VQE-TFIM-11q / MomentumQNG_block / seed=1  loss=-6.999809   job=3m02s  @3m02s
+  [ 82/320] DONE     VQE-TFIM-11q / MomentumQNG_block / seed=3  loss=-9.999326   job=3m02s  @3m03s
+  [ 83/320] DONE     VQE-TFIM-11q / QNG_block_lr01 / seed=1  loss=-1.472328   job=3m03s  @3m03s
+  [ 84/320] DONE     VQE-TFIM-11q / QNGAdam_v1_block / seed=2  loss=-9.374902   job=3m03s  @3m03s
+  [ 85/320] DONE     VQE-TFIM-11q / QNG_block_lr01 / seed=4  loss=-6.017904   job=3m03s  @3m03s
+  [ 86/320] DONE     VQE-TFIM-11q / QNG_block_lr01 / seed=2  loss=-0.569627   job=3m03s  @3m03s
+  [ 87/320] DONE     VQE-TFIM-11q / QNG_block_lr02 / seed=2  loss=-2.249362   job=3m03s  @3m03s
+  [ 88/320] DONE     VQE-TFIM-11q / QNG_block  / seed=2  loss=-3.456584   job=3m03s  @3m03s
+  [ 89/320] DONE     VQE-TFIM-11q / QNG_block_lr01 / seed=0  loss=-1.616605   job=3m03s  @3m03s
+  [ 90/320] DONE     VQE-TFIM-11q / QNG_block  / seed=4  loss=-5.119671   job=3m03s  @3m04s
+  [ 91/320] DONE     VQE-TFIM-11q / GD         / seed=0  loss=-4.113638   job=0m03s  @3m07s
+  [ 92/320] DONE     VQE-TFIM-11q / GD         / seed=1  loss=-5.213646   job=0m03s  @3m07s
+  [ 93/320] DONE     VQE-TFIM-11q / Adam       / seed=1  loss=-7.597974   job=0m03s  @3m07s
+  [ 94/320] DONE     VQE-TFIM-11q / Adam       / seed=0  loss=-6.235989   job=0m03s  @3m07s
+  [ 95/320] DONE     VQE-TFIM-11q / GD         / seed=2  loss=-6.183622   job=0m03s  @3m07s
+  [ 96/320] DONE     VQE-TFIM-11q / Adam       / seed=2  loss=-8.962436   job=0m03s  @3m07s
+  [ 97/320] DONE    VQE-Stokes-6q / Adam       / seed=0  loss=-0.999652   job=0m01s  @3m08s
+  [ 98/320] DONE    VQE-Stokes-6q / GD         / seed=0  loss=-0.954621   job=0m01s  @3m08s
+  [ 99/320] DONE    VQE-Stokes-6q / GD         / seed=1  loss=-0.968824   job=0m01s  @3m10s
+  [100/320] DONE     VQE-TFIM-11q / GD         / seed=3  loss=-1.767965   job=0m03s  @3m10s
+  [101/320] DONE     VQE-TFIM-11q / Adam       / seed=3  loss=-6.614275   job=0m03s  @3m10s
+  [102/320] DONE     VQE-TFIM-11q / GD         / seed=4  loss=-7.127401   job=0m03s  @3m10s
+  [103/320] DONE     VQE-TFIM-11q / Adam       / seed=4  loss=-7.598369   job=0m03s  @3m10s
+  [104/320] DONE    VQE-Stokes-6q / Adam       / seed=1  loss=-0.999958   job=0m02s  @3m11s
+  [105/320] DONE    VQE-Stokes-6q / GD         / seed=2  loss=-0.949951   job=0m01s  @3m11s
+  [106/320] DONE    VQE-Stokes-6q / Adam       / seed=2  loss=-0.999867   job=0m01s  @3m11s
+  [107/320] DONE    VQE-Stokes-6q / GD         / seed=3  loss=-0.972558   job=0m01s  @3m12s
+  [108/320] DONE    VQE-Stokes-6q / Adam       / seed=3  loss=-0.999947   job=0m01s  @3m12s
+  [109/320] DONE    VQE-Stokes-6q / GD         / seed=4  loss=-0.970875   job=0m01s  @3m12s
+  [110/320] DONE    VQE-Stokes-6q / Adam       / seed=4  loss=-0.999963   job=0m01s  @3m13s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m20s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step   0/100  (   0%)  loss=0.9239  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNG_block /seed=4  step   0/100  (   0%)  loss=0.9771  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNG_block_lr01/seed=4  step   0/100  (   0%)  loss=0.9771  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNG_block_lr02/seed=4  step   0/100  (   0%)  loss=0.9771  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/MomentumQNG_block/seed=4  step   0/100  (   0%)  loss=0.9771  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step   0/100  (   0%)  loss=0.9771  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step   0/100  (   0%)  loss=0.9771  elapsed=0m09s  ETA=n/a
+     Cls-moons-hard/QNG_block_lr02/seed=3  step   1/100  (   1%)  loss=0.7558  elapsed=0m19s  ETA=31m25s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step   1/100  (   1%)  loss=0.5671  elapsed=0m18s  ETA=31m17s
+     Cls-moons-easy/QNG_block /seed=4  step   1/100  (   1%)  loss=0.5671  elapsed=0m18s  ETA=30m51s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [3m40s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~23m13s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNG_block_lr01/seed=4  step   2/100  (   2%)  loss=0.6321  elapsed=0m28s  ETA=23m13s
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step   2/100  (   2%)  loss=1.1933  elapsed=0m28s  ETA=23m07s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step   2/100  (   2%)  loss=0.6604  elapsed=0m27s  ETA=22m36s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step   2/100  (   2%)  loss=0.6931  elapsed=0m27s  ETA=22m26s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step   3/100  (   3%)  loss=0.6776  elapsed=0m37s  ETA=20m11s
+     Cls-moons-hard/QNG_block /seed=4  step   3/100  (   3%)  loss=0.6432  elapsed=0m37s  ETA=20m05s
+     Cls-moons-easy/QNG_block /seed=4  step   3/100  (   3%)  loss=0.4928  elapsed=0m37s  ETA=20m00s
+     Cls-moons-hard/QNG_block_lr02/seed=3  step   3/100  (   3%)  loss=0.6836  elapsed=0m37s  ETA=19m57s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step   3/100  (   3%)  loss=0.5842  elapsed=0m36s  ETA=19m54s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step   3/100  (   3%)  loss=0.7856  elapsed=0m36s  ETA=19m51s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m00s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~17m46s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNG_block_lr01/seed=4  step   5/100  (   5%)  loss=0.5882  elapsed=0m56s  ETA=17m46s
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step   5/100  (   5%)  loss=0.9090  elapsed=0m55s  ETA=17m43s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step   5/100  (   5%)  loss=0.4908  elapsed=0m55s  ETA=17m42s
+     Cls-moons-hard/QNG_block /seed=4  step   5/100  (   5%)  loss=0.6206  elapsed=0m55s  ETA=17m38s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step   5/100  (   5%)  loss=0.6153  elapsed=0m55s  ETA=17m34s
+     Cls-moons-easy/QNG_block /seed=4  step   5/100  (   5%)  loss=0.4703  elapsed=0m55s  ETA=17m33s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step   5/100  (   5%)  loss=0.6140  elapsed=0m55s  ETA=17m29s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step   5/100  (   5%)  loss=0.4911  elapsed=0m55s  ETA=17m29s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step   5/100  (   5%)  loss=0.7136  elapsed=0m55s  ETA=17m27s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step   5/100  (   5%)  loss=0.6350  elapsed=0m55s  ETA=17m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m20s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~16m33s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step   7/100  (   7%)  loss=0.8247  elapsed=1m14s  ETA=16m33s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step   7/100  (   7%)  loss=0.5705  elapsed=1m14s  ETA=16m31s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step   7/100  (   7%)  loss=0.4813  elapsed=1m14s  ETA=16m29s
+     Cls-moons-hard/QNG_block /seed=4  step   7/100  (   7%)  loss=0.6055  elapsed=1m14s  ETA=16m26s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step   7/100  (   7%)  loss=1.0914  elapsed=1m14s  ETA=16m23s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step   7/100  (   7%)  loss=0.4979  elapsed=1m13s  ETA=16m20s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step   7/100  (   7%)  loss=0.4908  elapsed=1m13s  ETA=16m18s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step   7/100  (   7%)  loss=0.6356  elapsed=1m13s  ETA=16m17s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step   7/100  (   7%)  loss=0.5666  elapsed=1m13s  ETA=16m16s
+     Cls-moons-easy/MomentumQNG_block/seed=3  step  10/100  (  10%)  loss=0.4797  elapsed=1m48s  ETA=16m13s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [4m40s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~15m45s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step   9/100  (   9%)  loss=0.7383  elapsed=1m33s  ETA=15m45s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step   9/100  (   9%)  loss=0.5575  elapsed=1m33s  ETA=15m41s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step   9/100  (   9%)  loss=0.4807  elapsed=1m32s  ETA=15m39s
+     Cls-moons-hard/QNG_block /seed=4  step   9/100  (   9%)  loss=0.5934  elapsed=1m32s  ETA=15m37s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step   9/100  (   9%)  loss=1.0729  elapsed=1m32s  ETA=15m34s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step   9/100  (   9%)  loss=0.4903  elapsed=1m32s  ETA=15m33s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step   9/100  (   9%)  loss=0.6337  elapsed=1m32s  ETA=15m30s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step   9/100  (   9%)  loss=0.6268  elapsed=1m31s  ETA=15m28s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step   9/100  (   9%)  loss=0.5906  elapsed=1m31s  ETA=15m28s
+     Cls-moons-easy/QNGAdam_v1_block/seed=4  step   9/100  (   9%)  loss=0.5678  elapsed=1m30s  ETA=15m14s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m00s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~15m26s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  10/100  (  10%)  loss=0.7060  elapsed=1m42s  ETA=15m26s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.4459  elapsed=1m42s  ETA=15m20s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  10/100  (  10%)  loss=0.5522  elapsed=1m42s  ETA=15m19s
+     Cls-moons-hard/QNG_block /seed=4  step  10/100  (  10%)  loss=0.5882  elapsed=1m41s  ETA=15m17s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.7817  elapsed=1m41s  ETA=15m15s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.4777  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block /seed=4  step  10/100  (  10%)  loss=0.4424  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.5964  elapsed=1m41s  ETA=15m11s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.6133  elapsed=1m41s  ETA=15m09s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.5872  elapsed=1m41s  ETA=15m09s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m20s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~15m26s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  10/100  (  10%)  loss=0.7060  elapsed=1m42s  ETA=15m26s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.4459  elapsed=1m42s  ETA=15m20s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  10/100  (  10%)  loss=0.5522  elapsed=1m42s  ETA=15m19s
+     Cls-moons-hard/QNG_block /seed=4  step  10/100  (  10%)  loss=0.5882  elapsed=1m41s  ETA=15m17s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.7817  elapsed=1m41s  ETA=15m15s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.4777  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block /seed=4  step  10/100  (  10%)  loss=0.4424  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.5964  elapsed=1m41s  ETA=15m11s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.6133  elapsed=1m41s  ETA=15m09s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.5872  elapsed=1m41s  ETA=15m09s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [5m40s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~15m26s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  10/100  (  10%)  loss=0.7060  elapsed=1m42s  ETA=15m26s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.4459  elapsed=1m42s  ETA=15m20s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  10/100  (  10%)  loss=0.5522  elapsed=1m42s  ETA=15m19s
+     Cls-moons-hard/QNG_block /seed=4  step  10/100  (  10%)  loss=0.5882  elapsed=1m41s  ETA=15m17s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.7817  elapsed=1m41s  ETA=15m15s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.4777  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block /seed=4  step  10/100  (  10%)  loss=0.4424  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.5964  elapsed=1m41s  ETA=15m11s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.6133  elapsed=1m41s  ETA=15m09s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.5872  elapsed=1m41s  ETA=15m09s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m00s elapsed]
+  Done: 110/320  |  Running: 96  |  Pending: 114  |  Failed: 0  |  ETA: ~15m26s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  10/100  (  10%)  loss=0.7060  elapsed=1m42s  ETA=15m26s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.4459  elapsed=1m42s  ETA=15m20s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  10/100  (  10%)  loss=0.5522  elapsed=1m42s  ETA=15m19s
+     Cls-moons-hard/QNG_block /seed=4  step  10/100  (  10%)  loss=0.5882  elapsed=1m41s  ETA=15m17s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.7817  elapsed=1m41s  ETA=15m15s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.4777  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block /seed=4  step  10/100  (  10%)  loss=0.4424  elapsed=1m41s  ETA=15m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  10/100  (  10%)  loss=0.5964  elapsed=1m41s  ETA=15m11s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  10/100  (  10%)  loss=0.6133  elapsed=1m41s  ETA=15m09s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  10/100  (  10%)  loss=0.5872  elapsed=1m41s  ETA=15m09s
+──────────────────────────────────────────────────────────────────────
+  [111/320] DONE           1D-sin / QNG_block_lr02 / seed=0  loss=0.001607    job=2m56s  @6m08s
+  [112/320] DONE           1D-sin / MomentumQNG_block / seed=0  loss=0.000938    job=2m56s  @6m08s
+  [113/320] DONE           1D-sin / QNG_block  / seed=0  loss=0.004616    job=2m56s  @6m08s
+  [114/320] DONE           1D-sin / QNG_block_lr01 / seed=0  loss=0.002808    job=2m57s  @6m09s
+  [115/320] DONE           1D-sin / QNGAdam_v1_block / seed=0  loss=0.000107    job=2m57s  @6m09s
+  [116/320] DONE           1D-sin / QNGAdam_v2_block / seed=0  loss=0.002430    job=2m57s  @6m10s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m20s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~15m26s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  10/100  (  10%)  loss=0.7060  elapsed=1m42s  ETA=15m26s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.3725  elapsed=3m14s  ETA=12m59s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.5170  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block /seed=4  step  20/100  (  20%)  loss=0.5531  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  20/100  (  20%)  loss=0.5228  elapsed=3m14s  ETA=12m57s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.4225  elapsed=3m14s  ETA=12m56s
+     Cls-moons-easy/QNG_block /seed=4  step  20/100  (  20%)  loss=0.4178  elapsed=3m13s  ETA=12m55s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.3976  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.5545  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.4897  elapsed=3m13s  ETA=12m52s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [6m40s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~13m07s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  20/100  (  20%)  loss=0.5998  elapsed=3m16s  ETA=13m07s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.3725  elapsed=3m14s  ETA=12m59s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.5170  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block /seed=4  step  20/100  (  20%)  loss=0.5531  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  20/100  (  20%)  loss=0.5228  elapsed=3m14s  ETA=12m57s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.4225  elapsed=3m14s  ETA=12m56s
+     Cls-moons-easy/QNG_block /seed=4  step  20/100  (  20%)  loss=0.4178  elapsed=3m13s  ETA=12m55s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.3976  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.5545  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.4897  elapsed=3m13s  ETA=12m52s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m00s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~13m07s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  20/100  (  20%)  loss=0.5998  elapsed=3m16s  ETA=13m07s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.3725  elapsed=3m14s  ETA=12m59s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.5170  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block /seed=4  step  20/100  (  20%)  loss=0.5531  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  20/100  (  20%)  loss=0.5228  elapsed=3m14s  ETA=12m57s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.4225  elapsed=3m14s  ETA=12m56s
+     Cls-moons-easy/QNG_block /seed=4  step  20/100  (  20%)  loss=0.4178  elapsed=3m13s  ETA=12m55s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.3976  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.5545  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.4897  elapsed=3m13s  ETA=12m52s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m20s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~13m07s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  20/100  (  20%)  loss=0.5998  elapsed=3m16s  ETA=13m07s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.3725  elapsed=3m14s  ETA=12m59s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.5170  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block /seed=4  step  20/100  (  20%)  loss=0.5531  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  20/100  (  20%)  loss=0.5228  elapsed=3m14s  ETA=12m57s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.4225  elapsed=3m14s  ETA=12m56s
+     Cls-moons-easy/QNG_block /seed=4  step  20/100  (  20%)  loss=0.4178  elapsed=3m13s  ETA=12m55s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.3976  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.5545  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.4897  elapsed=3m13s  ETA=12m52s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [7m40s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~13m07s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  20/100  (  20%)  loss=0.5998  elapsed=3m16s  ETA=13m07s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.3725  elapsed=3m14s  ETA=12m59s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.5170  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block /seed=4  step  20/100  (  20%)  loss=0.5531  elapsed=3m14s  ETA=12m57s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  20/100  (  20%)  loss=0.5228  elapsed=3m14s  ETA=12m57s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.4225  elapsed=3m14s  ETA=12m56s
+     Cls-moons-easy/QNG_block /seed=4  step  20/100  (  20%)  loss=0.4178  elapsed=3m13s  ETA=12m55s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  20/100  (  20%)  loss=0.3976  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  20/100  (  20%)  loss=0.5545  elapsed=3m13s  ETA=12m53s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  20/100  (  20%)  loss=0.4897  elapsed=3m13s  ETA=12m52s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m00s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~11m19s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  30/100  (  30%)  loss=0.5204  elapsed=4m51s  ETA=11m19s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.4827  elapsed=4m49s  ETA=11m14s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.3658  elapsed=4m47s  ETA=11m10s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.4098  elapsed=4m46s  ETA=11m09s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.5147  elapsed=4m46s  ETA=11m09s
+     Cls-moons-easy/QNG_block /seed=4  step  30/100  (  30%)  loss=0.4067  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block /seed=4  step  30/100  (  30%)  loss=0.5350  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  30/100  (  30%)  loss=0.5086  elapsed=4m46s  ETA=11m07s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.3630  elapsed=4m45s  ETA=11m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.5297  elapsed=4m45s  ETA=11m06s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m20s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~11m19s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  30/100  (  30%)  loss=0.5204  elapsed=4m51s  ETA=11m19s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.4827  elapsed=4m49s  ETA=11m14s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.3658  elapsed=4m47s  ETA=11m10s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.4098  elapsed=4m46s  ETA=11m09s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.5147  elapsed=4m46s  ETA=11m09s
+     Cls-moons-easy/QNG_block /seed=4  step  30/100  (  30%)  loss=0.4067  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block /seed=4  step  30/100  (  30%)  loss=0.5350  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  30/100  (  30%)  loss=0.5086  elapsed=4m46s  ETA=11m07s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.3630  elapsed=4m45s  ETA=11m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.5297  elapsed=4m45s  ETA=11m06s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [8m40s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~11m19s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  30/100  (  30%)  loss=0.5204  elapsed=4m51s  ETA=11m19s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.4827  elapsed=4m49s  ETA=11m14s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.3658  elapsed=4m47s  ETA=11m10s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.4098  elapsed=4m46s  ETA=11m09s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.5147  elapsed=4m46s  ETA=11m09s
+     Cls-moons-easy/QNG_block /seed=4  step  30/100  (  30%)  loss=0.4067  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block /seed=4  step  30/100  (  30%)  loss=0.5350  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  30/100  (  30%)  loss=0.5086  elapsed=4m46s  ETA=11m07s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.3630  elapsed=4m45s  ETA=11m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.5297  elapsed=4m45s  ETA=11m06s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m00s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~11m19s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  30/100  (  30%)  loss=0.5204  elapsed=4m51s  ETA=11m19s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.4827  elapsed=4m49s  ETA=11m14s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.3658  elapsed=4m47s  ETA=11m10s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.4098  elapsed=4m46s  ETA=11m09s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.5147  elapsed=4m46s  ETA=11m09s
+     Cls-moons-easy/QNG_block /seed=4  step  30/100  (  30%)  loss=0.4067  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block /seed=4  step  30/100  (  30%)  loss=0.5350  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  30/100  (  30%)  loss=0.5086  elapsed=4m46s  ETA=11m07s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.3630  elapsed=4m45s  ETA=11m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.5297  elapsed=4m45s  ETA=11m06s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m20s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~11m19s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  30/100  (  30%)  loss=0.5204  elapsed=4m51s  ETA=11m19s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.4827  elapsed=4m49s  ETA=11m14s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  30/100  (  30%)  loss=0.3658  elapsed=4m47s  ETA=11m10s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.4098  elapsed=4m46s  ETA=11m09s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  30/100  (  30%)  loss=0.5147  elapsed=4m46s  ETA=11m09s
+     Cls-moons-hard/QNG_block /seed=4  step  30/100  (  30%)  loss=0.5350  elapsed=4m46s  ETA=11m08s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  30/100  (  30%)  loss=0.5086  elapsed=4m46s  ETA=11m07s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  30/100  (  30%)  loss=0.5297  elapsed=4m45s  ETA=11m06s
+     Cls-moons-easy/QNG_block /seed=4  step  40/100  (  40%)  loss=0.4000  elapsed=6m19s  ETA=9m28s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.3511  elapsed=6m17s  ETA=9m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [9m40s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~9m38s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  40/100  (  40%)  loss=0.4938  elapsed=6m25s  ETA=9m38s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.4762  elapsed=6m22s  ETA=9m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.3630  elapsed=6m20s  ETA=9m30s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.5090  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.3974  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNG_block /seed=4  step  40/100  (  40%)  loss=0.4000  elapsed=6m19s  ETA=9m28s
+     Cls-moons-hard/QNG_block /seed=4  step  40/100  (  40%)  loss=0.5239  elapsed=6m18s  ETA=9m27s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  40/100  (  40%)  loss=0.4990  elapsed=6m18s  ETA=9m27s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.3511  elapsed=6m17s  ETA=9m26s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.5137  elapsed=6m17s  ETA=9m26s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [10m00s elapsed]
+  Done: 116/320  |  Running: 96  |  Pending: 108  |  Failed: 0  |  ETA: ~9m38s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  40/100  (  40%)  loss=0.4938  elapsed=6m25s  ETA=9m38s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.4762  elapsed=6m22s  ETA=9m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.3630  elapsed=6m20s  ETA=9m30s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.5090  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.3974  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNG_block /seed=4  step  40/100  (  40%)  loss=0.4000  elapsed=6m19s  ETA=9m28s
+     Cls-moons-hard/QNG_block /seed=4  step  40/100  (  40%)  loss=0.5239  elapsed=6m18s  ETA=9m27s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  40/100  (  40%)  loss=0.4990  elapsed=6m18s  ETA=9m27s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.3511  elapsed=6m17s  ETA=9m26s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.5137  elapsed=6m17s  ETA=9m26s
+──────────────────────────────────────────────────────────────────────
+  [117/320] DONE     1D-multifreq / QNG_block_lr01 / seed=0  loss=0.047293    job=3m58s  @10m07s
+  [118/320] DONE     1D-multifreq / QNG_block  / seed=0  loss=0.052954    job=3m58s  @10m07s
+  [119/320] DONE          2D-quad / QNGAdam_v1_block / seed=0  loss=0.002440    job=10m07s  @10m07s
+  [120/320] DONE     1D-multifreq / QNG_block_lr02 / seed=0  loss=0.051743    job=4m00s  @10m09s
+  [121/320] DONE     1D-multifreq / QNGAdam_v1_block / seed=0  loss=0.045323    job=4m00s  @10m10s
+  [122/320] DONE     1D-multifreq / MomentumQNG_block / seed=0  loss=0.043885    job=4m01s  @10m10s
+  [123/320] DONE     1D-multifreq / QNGAdam_v2_block / seed=0  loss=0.045408    job=4m00s  @10m11s
+  [124/320] DONE          2D-quad / QNG_block_lr02 / seed=0  loss=0.005853    job=10m19s  @10m20s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [10m20s elapsed]
+  Done: 124/320  |  Running: 96  |  Pending: 100  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+       1D-multifreq/QNG_block_lr01/seed=1  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  40/100  (  40%)  loss=0.4938  elapsed=6m25s  ETA=9m38s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.4762  elapsed=6m22s  ETA=9m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.3630  elapsed=6m20s  ETA=9m30s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.5090  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.3974  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNG_block /seed=4  step  40/100  (  40%)  loss=0.4000  elapsed=6m19s  ETA=9m28s
+     Cls-moons-hard/QNG_block /seed=4  step  40/100  (  40%)  loss=0.5239  elapsed=6m18s  ETA=9m27s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  40/100  (  40%)  loss=0.4990  elapsed=6m18s  ETA=9m27s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.3511  elapsed=6m17s  ETA=9m26s
+──────────────────────────────────────────────────────────────────────
+  [125/320] DONE          2D-quad / QNG_block  / seed=0  loss=0.013927    job=10m21s  @10m22s
+  [126/320] DONE          2D-quad / QNGAdam_v2_block / seed=0  loss=0.004743    job=10m26s  @10m27s
+  [127/320] DONE          2D-quad / MomentumQNG_block / seed=0  loss=0.002978    job=10m29s  @10m30s
+  [128/320] DONE          2D-quad / QNG_block_lr01 / seed=0  loss=0.009346    job=10m30s  @10m30s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [10m40s elapsed]
+  Done: 128/320  |  Running: 96  |  Pending: 96  |  Failed: 0  |  ETA: ~9m38s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  40/100  (  40%)  loss=0.4938  elapsed=6m25s  ETA=9m38s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.4762  elapsed=6m22s  ETA=9m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  40/100  (  40%)  loss=0.3630  elapsed=6m20s  ETA=9m30s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.5090  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.3974  elapsed=6m19s  ETA=9m29s
+     Cls-moons-easy/QNG_block /seed=4  step  40/100  (  40%)  loss=0.4000  elapsed=6m19s  ETA=9m28s
+     Cls-moons-hard/QNG_block /seed=4  step  40/100  (  40%)  loss=0.5239  elapsed=6m18s  ETA=9m27s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  40/100  (  40%)  loss=0.4990  elapsed=6m18s  ETA=9m27s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  40/100  (  40%)  loss=0.3511  elapsed=6m17s  ETA=9m26s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  40/100  (  40%)  loss=0.5137  elapsed=6m17s  ETA=9m26s
+──────────────────────────────────────────────────────────────────────
+  [129/320] DONE          2D-quad / QNG_block_lr01 / seed=1  loss=0.006881    job=10m25s  @10m46s
+  [130/320] DONE          2D-quad / QNG_block_lr02 / seed=1  loss=0.009406    job=10m25s  @10m47s
+  [131/320] DONE          2D-quad / QNG_block  / seed=1  loss=0.007515    job=10m27s  @10m48s
+  [132/320] DONE          2D-quad / QNGAdam_v1_block / seed=1  loss=0.002439    job=10m27s  @10m48s
+  [133/320] DONE          2D-quad / QNGAdam_v2_block / seed=1  loss=0.006597    job=10m31s  @10m53s
+  [134/320] DONE          2D-quad / MomentumQNG_block / seed=1  loss=0.004288    job=10m32s  @10m53s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [11m00s elapsed]
+  Done: 134/320  |  Running: 96  |  Pending: 90  |  Failed: 0  |  ETA: ~9m38s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  40/100  (  40%)  loss=0.4938  elapsed=6m25s  ETA=9m38s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.4716  elapsed=7m55s  ETA=7m55s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.3576  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.3870  elapsed=7m52s  ETA=7m52s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.5052  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNG_block /seed=4  step  50/100  (  50%)  loss=0.3949  elapsed=7m51s  ETA=7m51s
+     Cls-moons-hard/QNG_block /seed=4  step  50/100  (  50%)  loss=0.5160  elapsed=7m50s  ETA=7m50s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  50/100  (  50%)  loss=0.4918  elapsed=7m50s  ETA=7m50s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.3455  elapsed=7m49s  ETA=7m49s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.5020  elapsed=7m49s  ETA=7m49s
+──────────────────────────────────────────────────────────────────────
+  [135/320] DONE          2D-quad / QNGAdam_v1_block / seed=2  loss=0.002336    job=10m00s  @11m14s
+  [136/320] DONE          2D-quad / QNGAdam_v2_block / seed=2  loss=0.002885    job=10m02s  @11m16s
+  [137/320] DONE          2D-quad / QNG_block_lr02 / seed=2  loss=0.004048    job=10m04s  @11m18s
+  [138/320] DONE          2D-quad / QNG_block  / seed=2  loss=0.011003    job=10m05s  @11m18s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [11m20s elapsed]
+  Done: 138/320  |  Running: 96  |  Pending: 86  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+       1D-multifreq/QNG_block_lr01/seed=2  step   0/100  (   0%)  loss=0.7301  elapsed=0m02s  ETA=n/a
+       1D-multifreq/QNG_block_lr02/seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+       1D-multifreq/MomentumQNG_block/seed=2  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  50/100  (  50%)  loss=0.4861  elapsed=8m00s  ETA=8m00s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.4716  elapsed=7m55s  ETA=7m55s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.3576  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.3870  elapsed=7m52s  ETA=7m52s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.5052  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNG_block /seed=4  step  50/100  (  50%)  loss=0.3949  elapsed=7m51s  ETA=7m51s
+     Cls-moons-hard/QNG_block /seed=4  step  50/100  (  50%)  loss=0.5160  elapsed=7m50s  ETA=7m50s
+──────────────────────────────────────────────────────────────────────
+  [139/320] DONE          2D-quad / QNG_block_lr01 / seed=2  loss=0.006278    job=10m13s  @11m26s
+  [140/320] DONE          2D-quad / MomentumQNG_block / seed=2  loss=0.003229    job=10m17s  @11m31s
+  [141/320] DONE          2D-quad / QNGAdam_v1_block / seed=3  loss=0.002014    job=10m17s  @11m34s
+  [142/320] DONE          2D-quad / QNGAdam_v2_block / seed=3  loss=0.002795    job=10m17s  @11m34s
+  [143/320] DONE          2D-quad / MomentumQNG_block / seed=3  loss=0.004385    job=10m22s  @11m39s
+  [144/320] DONE          2D-quad / QNG_block_lr02 / seed=3  loss=0.008237    job=10m22s  @11m39s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [11m40s elapsed]
+  Done: 144/320  |  Running: 96  |  Pending: 80  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+             1D-sin/QNG_block_lr02/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+             1D-sin/MomentumQNG_block/seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  50/100  (  50%)  loss=0.4861  elapsed=8m00s  ETA=8m00s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.4716  elapsed=7m55s  ETA=7m55s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.3576  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.3870  elapsed=7m52s  ETA=7m52s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.5052  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNG_block /seed=4  step  50/100  (  50%)  loss=0.3949  elapsed=7m51s  ETA=7m51s
+     Cls-moons-hard/QNG_block /seed=4  step  50/100  (  50%)  loss=0.5160  elapsed=7m50s  ETA=7m50s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  50/100  (  50%)  loss=0.4918  elapsed=7m50s  ETA=7m50s
+──────────────────────────────────────────────────────────────────────
+  [145/320] DONE          2D-quad / QNG_block_lr01 / seed=3  loss=0.019514    job=10m25s  @11m42s
+  [146/320] DONE          2D-quad / QNG_block  / seed=3  loss=0.031851    job=10m33s  @11m50s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [12m00s elapsed]
+  Done: 146/320  |  Running: 96  |  Pending: 78  |  Failed: 0  |  ETA: ~8m00s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  50/100  (  50%)  loss=0.4861  elapsed=8m00s  ETA=8m00s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.4716  elapsed=7m55s  ETA=7m55s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.3576  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.3870  elapsed=7m52s  ETA=7m52s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.5052  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNG_block /seed=4  step  50/100  (  50%)  loss=0.3949  elapsed=7m51s  ETA=7m51s
+     Cls-moons-hard/QNG_block /seed=4  step  50/100  (  50%)  loss=0.5160  elapsed=7m50s  ETA=7m50s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  50/100  (  50%)  loss=0.4918  elapsed=7m50s  ETA=7m50s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.3455  elapsed=7m49s  ETA=7m49s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.5020  elapsed=7m49s  ETA=7m49s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [12m20s elapsed]
+  Done: 146/320  |  Running: 96  |  Pending: 78  |  Failed: 0  |  ETA: ~8m00s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  50/100  (  50%)  loss=0.4861  elapsed=8m00s  ETA=8m00s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.4716  elapsed=7m55s  ETA=7m55s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  50/100  (  50%)  loss=0.3576  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.3870  elapsed=7m52s  ETA=7m52s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.5052  elapsed=7m52s  ETA=7m52s
+     Cls-moons-easy/QNG_block /seed=4  step  50/100  (  50%)  loss=0.3949  elapsed=7m51s  ETA=7m51s
+     Cls-moons-hard/QNG_block /seed=4  step  50/100  (  50%)  loss=0.5160  elapsed=7m50s  ETA=7m50s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  50/100  (  50%)  loss=0.4918  elapsed=7m50s  ETA=7m50s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  50/100  (  50%)  loss=0.3455  elapsed=7m49s  ETA=7m49s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  50/100  (  50%)  loss=0.5020  elapsed=7m49s  ETA=7m49s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [12m40s elapsed]
+  Done: 146/320  |  Running: 96  |  Pending: 78  |  Failed: 0  |  ETA: ~6m22s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  60/100  (  60%)  loss=0.4755  elapsed=9m34s  ETA=6m22s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.4692  elapsed=9m28s  ETA=6m18s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.3520  elapsed=9m25s  ETA=6m16s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.3774  elapsed=9m24s  ETA=6m16s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.5024  elapsed=9m24s  ETA=6m16s
+     Cls-moons-easy/QNG_block /seed=4  step  60/100  (  60%)  loss=0.3906  elapsed=9m23s  ETA=6m15s
+     Cls-moons-hard/QNG_block /seed=4  step  60/100  (  60%)  loss=0.5098  elapsed=9m22s  ETA=6m15s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  60/100  (  60%)  loss=0.4861  elapsed=9m22s  ETA=6m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.3418  elapsed=9m21s  ETA=6m14s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.4910  elapsed=9m21s  ETA=6m14s
+──────────────────────────────────────────────────────────────────────
+  [147/320] DONE          2D-quad / QNG_block_lr01 / seed=4  loss=0.005053    job=10m01s  @12m58s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [13m00s elapsed]
+  Done: 147/320  |  Running: 96  |  Pending: 77  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+       1D-multifreq/QNG_block /seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  60/100  (  60%)  loss=0.4755  elapsed=9m34s  ETA=6m22s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.4692  elapsed=9m28s  ETA=6m18s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.3520  elapsed=9m25s  ETA=6m16s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.3774  elapsed=9m24s  ETA=6m16s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.5024  elapsed=9m24s  ETA=6m16s
+     Cls-moons-easy/QNG_block /seed=4  step  60/100  (  60%)  loss=0.3906  elapsed=9m23s  ETA=6m15s
+     Cls-moons-hard/QNG_block /seed=4  step  60/100  (  60%)  loss=0.5098  elapsed=9m22s  ETA=6m15s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  60/100  (  60%)  loss=0.4861  elapsed=9m22s  ETA=6m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.3418  elapsed=9m21s  ETA=6m14s
+──────────────────────────────────────────────────────────────────────
+  [148/320] DONE           1D-sin / QNG_block_lr02 / seed=1  loss=0.000706    job=2m53s  @13m00s
+  [149/320] DONE           1D-sin / QNG_block  / seed=1  loss=0.005231    job=2m55s  @13m02s
+  [150/320] DONE           1D-sin / QNG_block_lr01 / seed=1  loss=0.001250    job=2m55s  @13m02s
+  [151/320] DONE           1D-sin / MomentumQNG_block / seed=1  loss=0.000056    job=2m55s  @13m04s
+  [152/320] DONE          2D-quad / QNGAdam_v1_block / seed=4  loss=0.002409    job=10m10s  @13m06s
+  [153/320] DONE          2D-quad / QNG_block_lr02 / seed=4  loss=0.005401    job=10m10s  @13m06s
+  [154/320] DONE           1D-sin / QNGAdam_v2_block / seed=1  loss=0.000568    job=2m56s  @13m06s
+  [155/320] DONE          2D-quad / QNG_block  / seed=4  loss=0.007679    job=10m11s  @13m07s
+  [156/320] DONE           1D-sin / QNGAdam_v1_block / seed=1  loss=0.000024    job=2m57s  @13m07s
+  [157/320] DONE          2D-quad / MomentumQNG_block / seed=4  loss=0.003446    job=10m12s  @13m08s
+  [158/320] DONE          2D-quad / QNGAdam_v2_block / seed=4  loss=0.004809    job=10m13s  @13m10s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [13m20s elapsed]
+  Done: 158/320  |  Running: 96  |  Pending: 66  |  Failed: 0  |  ETA: ~6m22s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  60/100  (  60%)  loss=0.4755  elapsed=9m34s  ETA=6m22s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.4692  elapsed=9m28s  ETA=6m18s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.3520  elapsed=9m25s  ETA=6m16s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.3774  elapsed=9m24s  ETA=6m16s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.5024  elapsed=9m24s  ETA=6m16s
+     Cls-moons-easy/QNG_block /seed=4  step  60/100  (  60%)  loss=0.3906  elapsed=9m23s  ETA=6m15s
+     Cls-moons-hard/QNG_block /seed=4  step  60/100  (  60%)  loss=0.5098  elapsed=9m22s  ETA=6m15s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  60/100  (  60%)  loss=0.4861  elapsed=9m22s  ETA=6m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.3418  elapsed=9m21s  ETA=6m14s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.4910  elapsed=9m21s  ETA=6m14s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [13m40s elapsed]
+  Done: 158/320  |  Running: 96  |  Pending: 66  |  Failed: 0  |  ETA: ~6m22s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  60/100  (  60%)  loss=0.4755  elapsed=9m34s  ETA=6m22s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.4692  elapsed=9m28s  ETA=6m18s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.3520  elapsed=9m25s  ETA=6m16s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.3774  elapsed=9m24s  ETA=6m16s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.5024  elapsed=9m24s  ETA=6m16s
+     Cls-moons-easy/QNG_block /seed=4  step  60/100  (  60%)  loss=0.3906  elapsed=9m23s  ETA=6m15s
+     Cls-moons-hard/QNG_block /seed=4  step  60/100  (  60%)  loss=0.5098  elapsed=9m22s  ETA=6m15s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  60/100  (  60%)  loss=0.4861  elapsed=9m22s  ETA=6m14s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  60/100  (  60%)  loss=0.3418  elapsed=9m21s  ETA=6m14s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  60/100  (  60%)  loss=0.4910  elapsed=9m21s  ETA=6m14s
+──────────────────────────────────────────────────────────────────────
+  [159/320] DONE           1D-sin / QNG_block_lr01 / seed=2  loss=0.000558    job=2m55s  @13m43s
+  [160/320] DONE           1D-sin / QNG_block  / seed=2  loss=0.001057    job=2m56s  @13m44s
+  [161/320] DONE           1D-sin / MomentumQNG_block / seed=2  loss=0.000006    job=2m55s  @13m44s
+  [162/320] DONE           1D-sin / QNG_block_lr02 / seed=2  loss=0.000408    job=2m57s  @13m45s
+  [163/320] DONE           1D-sin / QNGAdam_v2_block / seed=2  loss=0.000299    job=2m56s  @13m50s
+  [164/320] DONE           1D-sin / QNGAdam_v1_block / seed=2  loss=0.000003    job=2m57s  @13m50s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [14m00s elapsed]
+  Done: 164/320  |  Running: 96  |  Pending: 60  |  Failed: 0  |  ETA: ~6m22s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  60/100  (  60%)  loss=0.4755  elapsed=9m34s  ETA=6m22s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  60/100  (  60%)  loss=0.4692  elapsed=9m28s  ETA=6m18s
+       1D-multifreq/QNGAdam_v1_block/seed=4  step   3/100  (   3%)  loss=0.1814  elapsed=0m09s  ETA=5m12s
+       1D-multifreq/QNGAdam_v2_block/seed=4  step   3/100  (   3%)  loss=0.4373  elapsed=0m09s  ETA=5m11s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.3463  elapsed=10m57s  ETA=4m41s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.4973  elapsed=10m57s  ETA=4m41s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.3679  elapsed=10m56s  ETA=4m41s
+     Cls-moons-easy/QNG_block /seed=4  step  70/100  (  70%)  loss=0.3867  elapsed=10m55s  ETA=4m41s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.3385  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block /seed=4  step  70/100  (  70%)  loss=0.5046  elapsed=10m54s  ETA=4m40s
+──────────────────────────────────────────────────────────────────────
+  [165/320] DONE     1D-multifreq / QNG_block  / seed=1  loss=0.053329    job=4m01s  @14m12s
+  [166/320] DONE  VQE-Heis-ring-4q / GD         / seed=0  loss=-7.759288   job=0m00s  @14m13s
+  [167/320] DONE  VQE-Heis-ring-4q / Adam       / seed=0  loss=-7.998854   job=0m00s  @14m14s
+  [168/320] DONE  VQE-Heis-ring-4q / GD         / seed=1  loss=-7.862604   job=0m00s  @14m15s
+  [169/320] DONE  VQE-Heis-ring-4q / Adam       / seed=1  loss=-7.997647   job=0m00s  @14m16s
+  [170/320] DONE  VQE-Heis-ring-4q / GD         / seed=2  loss=-7.883345   job=0m00s  @14m17s
+  [171/320] DONE  VQE-Heis-ring-4q / Adam       / seed=2  loss=-7.986747   job=0m00s  @14m17s
+  [172/320] DONE  VQE-Heis-ring-4q / GD         / seed=3  loss=-7.902688   job=0m00s  @14m18s
+  [173/320] DONE  VQE-Heis-ring-4q / Adam       / seed=3  loss=-7.991841   job=0m00s  @14m19s
+  [174/320] DONE     1D-multifreq / QNG_block_lr01 / seed=1  loss=0.051444    job=3m59s  @14m19s
+  [175/320] DONE  VQE-Heis-ring-4q / GD         / seed=4  loss=-7.543460   job=0m00s  @14m20s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [14m20s elapsed]
+  Done: 175/320  |  Running: 95  |  Pending: 50  |  Failed: 0  |  ETA: ~4m46s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  70/100  (  70%)  loss=0.4709  elapsed=11m08s  ETA=4m46s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.4674  elapsed=11m01s  ETA=4m43s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.3463  elapsed=10m57s  ETA=4m41s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.4973  elapsed=10m57s  ETA=4m41s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.3679  elapsed=10m56s  ETA=4m41s
+     Cls-moons-easy/QNG_block /seed=4  step  70/100  (  70%)  loss=0.3867  elapsed=10m55s  ETA=4m41s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.3385  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block /seed=4  step  70/100  (  70%)  loss=0.5046  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  70/100  (  70%)  loss=0.4817  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.4824  elapsed=10m53s  ETA=4m40s
+──────────────────────────────────────────────────────────────────────
+  [176/320] DONE  VQE-Heis-ring-4q / Adam       / seed=4  loss=-7.995878   job=0m00s  @14m20s
+  [177/320] DONE     1D-multifreq / QNG_block_lr02 / seed=1  loss=0.050646    job=4m00s  @14m22s
+  [178/320] DONE     1D-multifreq / MomentumQNG_block / seed=1  loss=0.046962    job=4m02s  @14m29s
+  [179/320] DONE           1D-sin / QNG_block  / seed=3  loss=0.000746    job=2m54s  @14m29s
+  [180/320] DONE           1D-sin / QNG_block_lr01 / seed=3  loss=0.000302    job=2m54s  @14m29s
+  [181/320] DONE     1D-multifreq / QNGAdam_v2_block / seed=1  loss=0.055148    job=4m02s  @14m32s
+  [182/320] DONE     1D-multifreq / QNGAdam_v1_block / seed=1  loss=0.045581    job=4m02s  @14m33s
+  [183/320] DONE           1D-sin / MomentumQNG_block / seed=3  loss=0.000004    job=2m56s  @14m35s
+  [184/320] DONE           1D-sin / QNG_block_lr02 / seed=3  loss=0.000145    job=2m56s  @14m35s
+  [185/320] DONE           1D-sin / QNGAdam_v1_block / seed=3  loss=0.000004    job=2m56s  @14m39s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [14m40s elapsed]
+  Done: 185/320  |  Running: 96  |  Pending: 39  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/GD        /seed=1  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  70/100  (  70%)  loss=0.4709  elapsed=11m08s  ETA=4m46s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.4674  elapsed=11m01s  ETA=4m43s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.3463  elapsed=10m57s  ETA=4m41s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.4973  elapsed=10m57s  ETA=4m41s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.3679  elapsed=10m56s  ETA=4m41s
+     Cls-moons-easy/QNG_block /seed=4  step  70/100  (  70%)  loss=0.3867  elapsed=10m55s  ETA=4m41s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.3385  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block /seed=4  step  70/100  (  70%)  loss=0.5046  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  70/100  (  70%)  loss=0.4817  elapsed=10m54s  ETA=4m40s
+──────────────────────────────────────────────────────────────────────
+  [186/320] DONE           1D-sin / QNGAdam_v2_block / seed=3  loss=0.000537    job=3m00s  @14m51s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [15m00s elapsed]
+  Done: 186/320  |  Running: 96  |  Pending: 38  |  Failed: 0  |  ETA: ~4m46s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  70/100  (  70%)  loss=0.4709  elapsed=11m08s  ETA=4m46s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.4674  elapsed=11m01s  ETA=4m43s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.3463  elapsed=10m57s  ETA=4m41s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.4973  elapsed=10m57s  ETA=4m41s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.3679  elapsed=10m56s  ETA=4m41s
+     Cls-moons-easy/QNG_block /seed=4  step  70/100  (  70%)  loss=0.3867  elapsed=10m55s  ETA=4m41s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.3385  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block /seed=4  step  70/100  (  70%)  loss=0.5046  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  70/100  (  70%)  loss=0.4817  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.4824  elapsed=10m53s  ETA=4m40s
+──────────────────────────────────────────────────────────────────────
+  [187/320] DONE     1D-multifreq / QNG_block  / seed=2  loss=0.085843    job=3m52s  @15m07s
+  [188/320] DONE     1D-multifreq / QNG_block_lr01 / seed=2  loss=0.069636    job=3m53s  @15m09s
+  [189/320] DONE     1D-multifreq / MomentumQNG_block / seed=2  loss=0.087518    job=3m53s  @15m12s
+  [190/320] DONE          2D-quad / GD         / seed=0  loss=0.042230    job=0m51s  @15m12s
+  [191/320] DONE          2D-quad / Adam       / seed=0  loss=0.004314    job=0m51s  @15m12s
+  [192/320] DONE   Cls-moons-easy / QNG_block_lr02 / seed=0  loss=0.349596    job=14m52s  @15m13s
+  [193/320] DONE     1D-multifreq / QNG_block_lr02 / seed=2  loss=0.055717    job=3m54s  @15m13s
+  [194/320] DONE   Cls-moons-easy / QNG_block_lr01 / seed=0  loss=0.352916    job=14m56s  @15m17s
+  [195/320] DONE   Cls-moons-hard / QNGAdam_v2_block / seed=1  loss=0.475573    job=14m55s  @15m17s
+  [196/320] DONE   Cls-moons-easy / QNG_block  / seed=0  loss=0.362162    job=14m57s  @15m18s
+  [197/320] DONE   Cls-moons-easy / QNGAdam_v2_block / seed=0  loss=0.352428    job=14m58s  @15m19s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [15m20s elapsed]
+  Done: 197/320  |  Running: 96  |  Pending: 27  |  Failed: 0  |  ETA: n/a
+
+  Highest ETA (bottlenecks):
+     Cls-moons-easy/Adam      /seed=3  step   0/100  (   0%)  loss=1.3863  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/GD        /seed=3  step   0/100  (   0%)  loss=...  elapsed=0m00s  ETA=n/a
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  70/100  (  70%)  loss=0.4709  elapsed=11m08s  ETA=4m46s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.4674  elapsed=11m01s  ETA=4m43s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  70/100  (  70%)  loss=0.3463  elapsed=10m57s  ETA=4m41s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.4973  elapsed=10m57s  ETA=4m41s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  70/100  (  70%)  loss=0.3679  elapsed=10m56s  ETA=4m41s
+     Cls-moons-easy/QNG_block /seed=4  step  70/100  (  70%)  loss=0.3867  elapsed=10m55s  ETA=4m41s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  70/100  (  70%)  loss=0.3385  elapsed=10m54s  ETA=4m40s
+     Cls-moons-hard/QNG_block /seed=4  step  70/100  (  70%)  loss=0.5046  elapsed=10m54s  ETA=4m40s
+──────────────────────────────────────────────────────────────────────
+  [198/320] DONE   Cls-moons-hard / QNG_block  / seed=0  loss=0.481982    job=15m00s  @15m21s
+  [199/320] DONE     1D-multifreq / QNGAdam_v1_block / seed=2  loss=0.048578    job=3m54s  @15m21s
+  [200/320] DONE   Cls-moons-hard / QNG_block  / seed=1  loss=0.490464    job=15m01s  @15m24s
+  [201/320] DONE   Cls-moons-hard / MomentumQNG_block / seed=1  loss=0.481640    job=15m02s  @15m24s
+  [202/320] DONE   Cls-moons-easy / MomentumQNG_block / seed=0  loss=0.324192    job=15m03s  @15m24s
+  [203/320] DONE          2D-quad / GD         / seed=1  loss=0.010614    job=0m52s  @15m25s
+  [204/320] DONE          2D-quad / Adam       / seed=1  loss=0.006282    job=0m52s  @15m25s
+  [205/320] DONE   Cls-moons-easy / QNGAdam_v1_block / seed=0  loss=0.324239    job=15m04s  @15m26s
+  [206/320] DONE     1D-multifreq / QNGAdam_v2_block / seed=2  loss=0.058914    job=3m57s  @15m28s
+  [207/320] DONE   Cls-moons-hard / QNG_block_lr01 / seed=0  loss=0.471912    job=15m09s  @15m30s
+  [208/320] DONE   Cls-moons-hard / QNGAdam_v1_block / seed=0  loss=0.464159    job=15m10s  @15m32s
+  [209/320] DONE   Cls-moons-easy / QNG_block  / seed=1  loss=0.368957    job=15m12s  @15m34s
+  [210/320] DONE   Cls-moons-easy / QNGAdam_v1_block / seed=1  loss=0.320883    job=15m14s  @15m36s
+  [211/320] DONE   Cls-moons-hard / QNGAdam_v2_block / seed=0  loss=0.467462    job=15m14s  @15m36s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [15m40s elapsed]
+  Done: 211/320  |  Running: 96  |  Pending: 13  |  Failed: 0  |  ETA: ~4m46s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  70/100  (  70%)  loss=0.4709  elapsed=11m08s  ETA=4m46s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.4661  elapsed=12m33s  ETA=3m08s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.3407  elapsed=12m29s  ETA=3m07s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.4931  elapsed=12m29s  ETA=3m07s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.3586  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block /seed=4  step  80/100  (  80%)  loss=0.3830  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.3355  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block /seed=4  step  80/100  (  80%)  loss=0.5001  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  80/100  (  80%)  loss=0.4788  elapsed=12m25s  ETA=3m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.4766  elapsed=12m24s  ETA=3m06s
+──────────────────────────────────────────────────────────────────────
+  [212/320] DONE   Cls-moons-easy / MomentumQNG_block / seed=1  loss=0.309277    job=15m18s  @15m40s
+  [213/320] DONE           1D-sin / GD         / seed=0  loss=0.009959    job=0m15s  @15m41s
+  [214/320] DONE   Cls-moons-hard / MomentumQNG_block / seed=0  loss=0.458273    job=15m21s  @15m43s
+  [215/320] DONE   Cls-moons-easy / GD         / seed=0  loss=0.379609    job=1m20s  @15m43s
+  [216/320] DONE           1D-sin / Adam       / seed=0  loss=0.002085    job=0m14s  @15m43s
+  [217/320] DONE   Cls-moons-easy / QNG_block_lr01 / seed=1  loss=0.355929    job=15m21s  @15m43s
+  [218/320] DONE   Cls-moons-hard / QNG_block_lr02 / seed=0  loss=0.538931    job=15m23s  @15m44s
+  [219/320] DONE   Cls-moons-hard / QNG_block_lr01 / seed=1  loss=0.486543    job=15m24s  @15m46s
+  [220/320] DONE   Cls-moons-easy / QNG_block_lr02 / seed=1  loss=0.365725    job=15m25s  @15m46s
+  [221/320] DONE           1D-sin / GD         / seed=1  loss=0.023659    job=0m14s  @15m48s
+  [222/320] DONE   Cls-moons-hard / Adam       / seed=0  loss=0.466061    job=1m20s  @15m50s
+  [223/320] DONE   Cls-moons-hard / GD         / seed=0  loss=0.500763    job=1m20s  @15m50s
+  [224/320] DONE           1D-sin / Adam       / seed=1  loss=0.001414    job=0m14s  @15m51s
+  [225/320] DONE   Cls-moons-easy / Adam       / seed=0  loss=0.351134    job=1m21s  @15m51s
+  [226/320] DONE   Cls-moons-easy / QNGAdam_v2_block / seed=1  loss=0.351179    job=15m29s  @15m51s
+  [227/320] DONE   Cls-moons-hard / QNG_block_lr02 / seed=1  loss=0.706206    job=15m30s  @15m52s
+  [228/320] DONE     1D-multifreq / GD         / seed=0  loss=0.066908    job=0m21s  @15m52s
+  [229/320] DONE   Cls-moons-hard / QNGAdam_v1_block / seed=1  loss=0.458279    job=15m31s  @15m54s
+  [230/320] DONE     1D-multifreq / Adam       / seed=0  loss=0.045541    job=0m22s  @15m55s
+  [231/320] DONE           1D-sin / GD         / seed=2  loss=0.003099    job=0m14s  @15m56s
+  [232/320] DONE   Cls-moons-easy / Adam       / seed=1  loss=0.340271    job=1m20s  @15m57s
+  [233/320] DONE          2D-quad / GD         / seed=2  loss=0.023354    job=0m50s  @15m58s
+  [234/320] DONE     1D-multifreq / GD         / seed=1  loss=0.082664    job=0m22s  @15m58s
+  [235/320] DONE           1D-sin / GD         / seed=3  loss=0.002314    job=0m14s  @15m58s
+  [236/320] DONE   Cls-moons-easy / GD         / seed=1  loss=0.378296    job=1m22s  @15m58s
+  [237/320] DONE           1D-sin / QNG_block  / seed=4  loss=0.004410    job=2m52s  @15m59s
+  [238/320] DONE           1D-sin / Adam       / seed=3  loss=0.000088    job=0m14s  @15m59s
+  [239/320] DONE           1D-sin / Adam       / seed=2  loss=0.000304    job=0m17s  @16m00s
+  [240/320] DONE          2D-quad / Adam       / seed=2  loss=0.002965    job=0m50s  @16m00s
+  [241/320] DONE           1D-sin / QNG_block_lr02 / seed=4  loss=0.000299    job=2m53s  @16m00s
+  [242/320] DONE   Cls-moons-hard / GD         / seed=1  loss=0.510404    job=1m20s  @16m00s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [16m00s elapsed]
+  Done: 242/320  |  Running: 78  |  Pending: 0  |  Failed: 0  |  ETA: ~3m10s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  80/100  (  80%)  loss=0.4686  elapsed=12m42s  ETA=3m10s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.4661  elapsed=12m33s  ETA=3m08s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.3407  elapsed=12m29s  ETA=3m07s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.4931  elapsed=12m29s  ETA=3m07s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.3586  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block /seed=4  step  80/100  (  80%)  loss=0.3830  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.3355  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block /seed=4  step  80/100  (  80%)  loss=0.5001  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  80/100  (  80%)  loss=0.4788  elapsed=12m25s  ETA=3m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.4766  elapsed=12m24s  ETA=3m06s
+──────────────────────────────────────────────────────────────────────
+  [243/320] DONE           1D-sin / QNGAdam_v1_block / seed=4  loss=0.000016    job=2m52s  @16m01s
+  [244/320] DONE     1D-multifreq / Adam       / seed=1  loss=0.057088    job=0m22s  @16m02s
+  [245/320] DONE           1D-sin / GD         / seed=4  loss=0.015861    job=0m14s  @16m03s
+  [246/320] DONE           1D-sin / QNGAdam_v2_block / seed=4  loss=0.002088    job=2m53s  @16m03s
+  [247/320] DONE          2D-quad / GD         / seed=3  loss=0.050934    job=0m50s  @16m04s
+  [248/320] DONE           1D-sin / QNG_block_lr01 / seed=4  loss=0.001266    job=2m57s  @16m04s
+  [249/320] DONE           1D-sin / Adam       / seed=4  loss=0.002169    job=0m14s  @16m04s
+  [250/320] DONE           1D-sin / MomentumQNG_block / seed=4  loss=0.000084    job=2m57s  @16m05s
+  [251/320] DONE     1D-multifreq / GD         / seed=2  loss=0.094784    job=0m21s  @16m05s
+  [252/320] DONE     1D-multifreq / Adam       / seed=2  loss=0.059683    job=0m21s  @16m05s
+  [253/320] DONE          2D-quad / Adam       / seed=3  loss=0.003038    job=0m50s  @16m07s
+  [254/320] DONE     1D-multifreq / GD         / seed=3  loss=0.100565    job=0m21s  @16m07s
+  [255/320] DONE     1D-multifreq / Adam       / seed=3  loss=0.096668    job=0m21s  @16m08s
+  [256/320] DONE          2D-quad / GD         / seed=4  loss=0.022555    job=0m51s  @16m12s
+  [257/320] DONE     1D-multifreq / GD         / seed=4  loss=0.104599    job=0m21s  @16m12s
+  [258/320] DONE     1D-multifreq / Adam       / seed=4  loss=0.051929    job=0m21s  @16m12s
+  [259/320] DONE   Cls-moons-easy / QNG_block_lr01 / seed=2  loss=0.369333    job=14m58s  @16m12s
+  [260/320] DONE   Cls-moons-hard / QNG_block  / seed=2  loss=0.485597    job=14m58s  @16m12s
+  [261/320] DONE   Cls-moons-easy / QNG_block_lr02 / seed=2  loss=0.362268    job=14m58s  @16m13s
+  [262/320] DONE   Cls-moons-hard / Adam       / seed=1  loss=0.471193    job=1m20s  @16m13s
+  [263/320] DONE          2D-quad / Adam       / seed=4  loss=0.004409    job=0m50s  @16m14s
+  [264/320] DONE   Cls-moons-easy / MomentumQNG_block / seed=2  loss=0.355728    job=15m00s  @16m15s
+  [265/320] DONE   Cls-moons-easy / QNG_block  / seed=2  loss=0.383664    job=15m01s  @16m16s
+  [266/320] DONE   Cls-moons-hard / QNG_block_lr02 / seed=2  loss=0.742443    job=15m01s  @16m16s
+  [267/320] DONE   Cls-moons-hard / QNGAdam_v1_block / seed=2  loss=0.466175    job=15m01s  @16m17s
+  [268/320] DONE   Cls-moons-easy / QNGAdam_v1_block / seed=2  loss=0.359021    job=15m02s  @16m17s
+  [269/320] DONE   Cls-moons-easy / QNGAdam_v2_block / seed=3  loss=0.354943    job=14m56s  @16m17s
+  [270/320] DONE   Cls-moons-easy / MomentumQNG_block / seed=3  loss=0.349744    job=14m59s  @16m17s
+  [271/320] DONE   Cls-moons-hard / MomentumQNG_block / seed=2  loss=0.467953    job=15m02s  @16m17s
+  [272/320] DONE   Cls-moons-easy / QNGAdam_v2_block / seed=2  loss=0.359510    job=15m04s  @16m19s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [16m20s elapsed]
+  Done: 272/320  |  Running: 48  |  Pending: 0  |  Failed: 0  |  ETA: ~3m10s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  80/100  (  80%)  loss=0.4686  elapsed=12m42s  ETA=3m10s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.4661  elapsed=12m33s  ETA=3m08s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.3407  elapsed=12m29s  ETA=3m07s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.4931  elapsed=12m29s  ETA=3m07s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.3586  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block /seed=4  step  80/100  (  80%)  loss=0.3830  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.3355  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block /seed=4  step  80/100  (  80%)  loss=0.5001  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  80/100  (  80%)  loss=0.4788  elapsed=12m25s  ETA=3m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.4766  elapsed=12m24s  ETA=3m06s
+──────────────────────────────────────────────────────────────────────
+  [273/320] DONE   Cls-moons-easy / GD         / seed=2  loss=0.398605    job=1m17s  @16m30s
+  [274/320] DONE   Cls-moons-hard / Adam       / seed=2  loss=0.471684    job=1m17s  @16m30s
+  [275/320] DONE   Cls-moons-easy / QNG_block_lr01 / seed=3  loss=0.357244    job=15m14s  @16m31s
+  [276/320] DONE   Cls-moons-hard / GD         / seed=2  loss=0.515980    job=1m19s  @16m32s
+  [277/320] DONE   Cls-moons-easy / Adam       / seed=2  loss=0.359239    job=1m19s  @16m32s
+  [278/320] DONE   Cls-moons-easy / GD         / seed=3  loss=0.373421    job=1m16s  @16m35s
+  [279/320] DONE   Cls-moons-hard / QNGAdam_v2_block / seed=2  loss=0.469669    job=15m19s  @16m36s
+  [280/320] DONE   Cls-moons-easy / Adam       / seed=3  loss=0.354875    job=1m17s  @16m37s
+  [281/320] DONE   Cls-moons-easy / QNG_block  / seed=3  loss=0.362101    job=15m20s  @16m37s
+  [282/320] DONE   Cls-moons-hard / GD         / seed=3  loss=0.481906    job=1m17s  @16m38s
+  [283/320] DONE   Cls-moons-hard / Adam       / seed=3  loss=0.468710    job=1m17s  @16m39s
+  [284/320] DONE   Cls-moons-hard / QNG_block_lr01 / seed=2  loss=0.471905    job=15m24s  @16m39s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [16m40s elapsed]
+  Done: 284/320  |  Running: 36  |  Pending: 0  |  Failed: 0  |  ETA: ~3m10s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  80/100  (  80%)  loss=0.4686  elapsed=12m42s  ETA=3m10s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.4661  elapsed=12m33s  ETA=3m08s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.3407  elapsed=12m29s  ETA=3m07s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.4931  elapsed=12m29s  ETA=3m07s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.3586  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block /seed=4  step  80/100  (  80%)  loss=0.3830  elapsed=12m27s  ETA=3m06s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  80/100  (  80%)  loss=0.3355  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block /seed=4  step  80/100  (  80%)  loss=0.5001  elapsed=12m26s  ETA=3m06s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  80/100  (  80%)  loss=0.4788  elapsed=12m25s  ETA=3m06s
+     Cls-moons-hard/QNGAdam_v2_block/seed=4  step  80/100  (  80%)  loss=0.4766  elapsed=12m24s  ETA=3m06s
+──────────────────────────────────────────────────────────────────────
+  [285/320] DONE   Cls-moons-easy / GD         / seed=4  loss=0.405034    job=1m17s  @16m42s
+  [286/320] DONE   Cls-moons-easy / Adam       / seed=4  loss=0.339459    job=1m17s  @16m42s
+  [287/320] DONE   Cls-moons-easy / QNGAdam_v1_block / seed=3  loss=0.347604    job=15m26s  @16m44s
+  [288/320] DONE   Cls-moons-easy / QNG_block_lr02 / seed=3  loss=0.330882    job=15m26s  @16m44s
+  [289/320] DONE   Cls-moons-hard / GD         / seed=4  loss=0.529078    job=1m18s  @16m44s
+  [290/320] DONE     1D-multifreq / QNG_block  / seed=3  loss=0.096523    job=3m46s  @16m45s
+  [291/320] DONE   Cls-moons-hard / Adam       / seed=4  loss=0.459733    job=1m18s  @16m45s
+  [292/320] DONE     1D-multifreq / QNG_block_lr01 / seed=3  loss=0.095072    job=3m53s  @16m54s
+  [293/320] DONE     1D-multifreq / QNGAdam_v1_block / seed=3  loss=0.096670    job=3m51s  @16m56s
+  [294/320] DONE     1D-multifreq / MomentumQNG_block / seed=3  loss=0.096677    job=3m53s  @16m56s
+  [295/320] DONE     1D-multifreq / QNG_block_lr02 / seed=3  loss=0.093530    job=3m54s  @16m57s
+  [296/320] DONE     1D-multifreq / QNGAdam_v2_block / seed=3  loss=0.097177    job=3m51s  @16m57s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [17m00s elapsed]
+  Done: 296/320  |  Running: 24  |  Pending: 0  |  Failed: 0  |  ETA: ~3m10s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  80/100  (  80%)  loss=0.4686  elapsed=12m42s  ETA=3m10s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  80/100  (  80%)  loss=0.4661  elapsed=12m33s  ETA=3m08s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.3355  elapsed=13m57s  ETA=1m33s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.4890  elapsed=13m57s  ETA=1m33s
+     Cls-moons-easy/QNG_block /seed=4  step  90/100  (  90%)  loss=0.3792  elapsed=13m56s  ETA=1m32s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.3327  elapsed=13m55s  ETA=1m32s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  90/100  (  90%)  loss=0.3497  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  90/100  (  90%)  loss=0.4823  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=4  step  90/100  (  90%)  loss=0.4962  elapsed=13m53s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=3  step  90/100  (  90%)  loss=0.4767  elapsed=13m52s  ETA=1m32s
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+  Progress [17m20s elapsed]
+  Done: 296/320  |  Running: 24  |  Pending: 0  |  Failed: 0  |  ETA: ~1m34s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  90/100  (  90%)  loss=0.4666  elapsed=14m10s  ETA=1m34s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.4653  elapsed=14m02s  ETA=1m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.3355  elapsed=13m57s  ETA=1m33s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.4890  elapsed=13m57s  ETA=1m33s
+     Cls-moons-easy/QNG_block /seed=4  step  90/100  (  90%)  loss=0.3792  elapsed=13m56s  ETA=1m32s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.3327  elapsed=13m55s  ETA=1m32s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  90/100  (  90%)  loss=0.3497  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  90/100  (  90%)  loss=0.4823  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=4  step  90/100  (  90%)  loss=0.4962  elapsed=13m53s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=3  step  90/100  (  90%)  loss=0.4767  elapsed=13m52s  ETA=1m32s
+──────────────────────────────────────────────────────────────────────
+  [297/320] DONE     1D-multifreq / QNG_block_lr02 / seed=4  loss=0.057914    job=3m51s  @17m35s
+  [298/320] DONE     1D-multifreq / QNG_block  / seed=4  loss=0.091962    job=3m52s  @17m36s
+  [299/320] DONE   Cls-moons-hard / QNG_block_lr01 / seed=3  loss=0.473554    job=14m42s  @17m37s
+  [300/320] DONE     1D-multifreq / QNG_block_lr01 / seed=4  loss=0.085100    job=3m53s  @17m37s
+  [301/320] DONE     1D-multifreq / MomentumQNG_block / seed=4  loss=0.045152    job=3m53s  @17m38s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [17m40s elapsed]
+  Done: 301/320  |  Running: 19  |  Pending: 0  |  Failed: 0  |  ETA: ~1m34s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  90/100  (  90%)  loss=0.4666  elapsed=14m10s  ETA=1m34s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.4653  elapsed=14m02s  ETA=1m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.3355  elapsed=13m57s  ETA=1m33s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.4890  elapsed=13m57s  ETA=1m33s
+     Cls-moons-easy/QNG_block /seed=4  step  90/100  (  90%)  loss=0.3792  elapsed=13m56s  ETA=1m32s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.3327  elapsed=13m55s  ETA=1m32s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  90/100  (  90%)  loss=0.3497  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  90/100  (  90%)  loss=0.4823  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=4  step  90/100  (  90%)  loss=0.4962  elapsed=13m53s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=3  step  90/100  (  90%)  loss=0.4767  elapsed=13m52s  ETA=1m32s
+──────────────────────────────────────────────────────────────────────
+  [302/320] DONE     1D-multifreq / QNGAdam_v1_block / seed=4  loss=0.045645    job=3m53s  @17m44s
+  [303/320] DONE   Cls-moons-hard / QNGAdam_v1_block / seed=3  loss=0.462055    job=14m48s  @17m44s
+  [304/320] DONE     1D-multifreq / QNGAdam_v2_block / seed=4  loss=0.069799    job=3m54s  @17m44s
+  [305/320] DONE   Cls-moons-hard / QNGAdam_v2_block / seed=3  loss=0.474984    job=14m50s  @17m46s
+  [306/320] DONE   Cls-moons-hard / MomentumQNG_block / seed=3  loss=0.468858    job=14m56s  @17m52s
+  [307/320] DONE   Cls-moons-hard / QNG_block_lr02 / seed=3  loss=0.530925    job=14m56s  @17m52s
+  [308/320] DONE   Cls-moons-easy / QNGAdam_v1_block / seed=4  loss=0.315401    job=14m54s  @17m55s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [18m00s elapsed]
+  Done: 308/320  |  Running: 12  |  Pending: 0  |  Failed: 0  |  ETA: ~1m34s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  90/100  (  90%)  loss=0.4666  elapsed=14m10s  ETA=1m34s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.4653  elapsed=14m02s  ETA=1m33s
+     Cls-moons-easy/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.3355  elapsed=13m57s  ETA=1m33s
+     Cls-moons-hard/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.4890  elapsed=13m57s  ETA=1m33s
+     Cls-moons-easy/QNG_block /seed=4  step  90/100  (  90%)  loss=0.3792  elapsed=13m56s  ETA=1m32s
+     Cls-moons-easy/QNG_block_lr02/seed=4  step  90/100  (  90%)  loss=0.3327  elapsed=13m55s  ETA=1m32s
+     Cls-moons-easy/QNGAdam_v2_block/seed=4  step  90/100  (  90%)  loss=0.3497  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block_lr01/seed=4  step  90/100  (  90%)  loss=0.4823  elapsed=13m54s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=4  step  90/100  (  90%)  loss=0.4962  elapsed=13m53s  ETA=1m32s
+     Cls-moons-hard/QNG_block /seed=3  step  90/100  (  90%)  loss=0.4767  elapsed=13m52s  ETA=1m32s
+──────────────────────────────────────────────────────────────────────
+  [309/320] DONE   Cls-moons-easy / QNG_block_lr01 / seed=4  loss=0.342431    job=15m05s  @18m02s
+  [310/320] DONE   Cls-moons-hard / QNG_block  / seed=3  loss=0.476386    job=15m09s  @18m04s
+  [311/320] DONE   Cls-moons-easy / QNG_block  / seed=4  loss=0.375875    job=15m13s  @18m10s
+  [312/320] DONE   Cls-moons-easy / QNG_block_lr02 / seed=4  loss=0.330606    job=15m11s  @18m11s
+  [313/320] DONE   Cls-moons-hard / QNG_block  / seed=4  loss=0.493034    job=15m08s  @18m11s
+  [314/320] DONE   Cls-moons-hard / QNGAdam_v2_block / seed=4  loss=0.470733    job=15m08s  @18m12s
+  [315/320] DONE   Cls-moons-easy / QNGAdam_v2_block / seed=4  loss=0.342262    job=15m10s  @18m12s
+  [316/320] DONE   Cls-moons-hard / QNG_block_lr01 / seed=4  loss=0.489153    job=15m10s  @18m12s
+  [317/320] DONE   Cls-moons-easy / MomentumQNG_block / seed=4  loss=0.331619    job=15m13s  @18m15s
+  [318/320] DONE   Cls-moons-hard / QNG_block_lr02 / seed=4  loss=0.486808    job=15m12s  @18m15s
+
+──────────────────────────────────────────────────────────────────────
+  Progress [18m20s elapsed]
+  Done: 318/320  |  Running: 2  |  Pending: 0  |  Failed: 0  |  ETA: ~1m34s
+
+  Highest ETA (bottlenecks):
+     Cls-moons-hard/QNGAdam_v1_block/seed=4  step  90/100  (  90%)  loss=0.4666  elapsed=14m10s  ETA=1m34s
+     Cls-moons-hard/MomentumQNG_block/seed=4  step  90/100  (  90%)  loss=0.4653  elapsed=14m02s  ETA=1m33s
+──────────────────────────────────────────────────────────────────────
+  [319/320] DONE   Cls-moons-hard / MomentumQNG_block / seed=4  loss=0.464766    job=15m17s  @18m21s
+  [320/320] DONE   Cls-moons-hard / QNGAdam_v1_block / seed=4  loss=0.465266    job=15m24s  @18m29s
+
+======================================================================
+  TIMING BREAKDOWN
+======================================================================
+
+  1D-sin:
+    GD          mean=0m14s  max=0m15s
+    Adam        mean=0m15s  max=0m17s
+    QNG_block   mean=2m55s  max=2m56s
+    QNG_block_lr01  mean=2m56s  max=2m57s
+    QNG_block_lr02  mean=2m55s  max=2m57s
+    MomentumQNG_block  mean=2m56s  max=2m57s
+    QNGAdam_v1_block  mean=2m56s  max=2m57s
+    QNGAdam_v2_block  mean=2m56s  max=3m00s
+
+  2D-quad:
+    GD          mean=0m51s  max=0m52s
+    Adam        mean=0m51s  max=0m52s
+    QNG_block   mean=10m19s  max=10m33s
+    QNG_block_lr01  mean=10m19s  max=10m30s
+    QNG_block_lr02  mean=10m16s  max=10m25s
+    MomentumQNG_block  mean=10m22s  max=10m32s
+    QNGAdam_v1_block  mean=10m12s  max=10m27s
+    QNGAdam_v2_block  mean=10m18s  max=10m31s
+
+  VQE-TFIM-11q:
+    GD          mean=0m03s  max=0m03s
+    Adam        mean=0m03s  max=0m03s
+    QNG_block   mean=3m00s  max=3m03s
+    QNG_block_lr01  mean=3m02s  max=3m03s
+    QNG_block_lr02  mean=2m58s  max=3m03s
+    MomentumQNG_block  mean=2m58s  max=3m02s
+    QNGAdam_v1_block  mean=2m58s  max=3m03s
+    QNGAdam_v2_block  mean=2m56s  max=3m00s
+
+  Cls-moons-easy:
+    GD          mean=1m18s  max=1m22s
+    Adam        mean=1m19s  max=1m21s
+    QNG_block   mean=15m08s  max=15m20s
+    QNG_block_lr01  mean=15m06s  max=15m21s
+    QNG_block_lr02  mean=15m10s  max=15m26s
+    MomentumQNG_block  mean=15m07s  max=15m18s
+    QNGAdam_v1_block  mean=15m08s  max=15m26s
+    QNGAdam_v2_block  mean=15m07s  max=15m29s
+
+  VQE-Stokes-6q:
+    GD          mean=0m01s  max=0m01s
+    Adam        mean=0m01s  max=0m02s
+    QNG_block   mean=1m14s  max=1m16s
+    QNG_block_lr01  mean=1m16s  max=1m16s
+    QNG_block_lr02  mean=1m15s  max=1m17s
+    MomentumQNG_block  mean=1m14s  max=1m16s
+    QNGAdam_v1_block  mean=1m14s  max=1m16s
+    QNGAdam_v2_block  mean=1m15s  max=1m16s
+
+  VQE-Heis-ring-4q:
+    GD          mean=0m00s  max=0m00s
+    Adam        mean=0m00s  max=0m00s
+    QNG_block   mean=0m20s  max=0m21s
+    QNG_block_lr01  mean=0m20s  max=0m21s
+    QNG_block_lr02  mean=0m20s  max=0m20s
+    MomentumQNG_block  mean=0m20s  max=0m20s
+    QNGAdam_v1_block  mean=0m20s  max=0m21s
+    QNGAdam_v2_block  mean=0m20s  max=0m21s
+
+  1D-multifreq:
+    GD          mean=0m21s  max=0m22s
+    Adam        mean=0m21s  max=0m22s
+    QNG_block   mean=3m54s  max=4m01s
+    QNG_block_lr01  mean=3m55s  max=3m59s
+    QNG_block_lr02  mean=3m56s  max=4m00s
+    MomentumQNG_block  mean=3m56s  max=4m02s
+    QNGAdam_v1_block  mean=3m56s  max=4m02s
+    QNGAdam_v2_block  mean=3m57s  max=4m02s
+
+  Cls-moons-hard:
+    GD          mean=1m19s  max=1m20s
+    Adam        mean=1m18s  max=1m20s
+    QNG_block   mean=15m03s  max=15m09s
+    QNG_block_lr01  mean=15m10s  max=15m24s
+    QNG_block_lr02  mean=15m12s  max=15m30s
+    MomentumQNG_block  mean=15m08s  max=15m21s
+    QNGAdam_v1_block  mean=15m11s  max=15m31s
+    QNGAdam_v2_block  mean=15m05s  max=15m19s
+
+  Total wall time : 18m29s
+  Succeeded       : 320/320
+======================================================================
+
+Saving 1D function fitting results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/function_fitting_1d.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit1d_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit1d_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit1d_final.png
+
+Saving 2D function fitting results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/function_fitting_2d.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit2d_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit2d_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit2d_final.png
+
+Saving VQE results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/vqe.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_final.png
+
+Saving classification results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/classification.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/cls_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/cls_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/cls_final.png
+
+Saving Tier 1 vqe_stokes results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/vqe_stokes.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_stokes_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_stokes_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_stokes_final.png
+
+Saving Tier 1 vqe_heis_ring results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/vqe_heis_ring.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_heis_ring_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_heis_ring_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/vqe_heis_ring_final.png
+
+Saving Tier 1 fit_multifreq1d results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/fit_multifreq1d.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit_multifreq1d_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit_multifreq1d_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/fit_multifreq1d_final.png
+
+Saving Tier 1 cls_moons_hard results...
+  Results saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/cls_moons_hard.json
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/cls_moons_hard_convergence.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/cls_moons_hard_resource.png
+  Plot saved -> /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots/cls_moons_hard_final.png
+
+======================================================================
+  ALL EXPERIMENTS COMPLETE
+  Total wall time: 18m29s
+  Results saved in /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537
+  Plots  saved in /fs/nexus-scratch/aysingha/workspace/quantum-manifold-optimization/results/2026-04-24_030537/plots
+======================================================================
+======================================================================
+  End      : 2026-04-24 03:24:16
+======================================================================

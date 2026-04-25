@@ -16,7 +16,7 @@ from sklearn.preprocessing import MinMaxScaler
 from src.models import make_classification_circuit, init_params_regression
 from src.training import train_with_data
 from src.metrics import aggregate_seeds, save_results, accuracy, make_run_dir
-from src.visualization import convergence_plot, resource_plot, final_loss_bar
+from src.visualization import convergence_plot, resource_plot, final_loss_bar, task_plot_path
 
 # ── Config ──────────────────────────────────────────────────────────────────
 N_QUBITS = 2
@@ -91,11 +91,11 @@ def run(results_dir=None):
 
     save_results(all_agg, os.path.join(results_dir, "classification.json"))
     convergence_plot(all_agg, title="Classification (make_moons)", log_y=True,
-                     save_path=os.path.join(plots_dir, "cls_convergence.png"))
+                     save_path=task_plot_path(plots_dir, "classification", "convergence"))
     resource_plot(all_agg, title="Classification (resource-normalised)", log_y=True,
-                  save_path=os.path.join(plots_dir, "cls_resource.png"))
+                  save_path=task_plot_path(plots_dir, "classification", "resource"))
     final_loss_bar(all_agg, title="Classification: final hinge loss",
-                   save_path=os.path.join(plots_dir, "cls_final.png"))
+                   save_path=task_plot_path(plots_dir, "classification", "final"))
     return all_agg
 
 

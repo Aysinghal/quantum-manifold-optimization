@@ -99,23 +99,105 @@ def make_ising_hamiltonian(n_qubits, J=1.0, h=1.0):
 
 
 def exact_ground_energy(n_qubits, J=1.0, h=1.0):
-    """Exact ground-state energy via full diagonalisation."""
+    """Exact TFIM ground-state energy via full diagonalisation. Kept for
+    backward compatibility with the original `vqe` task; new tasks should
+    use `exact_ground_energy_from_h` with their own Hamiltonian."""
     H = make_ising_hamiltonian(n_qubits, J, h)
-    mat = qml.matrix(H)
+    return exact_ground_energy_from_h(H)
+
+
+def exact_ground_energy_from_h(hamiltonian):
+    """Exact ground-state energy for any PennyLane Hamiltonian via dense
+    diagonalisation. Only feasible for ~<=12 qubits."""
+    mat = qml.matrix(hamiltonian)
     return float(np.min(np.linalg.eigvalsh(mat)))
 
 
-def make_vqe_circuit(n_qubits=4, n_layers=4, J=1.0, h=1.0, shots=None, diff_method=None):
-    """Return (circuit, hamiltonian) for VQE on the Ising model."""
+def make_stokes_hamiltonian(n_qubits=6):
+    """H = Z_0 (x) Z_1 only.
+
+    Stokes-style "rigged" Hamiltonian: only 2 of the n_qubits enter the loss,
+    so the remaining circuit parameters are "dead weight" that the QNG metric
+    tensor can down-weight. This is the regime where vanilla QNG was designed
+    to dominate. n_qubits is just the circuit width; the Hamiltonian itself
+    only touches wires 0 and 1.
+    """
+    return qml.Hamiltonian([1.0], [qml.PauliZ(0) @ qml.PauliZ(1)])
+
+
+def make_sk_hamiltonian(n_qubits, seed=42):
+    """Sherrington-Kirkpatrick spin-glass Hamiltonian.
+
+    ``H = sum_{i<j} J_{ij} Z_i Z_j`` with ``J_{ij} ~ U(-1, 1)``. All-to-all
+    couplings on Z, drawn from a fixed seed so the *Hamiltonian* is identical
+    across runs (only the optimizer initialisation varies with `seed` upstream).
+    Frustrated and rugged -- a notoriously hard landscape that should stress
+    every optimizer; included in Phase 1 as a "hard real-world" check that
+    R-QNG-torus does not collapse on a non-toy problem.
+    """
+    rng = np.random.default_rng(seed)
+    coeffs, ops = [], []
+    for i in range(n_qubits):
+        for j in range(i + 1, n_qubits):
+            coeffs.append(float(rng.uniform(-1.0, 1.0)))
+            ops.append(qml.PauliZ(i) @ qml.PauliZ(j))
+    return qml.Hamiltonian(coeffs, ops)
+
+
+def make_xxz_hamiltonian(n_qubits, delta=1.0):
+    """XXZ chain (open boundary).
+
+    ``H = sum_i (X_i X_{i+1} + Y_i Y_{i+1} + delta * Z_i Z_{i+1})``. Setting
+    ``delta = 1`` recovers the isotropic Heisenberg chain; ``delta != 1`` is
+    the anisotropic XXZ regime. Smooth-but-rugged condensed-matter benchmark;
+    contrasts with the Stokes "rigged" Hamiltonian where most circuit wires
+    are dead weight.
+    """
+    coeffs, ops = [], []
+    for i in range(n_qubits - 1):
+        j = i + 1
+        coeffs.append(1.0); ops.append(qml.PauliX(i) @ qml.PauliX(j))
+        coeffs.append(1.0); ops.append(qml.PauliY(i) @ qml.PauliY(j))
+        coeffs.append(float(delta)); ops.append(qml.PauliZ(i) @ qml.PauliZ(j))
+    return qml.Hamiltonian(coeffs, ops)
+
+
+def make_heisenberg_ring_hamiltonian(n_qubits, J=1.0, periodic=True):
+    """H = J * sum_<i,j> (X_i X_j + Y_i Y_j + Z_i Z_j)  on a ring (periodic) or
+    open chain. Antiferromagnetic for J > 0. Ground-state landscape has
+    multiple local minima (frustration on odd-length rings, near-degeneracies
+    on even-length rings) but is otherwise smooth -- the regime where
+    momentum-augmented QNG should beat both vanilla QNG (which gets stuck on
+    plateaus) and Adam (which lacks the geometric preconditioner)."""
+    coeffs, ops = [], []
+    n_terms = n_qubits if periodic else n_qubits - 1
+    for i in range(n_terms):
+        j = (i + 1) % n_qubits
+        coeffs.append(J); ops.append(qml.PauliX(i) @ qml.PauliX(j))
+        coeffs.append(J); ops.append(qml.PauliY(i) @ qml.PauliY(j))
+        coeffs.append(J); ops.append(qml.PauliZ(i) @ qml.PauliZ(j))
+    return qml.Hamiltonian(coeffs, ops)
+
+
+def make_vqe_circuit(n_qubits=4, n_layers=4, J=1.0, h=1.0,
+                     hamiltonian=None, shots=None, diff_method=None):
+    """Return (circuit, hamiltonian) for VQE.
+
+    If `hamiltonian` is provided, it is used as-is (the J/h kwargs are ignored).
+    Otherwise the default transverse-field Ising Hamiltonian is built from
+    n_qubits, J, h. Existing callers that pass (n_qubits, n_layers, J, h)
+    continue to work unchanged.
+    """
     dev = qml.device("lightning.qubit", wires=n_qubits + 1)
-    H = make_ising_hamiltonian(n_qubits, J, h)
+    if hamiltonian is None:
+        hamiltonian = make_ising_hamiltonian(n_qubits, J, h)
 
     @qml.qnode(dev, interface="autograd", diff_method=_resolve_diff_method(shots, diff_method))
     def circuit(params):
         qml.StronglyEntanglingLayers(params, wires=range(n_qubits))
-        return qml.expval(H)
+        return qml.expval(hamiltonian)
 
-    return _maybe_with_shots(circuit, shots), H
+    return _maybe_with_shots(circuit, shots), hamiltonian
 
 
 # ---------------------------------------------------------------------------
@@ -160,3 +242,43 @@ def init_params_vqe(n_qubits=4, n_layers=4, seed=42):
     rng = np.random.default_rng(seed)
     shape = qml.StronglyEntanglingLayers.shape(n_layers=n_layers, n_wires=n_qubits)
     return pnp.array(rng.uniform(0, 2 * np.pi, size=shape), requires_grad=True)
+
+
+def init_on_manifold(params, manifold, target_radius=None):
+    """Project initial parameters onto the optimizer's manifold so the very
+    first training step starts from a feasible point.
+
+    Sphere case (the only non-trivial one): rescale the flattened parameter
+    vector to ``||theta_flat|| = R``. The default radius is the **natural
+    shell** of a uniform-on-``[0, 2*pi)`` initialization,
+
+        ``R* = 2*pi * sqrt(d / 3)``  with ``d = len(theta_flat)``,
+
+    derived from ``E[theta_i^2] = 4*pi^2/3`` for ``theta_i ~ U(0, 2*pi)``.
+    Empirically this also tracks where flat optimizers (Adam, QNG) settle
+    after a long run on these tasks, which is what makes the sphere
+    constraint a fair comparison rather than a strawman: at ``R=1`` the
+    sphere optimizers are forced into a vanishingly small parameter range
+    and lose by construction. Pass ``target_radius`` to override.
+
+    Euclidean and Torus return the input unchanged (Torus retract handles
+    wrapping itself; the initial random uniform draw on ``[0, 2*pi)``
+    already lies on the torus).
+
+    The shape and ``requires_grad`` flag of the input are preserved so the
+    rest of the training loop sees an identical-looking ``pnp.array``.
+    """
+    if manifold is None:
+        return params
+    if getattr(manifold, "name", None) != "sphere":
+        return params
+    arr = np.array(params)
+    flat = arr.flatten()
+    d = flat.size
+    if target_radius is None:
+        target_radius = 2.0 * np.pi * np.sqrt(d / 3.0)
+    norm = float(np.linalg.norm(flat))
+    if norm < 1e-12:
+        return params
+    flat = flat * (target_radius / norm)
+    return pnp.array(flat.reshape(arr.shape), requires_grad=True)
