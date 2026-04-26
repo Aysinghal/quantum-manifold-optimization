@@ -148,6 +148,38 @@ def resource_plot(agg_by_opt, title="", ylabel="Loss", log_y=False, save_path=No
     return fig, ax
 
 
+def theta_trajectory_plot(agg_by_opt, title="", xlabel="Step",
+                          ylabel=r"$\|\theta\|$", log_y=False, save_path=None):
+    """Plot ||theta|| vs step with shaded std bands across seeds.
+
+    The manifold-diagnostic counterpart to ``convergence_plot``: needed to
+    see whether flat baselines drift across torus cells, and whether sphere
+    optimizers actually pin ||theta|| at the init radius.
+
+    agg_by_opt: {opt_name: {mean_theta_norms, std_theta_norms, ...}}
+    """
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for opt_name, agg in agg_by_opt.items():
+        mean = np.array(agg["mean_theta_norms"])
+        std = np.array(agg["std_theta_norms"])
+        steps = np.arange(1, len(mean) + 1)
+        color = COLORS.get(opt_name, None)
+        label = LABELS.get(opt_name, opt_name)
+        ax.plot(steps, mean, color=color, label=label)
+        ax.fill_between(steps, mean - std, mean + std, alpha=0.2, color=color)
+    if log_y:
+        ax.set_yscale("log")
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    if save_path:
+        _save(fig, save_path)
+    return fig, ax
+
+
 def walltime_plot(agg_by_opt, title="", ylabel="Loss", log_y=False, save_path=None):
     """Plot loss vs wall-clock time."""
     fig, ax = plt.subplots(figsize=(8, 5))

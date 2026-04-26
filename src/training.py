@@ -310,7 +310,7 @@ def _qng_step(mt_fn, cost_fn, params, x_train, lr, lam=1e-3, rng=None,
 def train_with_data(circuit, params, x_train, y_train,
                     opt_name, lr, n_steps, n_layers,
                     loss_type="mse", lam=1e-3, verbose=True,
-                    progress_cb=None, track_theta_norm=False):
+                    progress_cb=None):
     """Train a circuit whose cost aggregates over (x, y) pairs.
 
     Works for GD, Adam (via PennyLane optimizers) and QNG_block / QNG_full
@@ -318,6 +318,11 @@ def train_with_data(circuit, params, x_train, y_train,
 
     progress_cb: optional callable(step, n_steps, loss) invoked every step
                  for the first 10 steps, then every 10 steps thereafter.
+
+    Always records ``theta_norms`` (one ||theta|| per step) in the result
+    dict. The cost is one np.linalg.norm per step, negligible compared to
+    the optimizer step itself, and the trajectory is needed for manifold
+    diagnostics in the post-processing pipeline.
     """
     if loss_type == "mse":
         cost_fn = mse_cost(circuit, x_train, y_train)
@@ -332,8 +337,7 @@ def train_with_data(circuit, params, x_train, y_train,
     L = n_layers
     evals_per_step = EVAL_COST[opt_name](d, L)
 
-    losses, wall_times, cum_evals = [], [], []
-    theta_norms = [] if track_theta_norm else None
+    losses, wall_times, cum_evals, theta_norms = [], [], [], []
     total_evals = 0
     t0 = time.perf_counter()
 
@@ -350,8 +354,7 @@ def train_with_data(circuit, params, x_train, y_train,
             losses.append(float(loss))
             wall_times.append(time.perf_counter() - t0)
             cum_evals.append(total_evals)
-            if track_theta_norm:
-                theta_norms.append(float(np.linalg.norm(np.array(params).flatten())))
+            theta_norms.append(float(np.linalg.norm(np.array(params).flatten())))
             if verbose and step % 25 == 0:
                 print(f"    step {step:4d}  loss={float(loss):.6f}")
             if progress_cb and (step < 10 or step % 10 == 0):
@@ -375,8 +378,7 @@ def train_with_data(circuit, params, x_train, y_train,
             losses.append(loss)
             wall_times.append(time.perf_counter() - t0)
             cum_evals.append(total_evals)
-            if track_theta_norm:
-                theta_norms.append(float(np.linalg.norm(np.array(params).flatten())))
+            theta_norms.append(float(np.linalg.norm(np.array(params).flatten())))
             if verbose and step % 25 == 0:
                 print(f"    step {step:4d}  loss={loss:.6f}")
             if progress_cb and (step < 10 or step % 10 == 0):
@@ -384,15 +386,13 @@ def train_with_data(circuit, params, x_train, y_train,
     else:
         raise ValueError(f"Unknown optimizer: {opt_name}")
 
-    out = {
+    return {
         "params": params,
         "losses": losses,
         "wall_times": wall_times,
         "circuit_evals": cum_evals,
+        "theta_norms": theta_norms,
     }
-    if track_theta_norm:
-        out["theta_norms"] = theta_norms
-    return out
 
 
 # ---------------------------------------------------------------------------
@@ -400,12 +400,14 @@ def train_with_data(circuit, params, x_train, y_train,
 # ---------------------------------------------------------------------------
 
 def train_vqe(circuit, params, opt_name, lr, n_steps, n_layers,
-              lam=1e-3, verbose=True, progress_cb=None,
-              track_theta_norm=False):
+              lam=1e-3, verbose=True, progress_cb=None):
     """Train a VQE circuit where cost = circuit(params) = <H>.
 
     progress_cb: optional callable(step, n_steps, loss) invoked every step
                  for the first 10 steps, then every 10 steps thereafter.
+
+    Always records ``theta_norms`` (one ||theta|| per step) in the result
+    dict; see ``train_with_data`` for the rationale.
     """
     # Sphere optimizers need ||theta_init|| = 1; Euclidean / Torus get the
     # raw uniform-on-[0, 2pi) draw passed in by the caller.
@@ -415,8 +417,7 @@ def train_vqe(circuit, params, opt_name, lr, n_steps, n_layers,
     L = n_layers
     evals_per_step = EVAL_COST[opt_name](d, L)
 
-    losses, wall_times, cum_evals = [], [], []
-    theta_norms = [] if track_theta_norm else None
+    losses, wall_times, cum_evals, theta_norms = [], [], [], []
     total_evals = 0
     t0 = time.perf_counter()
 
@@ -471,19 +472,16 @@ def train_vqe(circuit, params, opt_name, lr, n_steps, n_layers,
         losses.append(float(loss))
         wall_times.append(time.perf_counter() - t0)
         cum_evals.append(total_evals)
-        if track_theta_norm:
-            theta_norms.append(float(np.linalg.norm(np.array(params).flatten())))
+        theta_norms.append(float(np.linalg.norm(np.array(params).flatten())))
         if verbose and step % 25 == 0:
             print(f"    step {step:4d}  energy={float(loss):.6f}")
         if progress_cb and (step < 10 or step % 10 == 0):
             progress_cb(step, n_steps, float(loss))
 
-    out = {
+    return {
         "params": params,
         "losses": losses,
         "wall_times": wall_times,
         "circuit_evals": cum_evals,
+        "theta_norms": theta_norms,
     }
-    if track_theta_norm:
-        out["theta_norms"] = theta_norms
-    return out

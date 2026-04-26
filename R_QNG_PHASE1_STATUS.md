@@ -50,7 +50,7 @@ A registry `_OPTIMIZER_MANIFOLDS = {"RQNG_torus_block": Torus()}` and helper `ma
 - New helper `_apply_manifold_step(opt_name, params, update, lr)` computes the post-update parameter via `manifold.retract(theta, -lr * update)` and returns it as a `pnp.array(..., requires_grad=True)`.
 - The QNG update site in both `_qng_step` and the manual-QNG path of `train_vqe` was switched from a raw `params - lr * update` to `_apply_manifold_step(...)`. For `Euclidean` this is mathematically identical to the old code; for `Torus` it adds a `mod 2π`.
 - `_natgrad_direction` now treats `RQNG_torus_block` the same as `QNG_block` for the FS-solve branch.
-- New `track_theta_norm=True` kwarg on `train_with_data` and `train_vqe` records $\|\theta\|$ at every step and returns it under `theta_norms`.
+- `train_with_data` and `train_vqe` always record $\|\theta\|$ at every step and return it under `theta_norms` in the result dict (post-cleanup; previously gated by a `track_theta_norm` kwarg).
 
 ### 2.3 Hamiltonians: `src/models.py`
 Two new builders (used by Phase 1's "hard physics" tasks):
@@ -87,22 +87,20 @@ Two new builders (used by Phase 1's "hard physics" tasks):
 - Four new worker functions (`_run_vqe_stokes_overparam_long`, `_run_fit_high_periodic`, `_run_vqe_sk_spinglass`, `_run_vqe_xxz`), wired into `all_worker_specs` and given save/plot blocks in `main()`.
 - New helper `_high_periodic_target` for `fit_high_periodic`.
 
-### 2.6 Diagnostics: `experiments/manifold_diagnostics.py` (new file)
-A standalone, single-task script that:
-- runs the four `torus_concept` optimizers on one task (`vqe_stokes_overparam_long` or `fit_high_periodic`),
-- logs `theta_norms` per step (i.e. tracks parameter drift),
-- saves a 2-panel plot (loss vs step, $\|\theta\|$ vs step) under `results/manifold_diagnostics_<task>_seed<seed>.png`,
-- supports `--workers N` (uses `ProcessPoolExecutor`),
-- prints per-10-step heartbeats with ETA.
-
-This script's only job is to verify whether the *mechanism* the torus is supposed to fix (parameter drift in flat baselines) actually happens on each task. **If flat baselines don't drift, RQNG can't help, period.**
+### 2.6 Diagnostics
+The dedicated `experiments/manifold_diagnostics.py` script has been folded into `run_all_parallel.py`. The same diagnostic comparison (4 `torus_concept` optimizers on one task, per-step $\|\theta\|$ trajectory) is now reproduced by running the unified runner with a single seed and a single task, e.g.:
+```bash
+python run_all_parallel.py --tasks vqe_stokes_overparam_long \
+    --optimizers torus_concept --seeds 0
+```
+The runner emits a `theta.png` per task block (mean ± std band across seeds), so the trajectory plot is always produced — single-seed runs render with a flat zero-width std band, identical in shape to the old `manifold_diagnostics` 2-panel layout.
 
 ### 2.7 Slurm: `run.sbatch`
 Phase 1 invocation pattern (not yet baked into the defaults):
 ```bash
-TASK_TIER=manifold_torus OPT_TIER=torus_concept sbatch run.sbatch
+TASKS=manifold_torus OPTS=torus_concept sbatch run.sbatch
 ```
-This would launch ~140 jobs (7 tasks × 4 optimizers × 5 seeds).
+This would launch ~140 jobs (7 tasks × 4 optimizers × 5 seeds). Diagnostic-style runs use the same script with `SEEDS=0` and a single task name, e.g. `TASKS=vqe_stokes_overparam_long OPTS=torus_concept SEEDS=0 sbatch run.sbatch`.
 
 ---
 
@@ -152,7 +150,7 @@ Final state per optimizer:
 
 Key observation: **Adam moved $\|\theta\|$ by 0.39 over 300 steps. QNG_block moved by ~0.01.** The "overparameterized circuit accumulates $\|\theta\|$" prediction did not happen on the QNG-family optimizers, on this task, in 300 steps.
 
-Plot: `results/manifold_diagnostics_vqe_stokes_overparam_long_seed0.png`.
+Plot: `results/<run>/plots/vqe_stokes_overparam_long__for_RQNG/theta.png` (produced by `python run_all_parallel.py --tasks vqe_stokes_overparam_long --optimizers torus_concept --seeds 0`).
 
 ### 4.2 Diagnostic 2 — `fit_high_periodic` (200 steps, seed 0, 4 workers)
 
@@ -170,7 +168,7 @@ Key observations:
 - All four optimizers are within ~0.6 in $\|\theta\|$ of each other. The "winding around $2\pi$" mechanism we wanted to favor the torus didn't show up.
 - Adam wins the loss race by a wide margin (0.402 vs 0.491). This is a *separate* finding — likely just that QNG is slow on this task at the chosen LR — but it has no bearing on the torus question.
 
-Plot: `results/manifold_diagnostics_fit_high_periodic_seed0.png`.
+Plot: `results/<run>/plots/fit_high_periodic__for_RQNG/theta.png` (produced by `python run_all_parallel.py --tasks fit_high_periodic --optimizers torus_concept --seeds 0`).
 
 ---
 
@@ -236,14 +234,14 @@ This is probably the highest-EV path. Phase 1 gave us a clean null with two diag
 | Manifold ABC + Torus + Euclidean | `src/manifolds.py` | Sphere is stubbed only |
 | Manifold-aware QNG step | `src/training.py` → `_apply_manifold_step` | dispatches via `manifold_for(opt_name)` |
 | FS-solve dispatch | `src/training.py` → `_natgrad_direction` | RQNG_torus_block routed to QNG_block branch |
-| Theta-norm logging | `src/training.py` → `train_with_data`, `train_vqe` (kwarg `track_theta_norm=True`) | returns `theta_norms` in result dict |
+| Theta-norm logging | `src/training.py` → `train_with_data`, `train_vqe` | always returns `theta_norms` in the result dict |
 | New Hamiltonians | `src/models.py` → `make_sk_hamiltonian`, `make_xxz_hamiltonian` | |
 | Optimizer registry / tiers | `run_all_parallel.py` → `OPTIMIZERS`, `OPT_PRIORITY`, `OPT_TIERS["torus_concept"]`, `TASK_TIERS["manifold_torus"]` | |
 | Worker funcs (4 new tasks) | `run_all_parallel.py` → `_run_vqe_stokes_overparam_long`, `_run_fit_high_periodic`, `_run_vqe_sk_spinglass`, `_run_vqe_xxz` | |
-| Diagnostics script | `experiments/manifold_diagnostics.py` | `--task {vqe_stokes_overparam_long, fit_high_periodic} --workers N --n_steps K --seed S` |
+| Diagnostics | `run_all_parallel.py` (single-task, single-seed mode) | `--tasks <task> --optimizers torus_concept --seeds 0` produces a `theta.png` per task block |
 | Plot styling | `src/visualization.py` → `COLORS`, `LABELS`, `INTENDED_OPTIMIZER_FAMILY`, `TASK_PLOT_SLUGS` | RQNG_torus_block = `#e377c2` |
-| Slurm invocation | `run.sbatch` | `TASK_TIER=manifold_torus OPT_TIER=torus_concept sbatch run.sbatch` |
-| Diagnostic plots produced | `results/manifold_diagnostics_vqe_stokes_overparam_long_seed0.png`, `results/manifold_diagnostics_fit_high_periodic_seed0.png` | |
+| Slurm invocation | `run.sbatch` | `TASKS=manifold_torus OPTS=torus_concept sbatch run.sbatch` |
+| Diagnostic plots produced | `results/<run>/plots/<task>__for_RQNG/theta.png` for both diagnostic tasks (replaces the old `manifold_diagnostics_*` PNGs) | |
 
 ---
 

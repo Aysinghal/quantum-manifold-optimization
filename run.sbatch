@@ -42,26 +42,47 @@ echo "  PennyLane: $(python -c 'import pennylane; print(pennylane.__version__)')
 # advantage, so a noisy default would muddy a negative result.
 # Override with `SHOTS=1000 sbatch run.sbatch` for a hardware-realistic run.
 SHOTS="${SHOTS:-0}"
-# TASK_TIER selects which task tiers from run_all_parallel.TASK_TIERS run.
-# OPT_TIER selects which optimizer tiers from run_all_parallel.OPT_TIERS run.
-# Both accept comma-separated lists; the runner takes the union.
+# TASKS / OPTS feed run_all_parallel.py's --tasks / --optimizers flags.
+# Each accepts a comma-separated list of TASK_TIERS / OPT_TIERS keys OR
+# individual task/optimizer names (or any mix); the runner takes the union.
+# SEEDS is optional and overrides the default [0,1,2,3,4].
 # Defaults run the original baseline + rigged tasks under the standard
 # QNG sweep (no QNG_full). Override examples:
-#   TASK_TIER=qng_advantage   OPT_TIER=flat_only       sbatch run.sbatch
-#   TASK_TIER=sanity          OPT_TIER=qng_full_sweep  sbatch run.sbatch
-#   TASK_TIER=sanity          OPT_TIER=full_qng_sweep  sbatch run.sbatch  # incl. QNG_full
-#   TASK_TIER=manifold_torus  OPT_TIER=torus_concept   sbatch run.sbatch  # Phase 1 (null)
-#   TASK_TIER=manifold_sphere OPT_TIER=sphere_concept  sbatch run.sbatch  # Phase 2 (this run)
+#   TASKS=qng_advantage   OPTS=flat_only       sbatch run.sbatch
+#   TASKS=sanity          OPTS=qng_full_sweep  sbatch run.sbatch
+#   TASKS=sanity          OPTS=full_qng_sweep  sbatch run.sbatch  # incl. QNG_full
+#   TASKS=manifold_torus  OPTS=torus_concept   sbatch run.sbatch  # Phase 1 (null)
+#   TASKS=manifold_sphere OPTS=sphere_concept  sbatch run.sbatch  # Phase 2
+#   TASKS=vqe_stokes_overparam_long OPTS=torus_concept SEEDS=0 sbatch run.sbatch
+#       (single-task, single-seed diagnostic-style run; produces theta plot)
 # Phase 2 job count: 7 opts x 8 tasks x 5 seeds = 280 jobs.
-TASK_TIER="${TASK_TIER:-sanity,qng_advantage}"
-OPT_TIER="${OPT_TIER:-qng_full_sweep}"
+TASKS="${TASKS:-sanity,qng_advantage}"
+OPTS="${OPTS:-qng_full_sweep}"
 echo "  Shots    : $SHOTS  (0 = analytic noiseless + adjoint; >0 = shot-noisy + parameter-shift)"
-echo "  TaskTier : $TASK_TIER  (comma-separated TASK_TIERS keys)"
-echo "  OptTier  : $OPT_TIER   (comma-separated OPT_TIERS keys)"
+echo "  Tasks    : $TASKS  (tier names and/or individual task names)"
+echo "  Opts     : $OPTS   (tier names and/or individual optimizer names)"
+if [ -n "$SEEDS" ]; then
+    echo "  Seeds    : $SEEDS  (overriding default [0,1,2,3,4])"
+fi
+if [ -n "$TITLE" ]; then
+    echo "  Title    : $TITLE  (slugified into the run-folder name)"
+fi
 echo "======================================================================"
 
-python -u run_all_parallel.py --workers $SLURM_CPUS_PER_TASK --shots $SHOTS \
-    --task-tier $TASK_TIER --opt-tier $OPT_TIER
+SEEDS_FLAG=""
+if [ -n "$SEEDS" ]; then
+    SEEDS_FLAG="--seeds $SEEDS"
+fi
+
+# TITLE may contain spaces, so we branch and quote it as a single argv
+# entry rather than splatting it through an unquoted variable.
+if [ -n "$TITLE" ]; then
+    python -u run_all_parallel.py --workers $SLURM_CPUS_PER_TASK --shots $SHOTS \
+        --tasks $TASKS --optimizers $OPTS $SEEDS_FLAG --title "$TITLE"
+else
+    python -u run_all_parallel.py --workers $SLURM_CPUS_PER_TASK --shots $SHOTS \
+        --tasks $TASKS --optimizers $OPTS $SEEDS_FLAG
+fi
 
 echo "======================================================================"
 echo "  End      : $(date '+%Y-%m-%d %H:%M:%S')"
