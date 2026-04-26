@@ -1,7 +1,7 @@
 """Throwaway: reorganize a flat run's plots into the per-task folder layout.
 
 After this runs, the script can be deleted -- future runs already produce
-the new layout natively via run_all_parallel.py / experiments/*.py.
+the new layout natively via run_all_parallel.py.
 
 Usage:
     python tools/reorganize_run_plots.py results/2026-04-24_030537
