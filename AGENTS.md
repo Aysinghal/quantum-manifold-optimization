@@ -8,6 +8,13 @@ edits that are easy to miss.
 If anything below contradicts the code, the code is right. Update this
 file when registries / cross-file invariants change.
 
+> **Research context:** the conceptual story -- what we're chasing, what we've
+> tried, what we've learned, what's parked -- lives in
+> [RESEARCH_PATH.md](RESEARCH_PATH.md) and [research_reference.md](research_reference.md).
+> Read those before proposing any new optimizer, task, or manifold direction.
+> This file (`AGENTS.md`) covers the mechanical "where to plug a new thing in";
+> the research files cover "should we be building it at all."
+
 ## Repo orientation (30-second version)
 
 ```
@@ -48,10 +55,12 @@ sbatch run.sbatch  ->  run_all_parallel.py main()
    |- ProcessPoolExecutor dispatches _run_<task>(opt, lr, seed, progress, shots)
    |- Heartbeat thread reads `progress` dict + bench_smoke_estimates.json
    |    -> _predicted_duration falls back through:
-   |         (1) measured (task,opt) median  this run
-   |         (2) measured task median       this run
-   |         (3) bench JSON entry           prior runs
-   |         (4) None                       => LPT treats as 0 load
+   |         (1) measured (task,opt) median        this run, completed
+   |         (2) running (task,opt) extrapolation  this run, step>=5
+   |         (3) bench JSON entry                  prior runs
+   |         (4) None                              => LPT treats as 0 load
+   |       (cross-opt task medians are intentionally NOT used --
+   |        opt-to-opt per-step cost varies too much.)
    |- aggregate_seeds + plots written under results/<stamp>__<slug>/
    |- run_meta.json saved alongside.
 ```
@@ -158,7 +167,11 @@ silent gaps in the ETA and missing output blocks at the end of the run.
   scheduling is the whole point.
 - For a job with `step == 0` we use the predicted full-run duration minus
   elapsed (clamped at 0). The prediction chain is in `_predicted_duration`:
-  this-run measured -> this-run same-task -> bench JSON -> None.
+  this-run (task, opt) completed median -> this-run (task, opt) running
+  median (only siblings with `step >= 5`, extrapolated to a full wall) ->
+  bench JSON -> None. Cross-opt task medians are deliberately skipped --
+  per-step cost varies too much across optimizers for them to be a
+  reliable predictor.
 - `lookup_bench_full_run` keys on `(task, opt, mode)` where
   `mode = "analytic" if shots is None else f"shots={shots}"`. Keep that
   mode key in lockstep with the labels in `tests/bench_smoke.py::MODES`.

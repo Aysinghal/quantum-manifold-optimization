@@ -5,7 +5,7 @@
 #SBATCH --qos=scavenger
 #SBATCH --time=8:00:00
 #SBATCH --mem=32G
-#SBATCH --cpus-per-task=96
+#SBATCH --cpus-per-task=108
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --nodelist=cbcb26,vulcan46,cml35,quics00
@@ -61,22 +61,22 @@ OPTS="${OPTS:-qng_full_sweep}"
 echo "  Shots    : $SHOTS  (0 = analytic noiseless + adjoint; >0 = shot-noisy + parameter-shift)"
 echo "  Tasks    : $TASKS  (tier names and/or individual task names)"
 echo "  Opts     : $OPTS   (tier names and/or individual optimizer names)"
-if [ -n "$SEEDS" ]; then
+if [ -n "${SEEDS:-}" ]; then
     echo "  Seeds    : $SEEDS  (overriding default [0,1,2,3,4])"
 fi
-if [ -n "$TITLE" ]; then
+if [ -n "${TITLE:-}" ]; then
     echo "  Title    : $TITLE  (slugified into the run-folder name)"
 fi
 echo "======================================================================"
 
 SEEDS_FLAG=""
-if [ -n "$SEEDS" ]; then
+if [ -n "${SEEDS:-}" ]; then
     SEEDS_FLAG="--seeds $SEEDS"
 fi
 
 # TITLE may contain spaces, so we branch and quote it as a single argv
 # entry rather than splatting it through an unquoted variable.
-if [ -n "$TITLE" ]; then
+if [ -n "${TITLE:-}" ]; then
     python -u run_all_parallel.py --workers $SLURM_CPUS_PER_TASK --shots $SHOTS \
         --tasks $TASKS --optimizers $OPTS $SEEDS_FLAG --title "$TITLE"
 else

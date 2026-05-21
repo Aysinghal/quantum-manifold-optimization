@@ -248,9 +248,9 @@ def init_on_manifold(params, manifold, target_radius=None):
     """Project initial parameters onto the optimizer's manifold so the very
     first training step starts from a feasible point.
 
-    Sphere case (the only non-trivial one): rescale the flattened parameter
-    vector to ``||theta_flat|| = R``. The default radius is the **natural
-    shell** of a uniform-on-``[0, 2*pi)`` initialization,
+    Sphere case: rescale the flattened parameter vector to
+    ``||theta_flat|| = R``. The default radius is the **natural shell**
+    of a uniform-on-``[0, 2*pi)`` initialization,
 
         ``R* = 2*pi * sqrt(d / 3)``  with ``d = len(theta_flat)``,
 
@@ -260,6 +260,21 @@ def init_on_manifold(params, manifold, target_radius=None):
     constraint a fair comparison rather than a strawman: at ``R=1`` the
     sphere optimizers are forced into a vanishingly small parameter range
     and lose by construction. Pass ``target_radius`` to override.
+
+    Hyperbolic case (Lorentz model, Phase 2.5b): pass-through. The
+    Hyperbolic class stores the d-dim parameter array as the **spatial
+    coordinates** ``x_s`` of a Lorentz point and recomputes the temporal
+    coordinate ``x_0 = sqrt(1/c + ||x_s||^2)`` lazily; therefore *any*
+    d-dim parameter array is already a valid Lorentz spatial coordinate
+    and lies on the curvature-c hyperboloid by construction. We
+    deliberately keep the U(0, 2*pi) draw at its natural scale rather
+    than rescaling to ``||x_s|| = O(1)`` -- a small-radius init was
+    tried and rejected because it puts every PQC gate near identity,
+    which makes the Fubini-Study metric ``F`` near-singular and blows
+    up ``F^{-1} grad`` in QNG-family optimizers. Natural-scale init
+    keeps ``F`` well-conditioned; the projection-inflation failure
+    mode at large ``||x_s||`` is handled inside ``Hyperbolic.retract``
+    via geodesic step clipping (see ``Hyperbolic`` docstring).
 
     Euclidean and Torus return the input unchanged (Torus retract handles
     wrapping itself; the initial random uniform draw on ``[0, 2*pi)``

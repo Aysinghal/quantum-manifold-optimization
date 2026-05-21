@@ -89,6 +89,18 @@ def make_run_dir(base_dir, title=None):
     tmp = link + ".tmp"
     if os.path.islink(tmp) or os.path.exists(tmp):
         os.remove(tmp)
+    # If `latest` was previously created as a real (non-symlink) entry by a
+    # crashed run, os.replace cannot atomically swap a symlink onto it. Detect
+    # and remove that case so the swap below succeeds.
+    if os.path.lexists(link) and not os.path.islink(link):
+        if os.path.isdir(link):
+            try:
+                os.rmdir(link)  # only succeeds if empty -- safer than rmtree
+            except OSError:
+                import shutil
+                shutil.rmtree(link)
+        else:
+            os.remove(link)
     os.symlink(folder, tmp)
     os.replace(tmp, link)
 

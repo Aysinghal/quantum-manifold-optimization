@@ -97,8 +97,12 @@ def _save(fig, save_path):
 
 
 def convergence_plot(agg_by_opt, title="", xlabel="Step", ylabel="Loss",
-                     log_y=False, save_path=None):
+                     log_y=False, log_x=True, save_path=None):
     """Plot loss vs steps with shaded std bands.
+
+    Defaults to a log-scaled step axis so early-iteration behavior gets
+    most of the horizontal real estate -- that's where optimizer
+    differences show up before everyone collapses to the same plateau.
 
     agg_by_opt: {opt_name: {mean_losses, std_losses, ...}}
     """
@@ -113,19 +117,28 @@ def convergence_plot(agg_by_opt, title="", xlabel="Step", ylabel="Loss",
         ax.fill_between(steps, mean - std, mean + std, alpha=0.2, color=color)
     if log_y:
         ax.set_yscale("log")
+    if log_x:
+        ax.set_xscale("log")
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.grid(True, which="both", alpha=0.3)
     fig.tight_layout()
     if save_path:
         _save(fig, save_path)
     return fig, ax
 
 
-def resource_plot(agg_by_opt, title="", ylabel="Loss", log_y=False, save_path=None):
-    """Plot loss vs cumulative circuit evaluations."""
+def resource_plot(agg_by_opt, title="", ylabel="Loss", log_y=False,
+                  log_x=True, save_path=None):
+    """Plot loss vs cumulative circuit evaluations.
+
+    Same log-x default as ``convergence_plot``: the cheap-per-step
+    optimizers spend most of their evaluations near the origin and the
+    expensive-per-step QNG family quickly walks off the right edge --
+    log-x is the only way both regimes are legible on the same plot.
+    """
     fig, ax = plt.subplots(figsize=(8, 5))
     for opt_name, agg in agg_by_opt.items():
         mean = np.array(agg["mean_losses"])
@@ -137,11 +150,13 @@ def resource_plot(agg_by_opt, title="", ylabel="Loss", log_y=False, save_path=No
         ax.fill_between(evals, mean - std, mean + std, alpha=0.2, color=color)
     if log_y:
         ax.set_yscale("log")
+    if log_x:
+        ax.set_xscale("log")
     ax.set_xlabel("Cumulative circuit evaluations")
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.grid(True, which="both", alpha=0.3)
     fig.tight_layout()
     if save_path:
         _save(fig, save_path)
@@ -149,12 +164,17 @@ def resource_plot(agg_by_opt, title="", ylabel="Loss", log_y=False, save_path=No
 
 
 def theta_trajectory_plot(agg_by_opt, title="", xlabel="Step",
-                          ylabel=r"$\|\theta\|$", log_y=False, save_path=None):
+                          ylabel=r"$\|\theta\|$", log_y=False, log_x=True,
+                          save_path=None):
     """Plot ||theta|| vs step with shaded std bands across seeds.
 
     The manifold-diagnostic counterpart to ``convergence_plot``: needed to
     see whether flat baselines drift across torus cells, and whether sphere
     optimizers actually pin ||theta|| at the init radius.
+
+    Same log-x default as ``convergence_plot`` -- the interesting transient
+    (sphere optimizers locking onto the init radius, torus optimizers
+    drifting off the unit cell) all happens in the first few dozen steps.
 
     agg_by_opt: {opt_name: {mean_theta_norms, std_theta_norms, ...}}
     """
@@ -169,11 +189,13 @@ def theta_trajectory_plot(agg_by_opt, title="", xlabel="Step",
         ax.fill_between(steps, mean - std, mean + std, alpha=0.2, color=color)
     if log_y:
         ax.set_yscale("log")
+    if log_x:
+        ax.set_xscale("log")
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.grid(True, which="both", alpha=0.3)
     fig.tight_layout()
     if save_path:
         _save(fig, save_path)
@@ -259,7 +281,14 @@ def _fit_xtick_labels(ax, labels, fig, max_lines=3, min_fontsize=7,
 
 
 def final_loss_bar(agg_by_opt, title="", ylabel="Final loss", save_path=None):
-    """Bar chart of final loss/energy for each optimizer."""
+    """Bar chart of final loss/energy for each optimizer.
+
+    Y-axis is linear: bars are categorical (no start-vs-end story), and
+    log/symlog y on VQE energies (clustered around a negative ground
+    state) just squishes everything together. If you want order-of-
+    magnitude separation in final losses, look at the convergence plot's
+    last step instead -- that one already supports ``log_y=True``.
+    """
     names = list(agg_by_opt.keys())
     means = [agg_by_opt[n]["final_loss_mean"] for n in names]
     stds = [agg_by_opt[n]["final_loss_std"] for n in names]

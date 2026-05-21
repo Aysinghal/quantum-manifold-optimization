@@ -102,6 +102,21 @@ OPTIMIZERS = {
     "RQNG_sphere_block": {"lr": 0.05},
     "ProjQNG_sphere":    {"lr": 0.05},
     "ProjAdam_sphere":   {"lr": 0.05},
+    # Phase 2.5a sphere row completion: QNGAdam_v1 on the sphere. lr=0.05
+    # mirrors QNGAdam_v1_block exactly so cross-manifold comparisons
+    # ("does sphere help our strongest flat optimizer?") aren't confounded
+    # by step-size differences.
+    "ProjQNGAdam_v1_sphere": {"lr": 0.05},
+    "RQNGAdam_v1_sphere":    {"lr": 0.05},
+    # Phase 2.5b hyperbolic-on-PQC. Five optimizers mirror the Phase-2
+    # sphere lineup so the cross-manifold comparison (Euclidean vs sphere
+    # vs hyperbolic) is apples-to-apples on shared lr=0.05. ProjAdam reuses
+    # the Adam lr; the four QNG-flavored ones reuse the QNG_block lr.
+    "ProjAdam_hyperbolic":         {"lr": 0.05},
+    "ProjQNG_hyperbolic":          {"lr": 0.05},
+    "RQNG_hyperbolic_block":       {"lr": 0.05},
+    "ProjQNGAdam_v1_hyperbolic":   {"lr": 0.05},
+    "RQNGAdam_v1_hyperbolic":      {"lr": 0.05},
 }
 
 # LPT scheduling priorities. Higher = scheduled earlier so the longest-running
@@ -120,6 +135,15 @@ OPT_PRIORITY = {
     "RQNG_sphere_block":  50,
     "ProjQNG_sphere":     50,
     "ProjAdam_sphere":    10,
+    "ProjQNGAdam_v1_sphere": 50,
+    "RQNGAdam_v1_sphere":    50,
+    # Phase 2.5b hyperbolic. Same family bracketing as the sphere row:
+    # QNG-family at 50, ProjAdam at 10.
+    "ProjQNG_hyperbolic":          50,
+    "RQNG_hyperbolic_block":       50,
+    "ProjQNGAdam_v1_hyperbolic":   50,
+    "RQNGAdam_v1_hyperbolic":      50,
+    "ProjAdam_hyperbolic":         10,
     "Adam":               10,
     "GD":                 10,
 }
@@ -221,6 +245,23 @@ OPT_TIERS = {
         "Adam", "QNG_block", "QNGAdam_v1_block",
         "RQNG_torus_block",
         "RQNG_sphere_block", "ProjQNG_sphere", "ProjAdam_sphere",
+        # Phase 2.5a: QNGAdam_v1 on the sphere. Closes the missing row in
+        # the Phase-2 comparison (sphere-on-Adam and sphere-on-QNG already
+        # exist; this adds sphere-on-QNGAdam_v1 in both Proj and R variants).
+        "ProjQNGAdam_v1_sphere", "RQNGAdam_v1_sphere",
+    ],
+    # Phase 2.5b hyperbolic-on-PQC tier: five hyperbolic optimizers only.
+    # Designed to be combined at sbatch time with TASKS=manifold_sphere
+    # for the cross-manifold comparison (the 8 sphere-tier tasks already
+    # have flat / sphere baselines from Phase 2 and 2.5a, so the only
+    # missing rows are the hyperbolic ones). Sized to be runnable in one
+    # 200-job sweep (8 tasks x 5 opts x 5 seeds).
+    "hyperbolic_concept": [
+        "ProjAdam_hyperbolic",
+        "ProjQNG_hyperbolic",
+        "RQNG_hyperbolic_block",
+        "ProjQNGAdam_v1_hyperbolic",
+        "RQNGAdam_v1_hyperbolic",
     ],
 }
 
@@ -239,6 +280,12 @@ def _canonical_opt(opt_name):
         "MomentumQNG_block", "QNGAdam_v1_block", "QNGAdam_v2_block",
         "RQNG_torus_block", "RQNG_sphere_block",
         "ProjQNG_sphere", "ProjAdam_sphere",
+        "ProjQNGAdam_v1_sphere", "RQNGAdam_v1_sphere",
+        # Phase 2.5b hyperbolic optimizers -- not aliases, dispatch
+        # straight through to training.py per-name.
+        "ProjAdam_hyperbolic", "ProjQNG_hyperbolic",
+        "RQNG_hyperbolic_block",
+        "ProjQNGAdam_v1_hyperbolic", "RQNGAdam_v1_hyperbolic",
     ):
         return opt_name
     if opt_name.startswith("QNG_block"):
@@ -433,14 +480,24 @@ def _diff_method_for(opt_name, shots):
     if (opt_name.startswith("QNG")
             or opt_name.startswith("MomentumQNG")
             or opt_name.startswith("RQNG")
-            or opt_name == "ProjQNG_sphere"):
+            or opt_name in (
+                "ProjQNG_sphere", "ProjQNGAdam_v1_sphere",
+                "ProjQNG_hyperbolic", "ProjQNGAdam_v1_hyperbolic",
+            )):
+        # The Proj* QNG-flavored optimizers are in the explicit list (not
+        # caught by a prefix) because they don't start with "QNG" / "RQNG"
+        # but still touch the FS metric tensor and must run on
+        # parameter-shift. RQNG_hyperbolic_block / RQNGAdam_v1_hyperbolic
+        # are caught by the "RQNG" prefix branch above. ProjAdam_hyperbolic
+        # falls through to the None branch (same as ProjAdam_sphere) --
+        # plain Adam doesn't need parameter-shift in analytic mode.
         return "parameter-shift"
     return None  # let _resolve_diff_method pick based on shots
 
 
 # ── Bench builders ──────────────────────────────────────────────────────────
 #
-# tests/bench_smoke.py needs to invoke the same construction the workers above
+# bench_smoke.py needs to invoke the same construction the workers above
 # perform, but only for a handful of timed steps. Rather than duplicate the
 # 13 worker bodies (drift risk every time we add a task), each builder
 # below returns a closure ``run(n_steps)`` plus the production step count
@@ -728,24 +785,19 @@ def load_bench_estimates(path=BENCH_ESTIMATES_PATH):
         return None
 
 
-def lookup_bench_full_run(bench, task, opt_name, shots, steps_override=None):
+def lookup_bench_full_run(bench, task, opt_name, shots):
     """Predicted full-run wall time (seconds) for one (task, opt, shots)
     combo, pulled from a loaded bench JSON.
 
     ``shots`` is the runner's CLI value (None for analytic, int for shots).
-    ``steps_override`` is the global ``--steps N`` override; if set, the
-    bench's stored ``per_step_s`` is rescaled to ``per_step_s * N`` instead
-    of using the saved ``full_run_s`` (which assumed the production step
-    count). Falls through to None if no entry exists, which the heartbeat
-    treats as "no estimate available".
+    Falls through to None if no entry exists, which the heartbeat treats
+    as "no estimate available".
     """
     if not bench:
         return None
     mode_key = "analytic" if shots is None else f"shots={shots}"
     try:
         entry = bench["estimates"][task][opt_name][mode_key]
-        if steps_override is not None:
-            return float(entry["per_step_s"]) * int(steps_override)
         return float(entry["full_run_s"])
     except (KeyError, TypeError, ValueError):
         return None
@@ -753,11 +805,10 @@ def lookup_bench_full_run(bench, task, opt_name, shots, steps_override=None):
 
 
 
-def _run_fit1d(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_fit1d(opt_name, lr, seed, progress, shots):
     key = ("fit1d", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else REG_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     x_raw = np.linspace(-np.pi, np.pi, 20)
@@ -771,26 +822,25 @@ def _run_fit1d(opt_name, lr, seed, progress, shots, n_steps_override=None):
     )
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("fit1d", opt_name, seed, _drop_params(result))
 
 
-def _run_fit2d(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_fit2d(opt_name, lr, seed, progress, shots):
     key = ("fit2d", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else REG_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     g = np.linspace(-1, 1, 8)
@@ -806,26 +856,25 @@ def _run_fit2d(opt_name, lr, seed, progress, shots, n_steps_override=None):
     )
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("fit2d", opt_name, seed, _drop_params(result))
 
 
-def _run_vqe(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe(opt_name, lr, seed, progress, shots):
     key = ("vqe", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else VQE_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": VQE_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     circuit, _H = make_vqe_circuit(
@@ -834,29 +883,28 @@ def _run_vqe(opt_name, lr, seed, progress, shots, n_steps_override=None):
     )
     params = init_params_vqe(VQE_N_QUBITS, VQE_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=VQE_N_STEPS,
         n_layers=VQE_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": VQE_N_STEPS, "total_steps": VQE_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe", opt_name, seed, _drop_params(result))
 
 
-def _run_cls(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_cls(opt_name, lr, seed, progress, shots):
     from sklearn.datasets import make_moons
     from sklearn.preprocessing import MinMaxScaler
 
     key = ("cls", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else REG_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     X, y = make_moons(n_samples=CLS_N_DATA, noise=0.15, random_state=42)
@@ -873,13 +921,13 @@ def _run_cls(opt_name, lr, seed, progress, shots, n_steps_override=None):
     )
     params  = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="hinge", verbose=False,
         progress_cb=_cb,
     )
@@ -887,14 +935,14 @@ def _run_cls(opt_name, lr, seed, progress, shots, n_steps_override=None):
     preds = [float(circuit(result["params"], x)) for x in x_train]
     result["final_accuracy"] = accuracy(preds, [float(yi) for yi in y])
 
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("cls", opt_name, seed, _drop_params(result))
 
 
 # ── Tier 1 workers ──────────────────────────────────────────────────────
 
-def _run_vqe_stokes(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe_stokes(opt_name, lr, seed, progress, shots):
     """A1: Stokes-style mini-VQE -- favors vanilla QNG.
 
     H = Z_0 (x) Z_1 only, on a 6q x 6L circuit. Massive parameter redundancy
@@ -904,8 +952,7 @@ def _run_vqe_stokes(opt_name, lr, seed, progress, shots, n_steps_override=None):
     """
     key = ("vqe_stokes", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else STOKES_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": STOKES_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     H = make_stokes_hamiltonian(STOKES_N_QUBITS)
@@ -915,22 +962,22 @@ def _run_vqe_stokes(opt_name, lr, seed, progress, shots, n_steps_override=None):
     )
     params = init_params_vqe(STOKES_N_QUBITS, STOKES_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=STOKES_N_STEPS,
         n_layers=STOKES_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": STOKES_N_STEPS, "total_steps": STOKES_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe_stokes", opt_name, seed, _drop_params(result))
 
 
-def _run_vqe_heis_ring(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe_heis_ring(opt_name, lr, seed, progress, shots):
     """B1: Frustrated 4q Heisenberg ring -- favors MomentumQNG.
 
     Antiferromagnetic Heisenberg on a periodic 4-site ring. Rugged-but-smooth
@@ -940,8 +987,7 @@ def _run_vqe_heis_ring(opt_name, lr, seed, progress, shots, n_steps_override=Non
     """
     key = ("vqe_heis_ring", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else HEIS_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": HEIS_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     H = make_heisenberg_ring_hamiltonian(HEIS_N_QUBITS, J=HEIS_J, periodic=True)
@@ -951,22 +997,22 @@ def _run_vqe_heis_ring(opt_name, lr, seed, progress, shots, n_steps_override=Non
     )
     params = init_params_vqe(HEIS_N_QUBITS, HEIS_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=HEIS_N_STEPS,
         n_layers=HEIS_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": HEIS_N_STEPS, "total_steps": HEIS_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe_heis_ring", opt_name, seed, _drop_params(result))
 
 
-def _run_fit_multifreq1d(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_fit_multifreq1d(opt_name, lr, seed, progress, shots):
     """C1: Multi-frequency 1D regression -- favors QNG-Adam hybrids.
 
     y = sin x + 0.4 sin 5x + 0.2 sin 13x, fit on 30 points in [-pi, pi].
@@ -977,8 +1023,7 @@ def _run_fit_multifreq1d(opt_name, lr, seed, progress, shots, n_steps_override=N
     """
     key = ("fit_multifreq1d", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else REG_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     x_raw = np.linspace(-np.pi, np.pi, 30)
@@ -992,22 +1037,22 @@ def _run_fit_multifreq1d(opt_name, lr, seed, progress, shots, n_steps_override=N
     )
     params = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("fit_multifreq1d", opt_name, seed, _drop_params(result))
 
 
-def _run_cls_moons_hard(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_cls_moons_hard(opt_name, lr, seed, progress, shots):
     """D1: High-noise two-moons classification -- favors Adam.
 
     make_moons with noise=0.40 (vs 0.15 for the original `cls`). The classes
@@ -1020,8 +1065,7 @@ def _run_cls_moons_hard(opt_name, lr, seed, progress, shots, n_steps_override=No
 
     key = ("cls_moons_hard", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else REG_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": REG_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     X, y = make_moons(n_samples=CLS_HARD_N_DATA, noise=CLS_HARD_NOISE, random_state=42)
@@ -1038,13 +1082,13 @@ def _run_cls_moons_hard(opt_name, lr, seed, progress, shots, n_steps_override=No
     )
     params = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=REG_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="hinge", verbose=False,
         progress_cb=_cb,
     )
@@ -1052,14 +1096,14 @@ def _run_cls_moons_hard(opt_name, lr, seed, progress, shots, n_steps_override=No
     preds = [float(circuit(result["params"], x)) for x in x_train]
     result["final_accuracy"] = accuracy(preds, [float(yi) for yi in y])
 
-    progress[key] = {"status": "done", "step": n_steps, "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": REG_N_STEPS, "total_steps": REG_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("cls_moons_hard", opt_name, seed, _drop_params(result))
 
 
 # ── Phase 1 (manifold_torus tier) workers ───────────────────────────────
 
-def _run_vqe_stokes_overparam_long(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe_stokes_overparam_long(opt_name, lr, seed, progress, shots):
     """Phase 1: massively-overparameterized Stokes VQE on a long horizon.
 
     Same H = Z_0 (x) Z_1 as `vqe_stokes`, but the circuit is 8 qubits x 8
@@ -1070,8 +1114,7 @@ def _run_vqe_stokes_overparam_long(opt_name, lr, seed, progress, shots, n_steps_
     """
     key = ("vqe_stokes_overparam_long", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else STOKES_LONG_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": STOKES_LONG_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     H = make_stokes_hamiltonian(STOKES_LONG_N_QUBITS)
@@ -1081,23 +1124,23 @@ def _run_vqe_stokes_overparam_long(opt_name, lr, seed, progress, shots, n_steps_
     )
     params = init_params_vqe(STOKES_LONG_N_QUBITS, STOKES_LONG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=STOKES_LONG_N_STEPS,
         n_layers=STOKES_LONG_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps,
-                     "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": STOKES_LONG_N_STEPS,
+                     "total_steps": STOKES_LONG_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe_stokes_overparam_long", opt_name, seed, _drop_params(result))
 
 
-def _run_fit_high_periodic(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_fit_high_periodic(opt_name, lr, seed, progress, shots):
     """Phase 1: fit y = sin(7x) on x in [-3*pi, 3*pi], 60 points, 200 steps.
 
     High-frequency single-tone target spanning several full rotations of x.
@@ -1107,8 +1150,7 @@ def _run_fit_high_periodic(opt_name, lr, seed, progress, shots, n_steps_override
     """
     key = ("fit_high_periodic", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else FIT_HIGH_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": FIT_HIGH_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     x_raw = np.linspace(-FIT_HIGH_X_SPAN, FIT_HIGH_X_SPAN, FIT_HIGH_N_DATA)
@@ -1122,23 +1164,23 @@ def _run_fit_high_periodic(opt_name, lr, seed, progress, shots, n_steps_override
     )
     params = init_params_regression(REG_N_QUBITS, REG_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_with_data(
         circuit, params, x_train, y_train,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=FIT_HIGH_N_STEPS,
         n_layers=REG_N_LAYERS, loss_type="mse", verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps,
-                     "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": FIT_HIGH_N_STEPS,
+                     "total_steps": FIT_HIGH_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("fit_high_periodic", opt_name, seed, _drop_params(result))
 
 
-def _run_vqe_sk_spinglass(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe_sk_spinglass(opt_name, lr, seed, progress, shots):
     """Phase 1 (hard bucket): Sherrington-Kirkpatrick spin glass.
 
     H = sum_{i<j} J_{ij} Z_i Z_j, J_{ij} ~ U(-1,1), 6q x 4L. Notoriously
@@ -1152,8 +1194,7 @@ def _run_vqe_sk_spinglass(opt_name, lr, seed, progress, shots, n_steps_override=
     """
     key = ("vqe_sk_spinglass", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else SK_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": SK_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     task_shots = SK_SHOTS
@@ -1164,23 +1205,23 @@ def _run_vqe_sk_spinglass(opt_name, lr, seed, progress, shots, n_steps_override=
     )
     params = init_params_vqe(SK_N_QUBITS, SK_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=SK_N_STEPS,
         n_layers=SK_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps,
-                     "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": SK_N_STEPS,
+                     "total_steps": SK_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe_sk_spinglass", opt_name, seed, _drop_params(result))
 
 
-def _run_vqe_xxz(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe_xxz(opt_name, lr, seed, progress, shots):
     """Phase 1 (hard bucket): isotropic XXZ chain (delta = 1).
 
     H = sum_i (X_i X_{i+1} + Y_i Y_{i+1} + Z_i Z_{i+1}) on an 8q open chain,
@@ -1192,8 +1233,7 @@ def _run_vqe_xxz(opt_name, lr, seed, progress, shots, n_steps_override=None):
     """
     key = ("vqe_xxz", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else XXZ_N_STEPS
-    progress[key] = {"status": "running", "step": 0, "total_steps": n_steps,
+    progress[key] = {"status": "running", "step": 0, "total_steps": XXZ_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     task_shots = XXZ_SHOTS
@@ -1204,25 +1244,25 @@ def _run_vqe_xxz(opt_name, lr, seed, progress, shots, n_steps_override=None):
     )
     params = init_params_vqe(XXZ_N_QUBITS, XXZ_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
-        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=n_steps,
+        opt_name=_canonical_opt(opt_name), lr=lr, n_steps=XXZ_N_STEPS,
         n_layers=XXZ_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps,
-                     "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": XXZ_N_STEPS,
+                     "total_steps": XXZ_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe_xxz", opt_name, seed, _drop_params(result))
 
 
 # ── Phase 2 (manifold_sphere tier) workers ──────────────────────────────
 
-def _run_vqe_overparam_heis(opt_name, lr, seed, progress, shots, n_steps_override=None):
+def _run_vqe_overparam_heis(opt_name, lr, seed, progress, shots):
     """Phase 2: overparameterized Heisenberg ring -- the natural sphere
     stress test.
 
@@ -1235,9 +1275,8 @@ def _run_vqe_overparam_heis(opt_name, lr, seed, progress, shots, n_steps_overrid
     """
     key = ("vqe_overparam_heis", opt_name, seed)
     t0 = time.perf_counter()
-    n_steps = n_steps_override if n_steps_override is not None else HEIS_OVERPARAM_N_STEPS
     progress[key] = {"status": "running", "step": 0,
-                     "total_steps": n_steps,
+                     "total_steps": HEIS_OVERPARAM_N_STEPS,
                      "loss": None, "elapsed": 0.0}
 
     H = make_heisenberg_ring_hamiltonian(
@@ -1249,19 +1288,19 @@ def _run_vqe_overparam_heis(opt_name, lr, seed, progress, shots, n_steps_overrid
     )
     params = init_params_vqe(HEIS_OVERPARAM_N_QUBITS, HEIS_OVERPARAM_N_LAYERS, seed)
 
-    def _cb(step, n_steps_cb, loss):
-        progress[key] = {"status": "running", "step": step, "total_steps": n_steps_cb,
+    def _cb(step, n_steps, loss):
+        progress[key] = {"status": "running", "step": step, "total_steps": n_steps,
                          "loss": loss, "elapsed": time.perf_counter() - t0}
 
     result = train_vqe(
         circuit, params,
         opt_name=_canonical_opt(opt_name), lr=lr,
-        n_steps=n_steps,
+        n_steps=HEIS_OVERPARAM_N_STEPS,
         n_layers=HEIS_OVERPARAM_N_LAYERS, verbose=False,
         progress_cb=_cb,
     )
-    progress[key] = {"status": "done", "step": n_steps,
-                     "total_steps": n_steps,
+    progress[key] = {"status": "done", "step": HEIS_OVERPARAM_N_STEPS,
+                     "total_steps": HEIS_OVERPARAM_N_STEPS,
                      "loss": result["losses"][-1], "elapsed": time.perf_counter() - t0}
     return ("vqe_overparam_heis", opt_name, seed, _drop_params(result))
 
@@ -1279,7 +1318,7 @@ def _fmt_elapsed(seconds):
 
 def _heartbeat_loop(progress, jobs, total_jobs, t_start, stop_event,
                     n_workers, active_opts, interval=20, full_every=60,
-                    bench=None, shots=None, steps_override=None):
+                    bench=None, shots=None):
     """Print a compact one-liner every `interval` seconds and a full breakdown
     every `full_every` seconds.
 
@@ -1287,11 +1326,17 @@ def _heartbeat_loop(progress, jobs, total_jobs, t_start, stop_event,
     work (running + pending) onto `n_workers` workers. Each remaining job is
     assigned a predicted wall time from this priority chain:
       1. Median of completed (task, opt) wall times this run.
-      2. Median of completed wall times for the same task (any opt).
+      2. Median of live-extrapolated full walls across running sibling
+         seeds of the same (task, opt) that have logged >= 5 steps. The
+         step threshold filters out the noisy warmup regime where
+         elapsed/step is dominated by import + compile.
       3. The bench_smoke estimate for (task, opt, mode) -- only if `bench`
-         was supplied. This is the "fresh start" case where nothing has
-         finished yet, so the on-the-fly history is empty.
+         was supplied. This is the "fresh start" case where no sibling has
+         finished AND none have crossed the warmup threshold yet.
       4. None -- the LPT simulator treats unknowns as zero load.
+    Cross-opt task medians are intentionally NOT used: optimizers vary too
+    much per-step (parameter-shift QNG vs. cheap flat opts) for "any opt on
+    this task" to be a reliable predictor.
     For currently-running jobs that have logged at least one step, we use
     elapsed/step * (total_steps - step) instead of the predictions above.
 
@@ -1317,34 +1362,51 @@ def _heartbeat_loop(progress, jobs, total_jobs, t_start, stop_event,
 
         # ── Wall-time history per (task, opt) from done jobs ────────────
         # Reconstructed each tick from the snapshot so memory stays bounded
-        # by total job count.
+        # by total job count. running_history holds live-extrapolated full
+        # walls (elapsed/step * total_steps) for any sibling seed of the
+        # same (task, opt) that has logged at least RUNNING_MIN_STEP steps;
+        # the threshold filters out the noisy first-few-steps regime where
+        # elapsed/step is dominated by import + compile + warmup.
+        RUNNING_MIN_STEP = 5
         wall_history = defaultdict(list)
+        running_history = defaultdict(list)
         per_task_done = defaultdict(int)
         per_task_walls = defaultdict(list)
         per_opt_done = defaultdict(int)
         per_opt_walls = defaultdict(list)
         for (task, opt, _seed), v in snap.items():
-            if v["status"] == "done":
+            status = v.get("status")
+            if status == "done":
                 wall_history[(task, opt)].append(v["elapsed"])
                 per_task_done[task] += 1
                 per_task_walls[task].append(v["elapsed"])
                 per_opt_done[opt] += 1
                 per_opt_walls[opt].append(v["elapsed"])
+            elif status == "running":
+                step = v.get("step", 0) or 0
+                tot  = v.get("total_steps") or 0
+                el   = v.get("elapsed", 0.0) or 0.0
+                if step >= RUNNING_MIN_STEP and tot > 0:
+                    running_history[(task, opt)].append((el / step) * tot)
 
         def _predicted_duration(task, opt):
             if (task, opt) in wall_history:
                 return float(np.median(wall_history[(task, opt)]))
-            same_task = [w for (t, _), ws in wall_history.items()
-                         if t == task for w in ws]
-            if same_task:
-                return float(np.median(same_task))
-            # Bench fallback: lookup_bench_full_run returns the predicted
-            # full-run wall for this (task, opt, shots-mode) tuple, or None
-            # if bench is missing or the entry isn't there. Returning None
-            # tells _lpt_simulate to treat this load as 0. When the runner
-            # passed --steps N, we rescale by N so the ETA matches the
-            # shorter run rather than the saved production-step total.
-            return lookup_bench_full_run(bench, task, opt, shots, steps_override)
+            # If a same-(task, opt) seed is already running with enough
+            # steps to be informative, use the live-extrapolated full wall
+            # across those siblings. This is preferred over the bench
+            # because it reflects the current box / concurrency. Only the
+            # completed-median tier above wins over it.
+            if (task, opt) in running_history:
+                return float(np.median(running_history[(task, opt)]))
+            # Cross-opt task medians are intentionally skipped here -- per-step
+            # cost varies too much across optimizers for "any opt on this task"
+            # to be a useful predictor. Fall through to the bench.
+            # lookup_bench_full_run returns the predicted full-run wall for
+            # this (task, opt, shots-mode) tuple, or None if bench is missing
+            # or the entry isn't there. Returning None tells _lpt_simulate to
+            # treat this load as 0.
+            return lookup_bench_full_run(bench, task, opt, shots)
 
         def _running_remaining(task, opt, info):
             step = info["step"]
@@ -1475,28 +1537,31 @@ def _heartbeat_loop(progress, jobs, total_jobs, t_start, stop_event,
                     f"    {opt:<20s} mean={mean_s:<8s} done {done_n}/{tot_n}"
                 )
 
-            # ── Top-3 in-flight by predicted total wall ─────────────────
+            # ── Top-3 in-flight by best-info remaining wall ─────────────
+            # Ranking uses the same fallback chain as the overall ETA via
+            # _running_remaining: live-rate extrapolation once step > 0,
+            # else (this-run median or bench) - elapsed, else None.
             if running:
                 def _bottleneck_key(kv):
                     (task, opt, _seed), info = kv
-                    pred = _predicted_duration(task, opt)
-                    pred_v = pred if pred is not None else 0.0
-                    return (-pred_v, -info["elapsed"])
+                    rem = _running_remaining(task, opt, info)
+                    rem_v = rem if rem is not None else 0.0
+                    return (-rem_v, -info["elapsed"])
 
                 running.sort(key=_bottleneck_key)
-                print("\n  Highest-impact in-flight (sorted by predicted total wall):")
+                print("\n  Highest-impact in-flight (sorted by remaining wall):")
                 for (task, opt, seed), info in running[:3]:
                     step = info["step"]
                     tot  = info["total_steps"]
                     loss_s = f"{info['loss']:.4f}" if info["loss"] is not None else "..."
                     el_s = _fmt_elapsed(info["elapsed"])
-                    pred = _predicted_duration(task, opt)
-                    pred_s = _fmt_elapsed(pred) if pred is not None else "n/a"
+                    rem = _running_remaining(task, opt, info)
+                    rem_s = _fmt_elapsed(rem) if rem is not None else "n/a"
                     label = TASK_LABELS.get(task, task)
                     print(
                         f"    {label} / {opt} / seed={seed}"
                         f"  step {step:>3d}/{tot}  loss={loss_s}"
-                        f"  elapsed={el_s}  pred={pred_s}"
+                        f"  elapsed={el_s}  rem={rem_s}"
                     )
 
         print(f"{'':─<70}", flush=True)
@@ -1547,18 +1612,7 @@ def main():
              "results/2026-04-25_204500__rqng_torus_diag), and the raw title "
              "plus full CLI is preserved in <run>/run_meta.json.",
     )
-    parser.add_argument(
-        "--steps", type=int, default=None,
-        help="Global step-count override. If set, every task uses this number "
-             "of optimization steps instead of its production constant "
-             "(REG_N_STEPS, VQE_N_STEPS, etc.). Useful for quick all-task "
-             "smoke runs (e.g. --steps 10). Bench-derived ETAs in the "
-             "heartbeat are rescaled accordingly.",
-    )
     args = parser.parse_args()
-
-    if args.steps is not None and args.steps < 1:
-        raise SystemExit(f"--steps must be >= 1 (got {args.steps})")
 
     all_individual_tasks = {t for tasks in TASK_TIERS.values() for t in tasks}
     all_individual_opts = set(OPTIMIZERS.keys())
@@ -1592,7 +1646,6 @@ def main():
         "active_opt_tiers": active_opt_tiers,
         "active_opts": active_opts,
         "seeds": active_seeds,
-        "steps_override": args.steps,
     }
     with open(os.path.join(results_dir, "run_meta.json"), "w") as f:
         json.dump(run_meta, f, indent=2)
@@ -1646,8 +1699,6 @@ def main():
     print(f"  Tasks   : {active_task_tiers or '(individuals only)'} -> {', '.join(active_tasks)}")
     print(f"  Opts    : {active_opt_tiers or '(individuals only)'}  -> {', '.join(active_opts)}")
     print(f"  Seeds   : {active_seeds}")
-    if args.steps is not None:
-        print(f"  Steps   : {args.steps}  (global override)")
     print(f"  Shots   : {shots_banner}")
     print(f"  VQE     : {VQE_N_QUBITS} qubits, {VQE_N_LAYERS} layers")
     bench_estimates = load_bench_estimates()
@@ -1671,8 +1722,7 @@ def main():
         target=_heartbeat_loop,
         args=(progress, jobs, total, t_start, stop_heartbeat,
               n_workers, active_opts),
-        kwargs={"bench": bench_estimates, "shots": shots,
-                "steps_override": args.steps},
+        kwargs={"bench": bench_estimates, "shots": shots},
         daemon=True,
     )
     hb_thread.start()
@@ -1680,7 +1730,7 @@ def main():
     with ProcessPoolExecutor(max_workers=n_workers) as pool:
         future_map = {}
         for fn, _task, opt_name, lr, seed in jobs:
-            fut = pool.submit(fn, opt_name, lr, seed, progress, shots, args.steps)
+            fut = pool.submit(fn, opt_name, lr, seed, progress, shots)
             future_map[fut] = (fn.__name__, opt_name, seed)
 
         done_count = 0

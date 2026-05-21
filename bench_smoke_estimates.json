@@ -1,0 +1,3163 @@
+{
+  "generated_at": "2026-04-26T23:56:44",
+  "last_run_started": "2026-04-26T23:46:41",
+  "host": "cbcb30.umiacs.umd.edu",
+  "warmup_steps": 1,
+  "timed_steps": 2,
+  "modes": [
+    "analytic",
+    "shots=1000"
+  ],
+  "n_tasks": 13,
+  "n_optimizers": 20,
+  "n_failures": 0,
+  "wall_total_s": 603.1479582850006,
+  "estimates": {
+    "fit1d": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.11803568250616081,
+          "prod_steps": 100,
+          "full_run_s": 11.803568250616081
+        },
+        "shots=1000": {
+          "per_step_s": 1.0975380585005041,
+          "prod_steps": 100,
+          "full_run_s": 109.75380585005041
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.09949748350481968,
+          "prod_steps": 100,
+          "full_run_s": 9.949748350481968
+        },
+        "shots=1000": {
+          "per_step_s": 1.0855877985013649,
+          "prod_steps": 100,
+          "full_run_s": 108.55877985013649
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 1.3303632120077964,
+          "prod_steps": 100,
+          "full_run_s": 133.03632120077964
+        },
+        "shots=1000": {
+          "per_step_s": 1.5238953660009429,
+          "prod_steps": 100,
+          "full_run_s": 152.3895366000943
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 1.3116102935018716,
+          "prod_steps": 100,
+          "full_run_s": 131.16102935018716
+        },
+        "shots=1000": {
+          "per_step_s": 1.5247282369964523,
+          "prod_steps": 100,
+          "full_run_s": 152.47282369964523
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 1.330923144996632,
+          "prod_steps": 100,
+          "full_run_s": 133.0923144996632
+        },
+        "shots=1000": {
+          "per_step_s": 1.5274797964957543,
+          "prod_steps": 100,
+          "full_run_s": 152.74797964957543
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 1.3189597974997014,
+          "prod_steps": 100,
+          "full_run_s": 131.89597974997014
+        },
+        "shots=1000": {
+          "per_step_s": 1.530955943497247,
+          "prod_steps": 100,
+          "full_run_s": 153.0955943497247
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 1.3340260944969486,
+          "prod_steps": 100,
+          "full_run_s": 133.40260944969486
+        },
+        "shots=1000": {
+          "per_step_s": 1.5235424785059877,
+          "prod_steps": 100,
+          "full_run_s": 152.35424785059877
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 1.3140740045055281,
+          "prod_steps": 100,
+          "full_run_s": 131.4074004505528
+        },
+        "shots=1000": {
+          "per_step_s": 1.5268289265077328,
+          "prod_steps": 100,
+          "full_run_s": 152.68289265077328
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 4.045130975500797,
+          "prod_steps": 100,
+          "full_run_s": 404.5130975500797
+        },
+        "shots=1000": {
+          "per_step_s": 4.917794973502168,
+          "prod_steps": 100,
+          "full_run_s": 491.77949735021684
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 1.31424295900797,
+          "prod_steps": 100,
+          "full_run_s": 131.424295900797
+        },
+        "shots=1000": {
+          "per_step_s": 1.5295127069985028,
+          "prod_steps": 100,
+          "full_run_s": 152.95127069985028
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 1.320828742987942,
+          "prod_steps": 100,
+          "full_run_s": 132.0828742987942
+        },
+        "shots=1000": {
+          "per_step_s": 1.5286706184997456,
+          "prod_steps": 100,
+          "full_run_s": 152.86706184997456
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 1.3241858194960514,
+          "prod_steps": 100,
+          "full_run_s": 132.41858194960514
+        },
+        "shots=1000": {
+          "per_step_s": 1.5173665420006728,
+          "prod_steps": 100,
+          "full_run_s": 151.73665420006728
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.09967663649877068,
+          "prod_steps": 100,
+          "full_run_s": 9.967663649877068
+        },
+        "shots=1000": {
+          "per_step_s": 1.0896520289970795,
+          "prod_steps": 100,
+          "full_run_s": 108.96520289970795
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.7494335165247321,
+          "prod_steps": 100,
+          "full_run_s": 74.94335165247321
+        },
+        "shots=1000": {
+          "per_step_s": 0.8457708575006109,
+          "prod_steps": 100,
+          "full_run_s": 84.57708575006109
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.748392262001289,
+          "prod_steps": 100,
+          "full_run_s": 74.8392262001289
+        },
+        "shots=1000": {
+          "per_step_s": 0.8639264910016209,
+          "prod_steps": 100,
+          "full_run_s": 86.39264910016209
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.08993491198634729,
+          "prod_steps": 100,
+          "full_run_s": 8.993491198634729
+        },
+        "shots=1000": {
+          "per_step_s": 0.6721208010276314,
+          "prod_steps": 100,
+          "full_run_s": 67.21208010276314
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.8447279699903447,
+          "prod_steps": 100,
+          "full_run_s": 84.47279699903447
+        },
+        "shots=1000": {
+          "per_step_s": 0.9099684699904174,
+          "prod_steps": 100,
+          "full_run_s": 90.99684699904174
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 0.8388920275028795,
+          "prod_steps": 100,
+          "full_run_s": 83.88920275028795
+        },
+        "shots=1000": {
+          "per_step_s": 0.914742873981595,
+          "prod_steps": 100,
+          "full_run_s": 91.4742873981595
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.799349267501384,
+          "prod_steps": 100,
+          "full_run_s": 79.9349267501384
+        },
+        "shots=1000": {
+          "per_step_s": 0.9310595675196964,
+          "prod_steps": 100,
+          "full_run_s": 93.10595675196964
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.8168153815204278,
+          "prod_steps": 100,
+          "full_run_s": 81.68153815204278
+        },
+        "shots=1000": {
+          "per_step_s": 0.9499372990103438,
+          "prod_steps": 100,
+          "full_run_s": 94.99372990103438
+        }
+      }
+    },
+    "fit2d": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.3717704544978915,
+          "prod_steps": 100,
+          "full_run_s": 37.17704544978915
+        },
+        "shots=1000": {
+          "per_step_s": 5.12578216700058,
+          "prod_steps": 100,
+          "full_run_s": 512.578216700058
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.3737936254910892,
+          "prod_steps": 100,
+          "full_run_s": 37.37936254910892
+        },
+        "shots=1000": {
+          "per_step_s": 5.188997331002611,
+          "prod_steps": 100,
+          "full_run_s": 518.8997331002611
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 4.614107843503007,
+          "prod_steps": 100,
+          "full_run_s": 461.4107843503007
+        },
+        "shots=1000": {
+          "per_step_s": 5.629379354490084,
+          "prod_steps": 100,
+          "full_run_s": 562.9379354490084
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 4.604901051992783,
+          "prod_steps": 100,
+          "full_run_s": 460.49010519927833
+        },
+        "shots=1000": {
+          "per_step_s": 5.630663243995514,
+          "prod_steps": 100,
+          "full_run_s": 563.0663243995514
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 4.61841959899175,
+          "prod_steps": 100,
+          "full_run_s": 461.841959899175
+        },
+        "shots=1000": {
+          "per_step_s": 5.642389525994076,
+          "prod_steps": 100,
+          "full_run_s": 564.2389525994076
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 4.622168525995221,
+          "prod_steps": 100,
+          "full_run_s": 462.2168525995221
+        },
+        "shots=1000": {
+          "per_step_s": 5.623596759498469,
+          "prod_steps": 100,
+          "full_run_s": 562.3596759498469
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 4.620342987502227,
+          "prod_steps": 100,
+          "full_run_s": 462.03429875022266
+        },
+        "shots=1000": {
+          "per_step_s": 5.631038801497198,
+          "prod_steps": 100,
+          "full_run_s": 563.1038801497198
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 4.606779145004111,
+          "prod_steps": 100,
+          "full_run_s": 460.67791450041113
+        },
+        "shots=1000": {
+          "per_step_s": 5.6412645380041795,
+          "prod_steps": 100,
+          "full_run_s": 564.126453800418
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 7.3191660284937825,
+          "prod_steps": 100,
+          "full_run_s": 731.9166028493783
+        },
+        "shots=1000": {
+          "per_step_s": 9.024413347506197,
+          "prod_steps": 100,
+          "full_run_s": 902.4413347506197
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 4.6025494240020635,
+          "prod_steps": 100,
+          "full_run_s": 460.25494240020635
+        },
+        "shots=1000": {
+          "per_step_s": 5.642715718509862,
+          "prod_steps": 100,
+          "full_run_s": 564.2715718509862
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 4.597521001996938,
+          "prod_steps": 100,
+          "full_run_s": 459.7521001996938
+        },
+        "shots=1000": {
+          "per_step_s": 5.638548154500313,
+          "prod_steps": 100,
+          "full_run_s": 563.8548154500313
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 4.617117236499325,
+          "prod_steps": 100,
+          "full_run_s": 461.71172364993254
+        },
+        "shots=1000": {
+          "per_step_s": 5.628494443008094,
+          "prod_steps": 100,
+          "full_run_s": 562.8494443008094
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.37713847450504545,
+          "prod_steps": 100,
+          "full_run_s": 37.713847450504545
+        },
+        "shots=1000": {
+          "per_step_s": 5.082021463487763,
+          "prod_steps": 100,
+          "full_run_s": 508.2021463487763
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 2.6433980304864235,
+          "prod_steps": 100,
+          "full_run_s": 264.33980304864235
+        },
+        "shots=1000": {
+          "per_step_s": 3.167546652490273,
+          "prod_steps": 100,
+          "full_run_s": 316.7546652490273
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 2.676975352515001,
+          "prod_steps": 100,
+          "full_run_s": 267.6975352515001
+        },
+        "shots=1000": {
+          "per_step_s": 3.172193881502608,
+          "prod_steps": 100,
+          "full_run_s": 317.2193881502608
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.27772942298906855,
+          "prod_steps": 100,
+          "full_run_s": 27.772942298906855
+        },
+        "shots=1000": {
+          "per_step_s": 3.134467946976656,
+          "prod_steps": 100,
+          "full_run_s": 313.4467946976656
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 3.001290861488087,
+          "prod_steps": 100,
+          "full_run_s": 300.1290861488087
+        },
+        "shots=1000": {
+          "per_step_s": 3.5320798055035993,
+          "prod_steps": 100,
+          "full_run_s": 353.20798055035993
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 3.027389546012273,
+          "prod_steps": 100,
+          "full_run_s": 302.7389546012273
+        },
+        "shots=1000": {
+          "per_step_s": 3.536600843508495,
+          "prod_steps": 100,
+          "full_run_s": 353.6600843508495
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 2.9972737555217464,
+          "prod_steps": 100,
+          "full_run_s": 299.72737555217464
+        },
+        "shots=1000": {
+          "per_step_s": 3.5367363359837327,
+          "prod_steps": 100,
+          "full_run_s": 353.67363359837327
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 3.0382121700095013,
+          "prod_steps": 100,
+          "full_run_s": 303.8212170009501
+        },
+        "shots=1000": {
+          "per_step_s": 3.5288476679997984,
+          "prod_steps": 100,
+          "full_run_s": 352.88476679997984
+        }
+      }
+    },
+    "vqe": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.014361795503646135,
+          "prod_steps": 150,
+          "full_run_s": 2.1542693255469203
+        },
+        "shots=1000": {
+          "per_step_s": 2.4483093854942126,
+          "prod_steps": 150,
+          "full_run_s": 367.2464078241319
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.014425614499486983,
+          "prod_steps": 150,
+          "full_run_s": 2.1638421749230474
+        },
+        "shots=1000": {
+          "per_step_s": 2.449701190504129,
+          "prod_steps": 150,
+          "full_run_s": 367.45517857561936
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 0.9074037404934643,
+          "prod_steps": 150,
+          "full_run_s": 136.11056107401964
+        },
+        "shots=1000": {
+          "per_step_s": 2.829547215005732,
+          "prod_steps": 150,
+          "full_run_s": 424.4320822508598
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 0.909709968502284,
+          "prod_steps": 150,
+          "full_run_s": 136.4564952753426
+        },
+        "shots=1000": {
+          "per_step_s": 2.8235490910010412,
+          "prod_steps": 150,
+          "full_run_s": 423.5323636501562
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 0.9112115829921095,
+          "prod_steps": 150,
+          "full_run_s": 136.68173744881642
+        },
+        "shots=1000": {
+          "per_step_s": 2.8008528479986126,
+          "prod_steps": 150,
+          "full_run_s": 420.1279271997919
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 0.9279004749987507,
+          "prod_steps": 150,
+          "full_run_s": 139.1850712498126
+        },
+        "shots=1000": {
+          "per_step_s": 2.8243867504934315,
+          "prod_steps": 150,
+          "full_run_s": 423.6580125740147
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 0.900625359499827,
+          "prod_steps": 150,
+          "full_run_s": 135.09380392497405
+        },
+        "shots=1000": {
+          "per_step_s": 2.80952991299273,
+          "prod_steps": 150,
+          "full_run_s": 421.42948694890947
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 0.915509883503546,
+          "prod_steps": 150,
+          "full_run_s": 137.3264825255319
+        },
+        "shots=1000": {
+          "per_step_s": 2.7800538330047857,
+          "prod_steps": 150,
+          "full_run_s": 417.00807495071786
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 14.282549171999563,
+          "prod_steps": 150,
+          "full_run_s": 2142.3823757999344
+        },
+        "shots=1000": {
+          "per_step_s": 17.936765701510012,
+          "prod_steps": 150,
+          "full_run_s": 2690.514855226502
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 0.912924837495666,
+          "prod_steps": 150,
+          "full_run_s": 136.9387256243499
+        },
+        "shots=1000": {
+          "per_step_s": 2.7890952985035256,
+          "prod_steps": 150,
+          "full_run_s": 418.36429477552883
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 0.8920380269992165,
+          "prod_steps": 150,
+          "full_run_s": 133.80570404988248
+        },
+        "shots=1000": {
+          "per_step_s": 2.790868121999665,
+          "prod_steps": 150,
+          "full_run_s": 418.6302182999498
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 0.9098928794992389,
+          "prod_steps": 150,
+          "full_run_s": 136.48393192488584
+        },
+        "shots=1000": {
+          "per_step_s": 2.7805445850099204,
+          "prod_steps": 150,
+          "full_run_s": 417.08168775148806
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.014130157011095434,
+          "prod_steps": 150,
+          "full_run_s": 2.119523551664315
+        },
+        "shots=1000": {
+          "per_step_s": 2.402594904502621,
+          "prod_steps": 150,
+          "full_run_s": 360.38923567539314
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.5588999270112254,
+          "prod_steps": 150,
+          "full_run_s": 83.8349890516838
+        },
+        "shots=1000": {
+          "per_step_s": 1.4461356110114139,
+          "prod_steps": 150,
+          "full_run_s": 216.92034165171208
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.5231868779810611,
+          "prod_steps": 150,
+          "full_run_s": 78.47803169715917
+        },
+        "shots=1000": {
+          "per_step_s": 1.443793814018136,
+          "prod_steps": 150,
+          "full_run_s": 216.56907210272038
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.008603179507190362,
+          "prod_steps": 150,
+          "full_run_s": 1.2904769260785542
+        },
+        "shots=1000": {
+          "per_step_s": 1.2632543799991254,
+          "prod_steps": 150,
+          "full_run_s": 189.4881569998688
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.5772866475163028,
+          "prod_steps": 150,
+          "full_run_s": 86.59299712744541
+        },
+        "shots=1000": {
+          "per_step_s": 1.5368012275139336,
+          "prod_steps": 150,
+          "full_run_s": 230.52018412709003
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 0.5825992905010935,
+          "prod_steps": 150,
+          "full_run_s": 87.38989357516402
+        },
+        "shots=1000": {
+          "per_step_s": 1.54077375199995,
+          "prod_steps": 150,
+          "full_run_s": 231.1160627999925
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.6050624964991584,
+          "prod_steps": 150,
+          "full_run_s": 90.75937447487377
+        },
+        "shots=1000": {
+          "per_step_s": 1.51057372498326,
+          "prod_steps": 150,
+          "full_run_s": 226.586058747489
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.5807108034787234,
+          "prod_steps": 150,
+          "full_run_s": 87.10662052180851
+        },
+        "shots=1000": {
+          "per_step_s": 1.503760391002288,
+          "prod_steps": 150,
+          "full_run_s": 225.5640586503432
+        }
+      }
+    },
+    "cls": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.6046304334886372,
+          "prod_steps": 100,
+          "full_run_s": 60.46304334886372
+        },
+        "shots=1000": {
+          "per_step_s": 7.013204488001065,
+          "prod_steps": 100,
+          "full_run_s": 701.3204488001065
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.5826672520051943,
+          "prod_steps": 100,
+          "full_run_s": 58.26672520051943
+        },
+        "shots=1000": {
+          "per_step_s": 7.074511419501505,
+          "prod_steps": 100,
+          "full_run_s": 707.4511419501505
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 6.808894613510347,
+          "prod_steps": 100,
+          "full_run_s": 680.8894613510347
+        },
+        "shots=1000": {
+          "per_step_s": 7.669149394991109,
+          "prod_steps": 100,
+          "full_run_s": 766.9149394991109
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 6.748084441001993,
+          "prod_steps": 100,
+          "full_run_s": 674.8084441001993
+        },
+        "shots=1000": {
+          "per_step_s": 7.622750185008044,
+          "prod_steps": 100,
+          "full_run_s": 762.2750185008044
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 6.754953278999892,
+          "prod_steps": 100,
+          "full_run_s": 675.4953278999892
+        },
+        "shots=1000": {
+          "per_step_s": 7.634931691500242,
+          "prod_steps": 100,
+          "full_run_s": 763.4931691500242
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 6.743566601988277,
+          "prod_steps": 100,
+          "full_run_s": 674.3566601988277
+        },
+        "shots=1000": {
+          "per_step_s": 7.635595051993732,
+          "prod_steps": 100,
+          "full_run_s": 763.5595051993732
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 6.731491027996526,
+          "prod_steps": 100,
+          "full_run_s": 673.1491027996526
+        },
+        "shots=1000": {
+          "per_step_s": 7.63189781899564,
+          "prod_steps": 100,
+          "full_run_s": 763.189781899564
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 6.705302197500714,
+          "prod_steps": 100,
+          "full_run_s": 670.5302197500714
+        },
+        "shots=1000": {
+          "per_step_s": 7.600743037997745,
+          "prod_steps": 100,
+          "full_run_s": 760.0743037997745
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 9.496807457995601,
+          "prod_steps": 100,
+          "full_run_s": 949.6807457995601
+        },
+        "shots=1000": {
+          "per_step_s": 11.04433028450876,
+          "prod_steps": 100,
+          "full_run_s": 1104.433028450876
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 6.7921307280048495,
+          "prod_steps": 100,
+          "full_run_s": 679.213072800485
+        },
+        "shots=1000": {
+          "per_step_s": 7.6581953760032775,
+          "prod_steps": 100,
+          "full_run_s": 765.8195376003277
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 6.74497577699367,
+          "prod_steps": 100,
+          "full_run_s": 674.497577699367
+        },
+        "shots=1000": {
+          "per_step_s": 7.63949510299426,
+          "prod_steps": 100,
+          "full_run_s": 763.949510299426
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 6.778020732002915,
+          "prod_steps": 100,
+          "full_run_s": 677.8020732002915
+        },
+        "shots=1000": {
+          "per_step_s": 7.627973677997943,
+          "prod_steps": 100,
+          "full_run_s": 762.7973677997943
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.6082834245025879,
+          "prod_steps": 100,
+          "full_run_s": 60.82834245025879
+        },
+        "shots=1000": {
+          "per_step_s": 7.015669246509788,
+          "prod_steps": 100,
+          "full_run_s": 701.5669246509788
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 4.03928366699256,
+          "prod_steps": 100,
+          "full_run_s": 403.928366699256
+        },
+        "shots=1000": {
+          "per_step_s": 4.490460261993576,
+          "prod_steps": 100,
+          "full_run_s": 449.0460261993576
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 4.407001119485358,
+          "prod_steps": 100,
+          "full_run_s": 440.7001119485358
+        },
+        "shots=1000": {
+          "per_step_s": 4.793237587524345,
+          "prod_steps": 100,
+          "full_run_s": 479.3237587524345
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.4751676989835687,
+          "prod_steps": 100,
+          "full_run_s": 47.51676989835687
+        },
+        "shots=1000": {
+          "per_step_s": 4.638630475004902,
+          "prod_steps": 100,
+          "full_run_s": 463.8630475004902
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 4.507328212988796,
+          "prod_steps": 100,
+          "full_run_s": 450.73282129887957
+        },
+        "shots=1000": {
+          "per_step_s": 4.9866362960019615,
+          "prod_steps": 100,
+          "full_run_s": 498.66362960019615
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 4.473149523022585,
+          "prod_steps": 100,
+          "full_run_s": 447.31495230225846
+        },
+        "shots=1000": {
+          "per_step_s": 4.987563257978763,
+          "prod_steps": 100,
+          "full_run_s": 498.75632579787634
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 4.5176793319988064,
+          "prod_steps": 100,
+          "full_run_s": 451.76793319988064
+        },
+        "shots=1000": {
+          "per_step_s": 5.009528978000162,
+          "prod_steps": 100,
+          "full_run_s": 500.9528978000162
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 4.565303156996379,
+          "prod_steps": 100,
+          "full_run_s": 456.53031569963787
+        },
+        "shots=1000": {
+          "per_step_s": 5.000680654513417,
+          "prod_steps": 100,
+          "full_run_s": 500.0680654513417
+        }
+      }
+    },
+    "vqe_stokes": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.010363518493250012,
+          "prod_steps": 100,
+          "full_run_s": 1.0363518493250012
+        },
+        "shots=1000": {
+          "per_step_s": 0.38447669650486205,
+          "prod_steps": 100,
+          "full_run_s": 38.447669650486205
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.010252411506371573,
+          "prod_steps": 100,
+          "full_run_s": 1.0252411506371573
+        },
+        "shots=1000": {
+          "per_step_s": 0.3871101014956366,
+          "prod_steps": 100,
+          "full_run_s": 38.71101014956366
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 0.562383044991293,
+          "prod_steps": 100,
+          "full_run_s": 56.2383044991293
+        },
+        "shots=1000": {
+          "per_step_s": 0.6425754125084495,
+          "prod_steps": 100,
+          "full_run_s": 64.25754125084495
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 0.5612754885078175,
+          "prod_steps": 100,
+          "full_run_s": 56.12754885078175
+        },
+        "shots=1000": {
+          "per_step_s": 0.637821897995309,
+          "prod_steps": 100,
+          "full_run_s": 63.7821897995309
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 0.5854016700031934,
+          "prod_steps": 100,
+          "full_run_s": 58.54016700031934
+        },
+        "shots=1000": {
+          "per_step_s": 0.6358088115084684,
+          "prod_steps": 100,
+          "full_run_s": 63.580881150846835
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 0.5869320375059033,
+          "prod_steps": 100,
+          "full_run_s": 58.69320375059033
+        },
+        "shots=1000": {
+          "per_step_s": 0.6368480554956477,
+          "prod_steps": 100,
+          "full_run_s": 63.68480554956477
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 0.5671540165058104,
+          "prod_steps": 100,
+          "full_run_s": 56.71540165058104
+        },
+        "shots=1000": {
+          "per_step_s": 0.6357275004993426,
+          "prod_steps": 100,
+          "full_run_s": 63.57275004993426
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 0.5658977389975917,
+          "prod_steps": 100,
+          "full_run_s": 56.589773899759166
+        },
+        "shots=1000": {
+          "per_step_s": 0.6592607134953141,
+          "prod_steps": 100,
+          "full_run_s": 65.92607134953141
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 8.77136079351476,
+          "prod_steps": 100,
+          "full_run_s": 877.1360793514759
+        },
+        "shots=1000": {
+          "per_step_s": 9.86133754599723,
+          "prod_steps": 100,
+          "full_run_s": 986.133754599723
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 0.565927334013395,
+          "prod_steps": 100,
+          "full_run_s": 56.5927334013395
+        },
+        "shots=1000": {
+          "per_step_s": 0.6362263504997827,
+          "prod_steps": 100,
+          "full_run_s": 63.62263504997827
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 0.5879989679961,
+          "prod_steps": 100,
+          "full_run_s": 58.799896799609996
+        },
+        "shots=1000": {
+          "per_step_s": 0.6379871120152529,
+          "prod_steps": 100,
+          "full_run_s": 63.79871120152529
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 0.5700812135182787,
+          "prod_steps": 100,
+          "full_run_s": 57.00812135182787
+        },
+        "shots=1000": {
+          "per_step_s": 0.6342443074972834,
+          "prod_steps": 100,
+          "full_run_s": 63.424430749728344
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.010452849499415606,
+          "prod_steps": 100,
+          "full_run_s": 1.0452849499415606
+        },
+        "shots=1000": {
+          "per_step_s": 0.3838079569977708,
+          "prod_steps": 100,
+          "full_run_s": 38.38079569977708
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.3295224964967929,
+          "prod_steps": 100,
+          "full_run_s": 32.95224964967929
+        },
+        "shots=1000": {
+          "per_step_s": 0.4094106829725206,
+          "prod_steps": 100,
+          "full_run_s": 40.94106829725206
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.36453592448378913,
+          "prod_steps": 100,
+          "full_run_s": 36.45359244837891
+        },
+        "shots=1000": {
+          "per_step_s": 0.43948370800353587,
+          "prod_steps": 100,
+          "full_run_s": 43.94837080035359
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.03905177998240106,
+          "prod_steps": 100,
+          "full_run_s": 3.905177998240106
+        },
+        "shots=1000": {
+          "per_step_s": 0.2609696935105603,
+          "prod_steps": 100,
+          "full_run_s": 26.096969351056032
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.39650164550403133,
+          "prod_steps": 100,
+          "full_run_s": 39.65016455040313
+        },
+        "shots=1000": {
+          "per_step_s": 0.40593213951797225,
+          "prod_steps": 100,
+          "full_run_s": 40.593213951797225
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 0.37226989449118264,
+          "prod_steps": 100,
+          "full_run_s": 37.226989449118264
+        },
+        "shots=1000": {
+          "per_step_s": 0.4444777345051989,
+          "prod_steps": 100,
+          "full_run_s": 44.44777345051989
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.36948618400492705,
+          "prod_steps": 100,
+          "full_run_s": 36.948618400492705
+        },
+        "shots=1000": {
+          "per_step_s": 0.4551772635022644,
+          "prod_steps": 100,
+          "full_run_s": 45.51772635022644
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.37116248247912154,
+          "prod_steps": 100,
+          "full_run_s": 37.116248247912154
+        },
+        "shots=1000": {
+          "per_step_s": 0.45516074099577963,
+          "prod_steps": 100,
+          "full_run_s": 45.51607409957796
+        }
+      }
+    },
+    "vqe_heis_ring": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.0057513664942234755,
+          "prod_steps": 100,
+          "full_run_s": 0.5751366494223475
+        },
+        "shots=1000": {
+          "per_step_s": 0.5204925279831514,
+          "prod_steps": 100,
+          "full_run_s": 52.04925279831514
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.005733032507123426,
+          "prod_steps": 100,
+          "full_run_s": 0.5733032507123426
+        },
+        "shots=1000": {
+          "per_step_s": 0.5384229859919287,
+          "prod_steps": 100,
+          "full_run_s": 53.84229859919287
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 0.15915479700197466,
+          "prod_steps": 100,
+          "full_run_s": 15.915479700197466
+        },
+        "shots=1000": {
+          "per_step_s": 0.612900662526954,
+          "prod_steps": 100,
+          "full_run_s": 61.2900662526954
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 0.15884285650099628,
+          "prod_steps": 100,
+          "full_run_s": 15.884285650099628
+        },
+        "shots=1000": {
+          "per_step_s": 0.611924455006374,
+          "prod_steps": 100,
+          "full_run_s": 61.192445500637405
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 0.15817764698294923,
+          "prod_steps": 100,
+          "full_run_s": 15.817764698294923
+        },
+        "shots=1000": {
+          "per_step_s": 0.6079979100031778,
+          "prod_steps": 100,
+          "full_run_s": 60.79979100031778
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 0.16027356652193703,
+          "prod_steps": 100,
+          "full_run_s": 16.027356652193703
+        },
+        "shots=1000": {
+          "per_step_s": 0.612091225979384,
+          "prod_steps": 100,
+          "full_run_s": 61.2091225979384
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 0.140307722002035,
+          "prod_steps": 100,
+          "full_run_s": 14.0307722002035
+        },
+        "shots=1000": {
+          "per_step_s": 0.5924872895120643,
+          "prod_steps": 100,
+          "full_run_s": 59.24872895120643
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 0.14003005000995472,
+          "prod_steps": 100,
+          "full_run_s": 14.003005000995472
+        },
+        "shots=1000": {
+          "per_step_s": 0.5876309940067586,
+          "prod_steps": 100,
+          "full_run_s": 58.763099400675856
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 0.9573599384748377,
+          "prod_steps": 100,
+          "full_run_s": 95.73599384748377
+        },
+        "shots=1000": {
+          "per_step_s": 1.5595593590114731,
+          "prod_steps": 100,
+          "full_run_s": 155.9559359011473
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 0.14087850399664603,
+          "prod_steps": 100,
+          "full_run_s": 14.087850399664603
+        },
+        "shots=1000": {
+          "per_step_s": 0.5915466294973157,
+          "prod_steps": 100,
+          "full_run_s": 59.15466294973157
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 0.16041915750247426,
+          "prod_steps": 100,
+          "full_run_s": 16.041915750247426
+        },
+        "shots=1000": {
+          "per_step_s": 0.6137211784953251,
+          "prod_steps": 100,
+          "full_run_s": 61.372117849532515
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 0.1603664194990415,
+          "prod_steps": 100,
+          "full_run_s": 16.03664194990415
+        },
+        "shots=1000": {
+          "per_step_s": 0.614250202983385,
+          "prod_steps": 100,
+          "full_run_s": 61.425020298338495
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.005896161019336432,
+          "prod_steps": 100,
+          "full_run_s": 0.5896161019336432
+        },
+        "shots=1000": {
+          "per_step_s": 0.543385822995333,
+          "prod_steps": 100,
+          "full_run_s": 54.3385822995333
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.07751805550651625,
+          "prod_steps": 100,
+          "full_run_s": 7.751805550651625
+        },
+        "shots=1000": {
+          "per_step_s": 0.29928534949431196,
+          "prod_steps": 100,
+          "full_run_s": 29.928534949431196
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.07766689150594175,
+          "prod_steps": 100,
+          "full_run_s": 7.766689150594175
+        },
+        "shots=1000": {
+          "per_step_s": 0.298587569501251,
+          "prod_steps": 100,
+          "full_run_s": 29.8587569501251
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.003872756497003138,
+          "prod_steps": 100,
+          "full_run_s": 0.3872756497003138
+        },
+        "shots=1000": {
+          "per_step_s": 0.29874522300087847,
+          "prod_steps": 100,
+          "full_run_s": 29.874522300087847
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.11155509398668073,
+          "prod_steps": 100,
+          "full_run_s": 11.155509398668073
+        },
+        "shots=1000": {
+          "per_step_s": 0.3397300515207462,
+          "prod_steps": 100,
+          "full_run_s": 33.97300515207462
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 0.08056870949803852,
+          "prod_steps": 100,
+          "full_run_s": 8.056870949803852
+        },
+        "shots=1000": {
+          "per_step_s": 0.3057130860106554,
+          "prod_steps": 100,
+          "full_run_s": 30.57130860106554
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.07684981051716022,
+          "prod_steps": 100,
+          "full_run_s": 7.684981051716022
+        },
+        "shots=1000": {
+          "per_step_s": 0.3024174069869332,
+          "prod_steps": 100,
+          "full_run_s": 30.24174069869332
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.07672582400846295,
+          "prod_steps": 100,
+          "full_run_s": 7.672582400846295
+        },
+        "shots=1000": {
+          "per_step_s": 0.3143354815256316,
+          "prod_steps": 100,
+          "full_run_s": 31.433548152563162
+        }
+      }
+    },
+    "fit_multifreq1d": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.16781851497944444,
+          "prod_steps": 100,
+          "full_run_s": 16.781851497944444
+        },
+        "shots=1000": {
+          "per_step_s": 1.6238150980207138,
+          "prod_steps": 100,
+          "full_run_s": 162.38150980207138
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.16716603649547324,
+          "prod_steps": 100,
+          "full_run_s": 16.716603649547324
+        },
+        "shots=1000": {
+          "per_step_s": 1.6271618649770971,
+          "prod_steps": 100,
+          "full_run_s": 162.7161864977097
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 1.7730109425028786,
+          "prod_steps": 100,
+          "full_run_s": 177.30109425028786
+        },
+        "shots=1000": {
+          "per_step_s": 2.0591154390131123,
+          "prod_steps": 100,
+          "full_run_s": 205.91154390131123
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 1.7803759814996738,
+          "prod_steps": 100,
+          "full_run_s": 178.03759814996738
+        },
+        "shots=1000": {
+          "per_step_s": 2.052718967490364,
+          "prod_steps": 100,
+          "full_run_s": 205.2718967490364
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 1.7698509019974153,
+          "prod_steps": 100,
+          "full_run_s": 176.98509019974153
+        },
+        "shots=1000": {
+          "per_step_s": 2.065508528990904,
+          "prod_steps": 100,
+          "full_run_s": 206.5508528990904
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 1.7976404045184609,
+          "prod_steps": 100,
+          "full_run_s": 179.76404045184609
+        },
+        "shots=1000": {
+          "per_step_s": 2.074928076006472,
+          "prod_steps": 100,
+          "full_run_s": 207.4928076006472
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 1.7814519024977926,
+          "prod_steps": 100,
+          "full_run_s": 178.14519024977926
+        },
+        "shots=1000": {
+          "per_step_s": 2.0699785515025724,
+          "prod_steps": 100,
+          "full_run_s": 206.99785515025724
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 1.8012945290247444,
+          "prod_steps": 100,
+          "full_run_s": 180.12945290247444
+        },
+        "shots=1000": {
+          "per_step_s": 2.078272669488797,
+          "prod_steps": 100,
+          "full_run_s": 207.8272669488797
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 4.5333101080032066,
+          "prod_steps": 100,
+          "full_run_s": 453.33101080032066
+        },
+        "shots=1000": {
+          "per_step_s": 5.485293183999602,
+          "prod_steps": 100,
+          "full_run_s": 548.5293183999602
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 1.7928150825027842,
+          "prod_steps": 100,
+          "full_run_s": 179.28150825027842
+        },
+        "shots=1000": {
+          "per_step_s": 2.0558165440161247,
+          "prod_steps": 100,
+          "full_run_s": 205.58165440161247
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 1.7767826600174885,
+          "prod_steps": 100,
+          "full_run_s": 177.67826600174885
+        },
+        "shots=1000": {
+          "per_step_s": 2.0576960614998825,
+          "prod_steps": 100,
+          "full_run_s": 205.76960614998825
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 1.776294170995243,
+          "prod_steps": 100,
+          "full_run_s": 177.6294170995243
+        },
+        "shots=1000": {
+          "per_step_s": 2.0572475465014577,
+          "prod_steps": 100,
+          "full_run_s": 205.72475465014577
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.16593230748549104,
+          "prod_steps": 100,
+          "full_run_s": 16.593230748549104
+        },
+        "shots=1000": {
+          "per_step_s": 1.6132947815058287,
+          "prod_steps": 100,
+          "full_run_s": 161.32947815058287
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 1.1212728420214262,
+          "prod_steps": 100,
+          "full_run_s": 112.12728420214262
+        },
+        "shots=1000": {
+          "per_step_s": 1.2887351129902527,
+          "prod_steps": 100,
+          "full_run_s": 128.87351129902527
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 1.1365728834934998,
+          "prod_steps": 100,
+          "full_run_s": 113.65728834934998
+        },
+        "shots=1000": {
+          "per_step_s": 1.265478388988413,
+          "prod_steps": 100,
+          "full_run_s": 126.54783889884129
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.08630659099435434,
+          "prod_steps": 100,
+          "full_run_s": 8.630659099435434
+        },
+        "shots=1000": {
+          "per_step_s": 0.9467262105026748,
+          "prod_steps": 100,
+          "full_run_s": 94.67262105026748
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.1836700570129324,
+          "prod_steps": 100,
+          "full_run_s": 118.36700570129324
+        },
+        "shots=1000": {
+          "per_step_s": 1.327579794509802,
+          "prod_steps": 100,
+          "full_run_s": 132.7579794509802
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 1.1337660010030959,
+          "prod_steps": 100,
+          "full_run_s": 113.37660010030959
+        },
+        "shots=1000": {
+          "per_step_s": 1.283192954491824,
+          "prod_steps": 100,
+          "full_run_s": 128.3192954491824
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.1587720534880646,
+          "prod_steps": 100,
+          "full_run_s": 115.87720534880646
+        },
+        "shots=1000": {
+          "per_step_s": 1.307676909986185,
+          "prod_steps": 100,
+          "full_run_s": 130.7676909986185
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.1648474219837226,
+          "prod_steps": 100,
+          "full_run_s": 116.48474219837226
+        },
+        "shots=1000": {
+          "per_step_s": 1.3235871765064076,
+          "prod_steps": 100,
+          "full_run_s": 132.35871765064076
+        }
+      }
+    },
+    "cls_moons_hard": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.6051951260014903,
+          "prod_steps": 100,
+          "full_run_s": 60.51951260014903
+        },
+        "shots=1000": {
+          "per_step_s": 7.045242782973219,
+          "prod_steps": 100,
+          "full_run_s": 704.5242782973219
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.610003730020253,
+          "prod_steps": 100,
+          "full_run_s": 61.0003730020253
+        },
+        "shots=1000": {
+          "per_step_s": 7.045211759483209,
+          "prod_steps": 100,
+          "full_run_s": 704.5211759483209
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 6.79297241801396,
+          "prod_steps": 100,
+          "full_run_s": 679.297241801396
+        },
+        "shots=1000": {
+          "per_step_s": 7.591202002513455,
+          "prod_steps": 100,
+          "full_run_s": 759.1202002513455
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 6.75753513048403,
+          "prod_steps": 100,
+          "full_run_s": 675.753513048403
+        },
+        "shots=1000": {
+          "per_step_s": 7.646767101512523,
+          "prod_steps": 100,
+          "full_run_s": 764.6767101512523
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 6.759325722989161,
+          "prod_steps": 100,
+          "full_run_s": 675.932572298916
+        },
+        "shots=1000": {
+          "per_step_s": 7.640399013005663,
+          "prod_steps": 100,
+          "full_run_s": 764.0399013005663
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 6.749691056524171,
+          "prod_steps": 100,
+          "full_run_s": 674.969105652417
+        },
+        "shots=1000": {
+          "per_step_s": 7.615351933985949,
+          "prod_steps": 100,
+          "full_run_s": 761.5351933985949
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 6.740442992508179,
+          "prod_steps": 100,
+          "full_run_s": 674.0442992508179
+        },
+        "shots=1000": {
+          "per_step_s": 7.654406132496661,
+          "prod_steps": 100,
+          "full_run_s": 765.4406132496661
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 6.790821812523063,
+          "prod_steps": 100,
+          "full_run_s": 679.0821812523063
+        },
+        "shots=1000": {
+          "per_step_s": 7.619976385525661,
+          "prod_steps": 100,
+          "full_run_s": 761.9976385525661
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 9.510888699995121,
+          "prod_steps": 100,
+          "full_run_s": 951.0888699995121
+        },
+        "shots=1000": {
+          "per_step_s": 11.040145281498553,
+          "prod_steps": 100,
+          "full_run_s": 1104.0145281498553
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 6.800311004975811,
+          "prod_steps": 100,
+          "full_run_s": 680.0311004975811
+        },
+        "shots=1000": {
+          "per_step_s": 7.619384153978899,
+          "prod_steps": 100,
+          "full_run_s": 761.9384153978899
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 6.795544992986834,
+          "prod_steps": 100,
+          "full_run_s": 679.5544992986834
+        },
+        "shots=1000": {
+          "per_step_s": 7.621855723496992,
+          "prod_steps": 100,
+          "full_run_s": 762.1855723496992
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 6.732351671496872,
+          "prod_steps": 100,
+          "full_run_s": 673.2351671496872
+        },
+        "shots=1000": {
+          "per_step_s": 7.6368598679837305,
+          "prod_steps": 100,
+          "full_run_s": 763.685986798373
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.5871815940190572,
+          "prod_steps": 100,
+          "full_run_s": 58.71815940190572
+        },
+        "shots=1000": {
+          "per_step_s": 7.037683985516196,
+          "prod_steps": 100,
+          "full_run_s": 703.7683985516196
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 4.44997269049054,
+          "prod_steps": 100,
+          "full_run_s": 444.997269049054
+        },
+        "shots=1000": {
+          "per_step_s": 4.882887172483606,
+          "prod_steps": 100,
+          "full_run_s": 488.2887172483606
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 4.383772506000241,
+          "prod_steps": 100,
+          "full_run_s": 438.3772506000241
+        },
+        "shots=1000": {
+          "per_step_s": 4.857581343007041,
+          "prod_steps": 100,
+          "full_run_s": 485.7581343007041
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.454677637986606,
+          "prod_steps": 100,
+          "full_run_s": 45.4677637986606
+        },
+        "shots=1000": {
+          "per_step_s": 4.685223559994483,
+          "prod_steps": 100,
+          "full_run_s": 468.52235599944834
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 4.515545921487501,
+          "prod_steps": 100,
+          "full_run_s": 451.5545921487501
+        },
+        "shots=1000": {
+          "per_step_s": 5.0258960145001765,
+          "prod_steps": 100,
+          "full_run_s": 502.58960145001765
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 4.570579949999228,
+          "prod_steps": 100,
+          "full_run_s": 457.0579949999228
+        },
+        "shots=1000": {
+          "per_step_s": 4.985578205494676,
+          "prod_steps": 100,
+          "full_run_s": 498.5578205494676
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 4.450834500981728,
+          "prod_steps": 100,
+          "full_run_s": 445.08345009817276
+        },
+        "shots=1000": {
+          "per_step_s": 4.9151933310204186,
+          "prod_steps": 100,
+          "full_run_s": 491.51933310204186
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 4.398690972971963,
+          "prod_steps": 100,
+          "full_run_s": 439.8690972971963
+        },
+        "shots=1000": {
+          "per_step_s": 4.9391462659987155,
+          "prod_steps": 100,
+          "full_run_s": 493.91462659987155
+        }
+      }
+    },
+    "vqe_stokes_overparam_long": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.037113093509105965,
+          "prod_steps": 300,
+          "full_run_s": 11.13392805273179
+        },
+        "shots=1000": {
+          "per_step_s": 1.073956641514087,
+          "prod_steps": 300,
+          "full_run_s": 322.18699245422613
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.01713248950545676,
+          "prod_steps": 300,
+          "full_run_s": 5.139746851637028
+        },
+        "shots=1000": {
+          "per_step_s": 1.0379851375182625,
+          "prod_steps": 300,
+          "full_run_s": 311.39554125547875
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 1.630349124490749,
+          "prod_steps": 300,
+          "full_run_s": 489.1047373472247
+        },
+        "shots=1000": {
+          "per_step_s": 1.806662448507268,
+          "prod_steps": 300,
+          "full_run_s": 541.9987345521804
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 1.6642827464966103,
+          "prod_steps": 300,
+          "full_run_s": 499.2848239489831
+        },
+        "shots=1000": {
+          "per_step_s": 1.8381588004995137,
+          "prod_steps": 300,
+          "full_run_s": 551.4476401498541
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 1.6655121734947897,
+          "prod_steps": 300,
+          "full_run_s": 499.6536520484369
+        },
+        "shots=1000": {
+          "per_step_s": 1.801851947006071,
+          "prod_steps": 300,
+          "full_run_s": 540.5555841018213
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 1.6537968894990627,
+          "prod_steps": 300,
+          "full_run_s": 496.1390668497188
+        },
+        "shots=1000": {
+          "per_step_s": 1.7869406800018623,
+          "prod_steps": 300,
+          "full_run_s": 536.0822040005587
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 1.6384870909969322,
+          "prod_steps": 300,
+          "full_run_s": 491.54612729907967
+        },
+        "shots=1000": {
+          "per_step_s": 1.8067167440021876,
+          "prod_steps": 300,
+          "full_run_s": 542.0150232006563
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 1.6586461330007296,
+          "prod_steps": 300,
+          "full_run_s": 497.5938399002189
+        },
+        "shots=1000": {
+          "per_step_s": 1.789612787484657,
+          "prod_steps": 300,
+          "full_run_s": 536.8838362453971
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 47.31871656500152,
+          "prod_steps": 300,
+          "full_run_s": 14195.614969500457
+        },
+        "shots=1000": {
+          "per_step_s": 51.49605310847983,
+          "prod_steps": 300,
+          "full_run_s": 15448.815932543948
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 1.5921526935126167,
+          "prod_steps": 300,
+          "full_run_s": 477.645808053785
+        },
+        "shots=1000": {
+          "per_step_s": 1.8233514385065064,
+          "prod_steps": 300,
+          "full_run_s": 547.0054315519519
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 1.6606604800035711,
+          "prod_steps": 300,
+          "full_run_s": 498.19814400107134
+        },
+        "shots=1000": {
+          "per_step_s": 1.833030523994239,
+          "prod_steps": 300,
+          "full_run_s": 549.9091571982717
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 1.6693568014889024,
+          "prod_steps": 300,
+          "full_run_s": 500.8070404466707
+        },
+        "shots=1000": {
+          "per_step_s": 1.8359129430027679,
+          "prod_steps": 300,
+          "full_run_s": 550.7738829008304
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.01729417048045434,
+          "prod_steps": 300,
+          "full_run_s": 5.188251144136302
+        },
+        "shots=1000": {
+          "per_step_s": 1.0463749375194311,
+          "prod_steps": 300,
+          "full_run_s": 313.91248125582933
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 1.0875303049979266,
+          "prod_steps": 300,
+          "full_run_s": 326.259091499378
+        },
+        "shots=1000": {
+          "per_step_s": 1.1720560480025597,
+          "prod_steps": 300,
+          "full_run_s": 351.6168144007679
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 1.0747721570078284,
+          "prod_steps": 300,
+          "full_run_s": 322.4316471023485
+        },
+        "shots=1000": {
+          "per_step_s": 1.1565126870118547,
+          "prod_steps": 300,
+          "full_run_s": 346.9538061035564
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.010024856484960765,
+          "prod_steps": 300,
+          "full_run_s": 3.0074569454882294
+        },
+        "shots=1000": {
+          "per_step_s": 0.714758519519819,
+          "prod_steps": 300,
+          "full_run_s": 214.42755585594568
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.1184727280051447,
+          "prod_steps": 300,
+          "full_run_s": 335.5418184015434
+        },
+        "shots=1000": {
+          "per_step_s": 1.1619396675087046,
+          "prod_steps": 300,
+          "full_run_s": 348.5819002526114
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 1.0717213994939812,
+          "prod_steps": 300,
+          "full_run_s": 321.51641984819435
+        },
+        "shots=1000": {
+          "per_step_s": 1.1734751540061552,
+          "prod_steps": 300,
+          "full_run_s": 352.04254620184656
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.116805932513671,
+          "prod_steps": 300,
+          "full_run_s": 335.0417797541013
+        },
+        "shots=1000": {
+          "per_step_s": 1.1904883270035498,
+          "prod_steps": 300,
+          "full_run_s": 357.14649810106494
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.0835591439972632,
+          "prod_steps": 300,
+          "full_run_s": 325.06774319917895
+        },
+        "shots=1000": {
+          "per_step_s": 1.1430848219897598,
+          "prod_steps": 300,
+          "full_run_s": 342.92544659692794
+        }
+      }
+    },
+    "fit_high_periodic": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.3368885590170976,
+          "prod_steps": 200,
+          "full_run_s": 67.37771180341952
+        },
+        "shots=1000": {
+          "per_step_s": 3.256436786992708,
+          "prod_steps": 200,
+          "full_run_s": 651.2873573985416
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.3345249360136222,
+          "prod_steps": 200,
+          "full_run_s": 66.90498720272444
+        },
+        "shots=1000": {
+          "per_step_s": 3.277849119505845,
+          "prod_steps": 200,
+          "full_run_s": 655.569823901169
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 3.2279317755019292,
+          "prod_steps": 200,
+          "full_run_s": 645.5863551003858
+        },
+        "shots=1000": {
+          "per_step_s": 3.7636856674798764,
+          "prod_steps": 200,
+          "full_run_s": 752.7371334959753
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 3.2579480434942525,
+          "prod_steps": 200,
+          "full_run_s": 651.5896086988505
+        },
+        "shots=1000": {
+          "per_step_s": 3.751142373017501,
+          "prod_steps": 200,
+          "full_run_s": 750.2284746035002
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 3.226533279987052,
+          "prod_steps": 200,
+          "full_run_s": 645.3066559974104
+        },
+        "shots=1000": {
+          "per_step_s": 3.698646802979056,
+          "prod_steps": 200,
+          "full_run_s": 739.7293605958112
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 3.2197861859749537,
+          "prod_steps": 200,
+          "full_run_s": 643.9572371949907
+        },
+        "shots=1000": {
+          "per_step_s": 3.7513270979980007,
+          "prod_steps": 200,
+          "full_run_s": 750.2654195996001
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 3.2373285529902205,
+          "prod_steps": 200,
+          "full_run_s": 647.4657105980441
+        },
+        "shots=1000": {
+          "per_step_s": 3.760414176998893,
+          "prod_steps": 200,
+          "full_run_s": 752.0828353997786
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 3.251900461502373,
+          "prod_steps": 200,
+          "full_run_s": 650.3800923004746
+        },
+        "shots=1000": {
+          "per_step_s": 3.7499899890099186,
+          "prod_steps": 200,
+          "full_run_s": 749.9979978019837
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 5.964441378018819,
+          "prod_steps": 200,
+          "full_run_s": 1192.8882756037638
+        },
+        "shots=1000": {
+          "per_step_s": 7.178385583480122,
+          "prod_steps": 200,
+          "full_run_s": 1435.6771166960243
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 3.234070780017646,
+          "prod_steps": 200,
+          "full_run_s": 646.8141560035292
+        },
+        "shots=1000": {
+          "per_step_s": 3.7306792635063175,
+          "prod_steps": 200,
+          "full_run_s": 746.1358527012635
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 3.2478183009952772,
+          "prod_steps": 200,
+          "full_run_s": 649.5636601990554
+        },
+        "shots=1000": {
+          "per_step_s": 3.7307726574945264,
+          "prod_steps": 200,
+          "full_run_s": 746.1545314989053
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 3.23049701351556,
+          "prod_steps": 200,
+          "full_run_s": 646.099402703112
+        },
+        "shots=1000": {
+          "per_step_s": 3.739803117001429,
+          "prod_steps": 200,
+          "full_run_s": 747.9606234002858
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.33830082800704986,
+          "prod_steps": 200,
+          "full_run_s": 67.66016560140997
+        },
+        "shots=1000": {
+          "per_step_s": 3.263936429983005,
+          "prod_steps": 200,
+          "full_run_s": 652.787285996601
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 2.0446921440016013,
+          "prod_steps": 200,
+          "full_run_s": 408.93842880032025
+        },
+        "shots=1000": {
+          "per_step_s": 2.3289438984938897,
+          "prod_steps": 200,
+          "full_run_s": 465.78877969877794
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 2.072745837009279,
+          "prod_steps": 200,
+          "full_run_s": 414.5491674018558
+        },
+        "shots=1000": {
+          "per_step_s": 2.296755811519688,
+          "prod_steps": 200,
+          "full_run_s": 459.3511623039376
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.24411831100587733,
+          "prod_steps": 200,
+          "full_run_s": 48.823662201175466
+        },
+        "shots=1000": {
+          "per_step_s": 2.0386479050212074,
+          "prod_steps": 200,
+          "full_run_s": 407.7295810042415
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 2.0213592314976268,
+          "prod_steps": 200,
+          "full_run_s": 404.27184629952535
+        },
+        "shots=1000": {
+          "per_step_s": 2.345476548478473,
+          "prod_steps": 200,
+          "full_run_s": 469.0953096956946
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 2.0579185800161213,
+          "prod_steps": 200,
+          "full_run_s": 411.58371600322425
+        },
+        "shots=1000": {
+          "per_step_s": 2.3403018260141835,
+          "prod_steps": 200,
+          "full_run_s": 468.0603652028367
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 2.0896901969972532,
+          "prod_steps": 200,
+          "full_run_s": 417.93803939945064
+        },
+        "shots=1000": {
+          "per_step_s": 2.3333801014814526,
+          "prod_steps": 200,
+          "full_run_s": 466.6760202962905
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 2.108391023997683,
+          "prod_steps": 200,
+          "full_run_s": 421.6782047995366
+        },
+        "shots=1000": {
+          "per_step_s": 2.351851456478471,
+          "prod_steps": 200,
+          "full_run_s": 470.3702912956942
+        }
+      }
+    },
+    "vqe_sk_spinglass": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 1.0475114150031004,
+          "prod_steps": 150,
+          "full_run_s": 157.12671225046506
+        },
+        "shots=1000": {
+          "per_step_s": 1.0539559804892633,
+          "prod_steps": 150,
+          "full_run_s": 158.0933970733895
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 1.0787741400126833,
+          "prod_steps": 150,
+          "full_run_s": 161.8161210019025
+        },
+        "shots=1000": {
+          "per_step_s": 1.0517339200014248,
+          "prod_steps": 150,
+          "full_run_s": 157.76008800021373
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 1.173567935504252,
+          "prod_steps": 150,
+          "full_run_s": 176.0351903256378
+        },
+        "shots=1000": {
+          "per_step_s": 1.1801665124949068,
+          "prod_steps": 150,
+          "full_run_s": 177.02497687423602
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 1.2040908985072747,
+          "prod_steps": 150,
+          "full_run_s": 180.6136347760912
+        },
+        "shots=1000": {
+          "per_step_s": 1.1829150234989356,
+          "prod_steps": 150,
+          "full_run_s": 177.43725352484034
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 1.1837394885078538,
+          "prod_steps": 150,
+          "full_run_s": 177.56092327617807
+        },
+        "shots=1000": {
+          "per_step_s": 1.1860076000157278,
+          "prod_steps": 150,
+          "full_run_s": 177.90114000235917
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 1.207462634483818,
+          "prod_steps": 150,
+          "full_run_s": 181.1193951725727
+        },
+        "shots=1000": {
+          "per_step_s": 1.1829180289932992,
+          "prod_steps": 150,
+          "full_run_s": 177.43770434899488
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 1.1811460359895136,
+          "prod_steps": 150,
+          "full_run_s": 177.17190539842704
+        },
+        "shots=1000": {
+          "per_step_s": 1.2049262535001617,
+          "prod_steps": 150,
+          "full_run_s": 180.73893802502425
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 1.183568334497977,
+          "prod_steps": 150,
+          "full_run_s": 177.53525017469656
+        },
+        "shots=1000": {
+          "per_step_s": 1.18839463047334,
+          "prod_steps": 150,
+          "full_run_s": 178.259194571001
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 3.9375368884939235,
+          "prod_steps": 150,
+          "full_run_s": 590.6305332740885
+        },
+        "shots=1000": {
+          "per_step_s": 3.9348606769926846,
+          "prod_steps": 150,
+          "full_run_s": 590.2291015489027
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 1.2005496530036908,
+          "prod_steps": 150,
+          "full_run_s": 180.08244795055361
+        },
+        "shots=1000": {
+          "per_step_s": 1.1812916825001594,
+          "prod_steps": 150,
+          "full_run_s": 177.1937523750239
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 1.186904421512736,
+          "prod_steps": 150,
+          "full_run_s": 178.0356632269104
+        },
+        "shots=1000": {
+          "per_step_s": 1.1989304200105835,
+          "prod_steps": 150,
+          "full_run_s": 179.83956300158752
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 1.1794773210131098,
+          "prod_steps": 150,
+          "full_run_s": 176.92159815196646
+        },
+        "shots=1000": {
+          "per_step_s": 1.1839382519829087,
+          "prod_steps": 150,
+          "full_run_s": 177.5907377974363
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 1.043183856003452,
+          "prod_steps": 150,
+          "full_run_s": 156.4775784005178
+        },
+        "shots=1000": {
+          "per_step_s": 1.0751353325031232,
+          "prod_steps": 150,
+          "full_run_s": 161.27029987546848
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.5992754589824472,
+          "prod_steps": 150,
+          "full_run_s": 89.89131884736707
+        },
+        "shots=1000": {
+          "per_step_s": 0.5936713684932329,
+          "prod_steps": 150,
+          "full_run_s": 89.05070527398493
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.5981105785176624,
+          "prod_steps": 150,
+          "full_run_s": 89.71658677764935
+        },
+        "shots=1000": {
+          "per_step_s": 0.6199445154925343,
+          "prod_steps": 150,
+          "full_run_s": 92.99167732388014
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.5447091380192433,
+          "prod_steps": 150,
+          "full_run_s": 81.70637070288649
+        },
+        "shots=1000": {
+          "per_step_s": 0.5431579720170703,
+          "prod_steps": 150,
+          "full_run_s": 81.47369580256054
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.6164162034983747,
+          "prod_steps": 150,
+          "full_run_s": 92.4624305247562
+        },
+        "shots=1000": {
+          "per_step_s": 0.6486523730272893,
+          "prod_steps": 150,
+          "full_run_s": 97.2978559540934
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 0.6402483634883538,
+          "prod_steps": 150,
+          "full_run_s": 96.03725452325307
+        },
+        "shots=1000": {
+          "per_step_s": 0.6123823284870014,
+          "prod_steps": 150,
+          "full_run_s": 91.8573492730502
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.6458691080042627,
+          "prod_steps": 150,
+          "full_run_s": 96.8803662006394
+        },
+        "shots=1000": {
+          "per_step_s": 0.6476690430135932,
+          "prod_steps": 150,
+          "full_run_s": 97.15035645203898
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.6458048950007651,
+          "prod_steps": 150,
+          "full_run_s": 96.87073425011477
+        },
+        "shots=1000": {
+          "per_step_s": 0.6184626395115629,
+          "prod_steps": 150,
+          "full_run_s": 92.76939592673443
+        }
+      }
+    },
+    "vqe_xxz": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 1.8037461240019184,
+          "prod_steps": 150,
+          "full_run_s": 270.56191860028775
+        },
+        "shots=1000": {
+          "per_step_s": 1.7817560439871158,
+          "prod_steps": 150,
+          "full_run_s": 267.2634065980674
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 1.812371884501772,
+          "prod_steps": 150,
+          "full_run_s": 271.8557826752658
+        },
+        "shots=1000": {
+          "per_step_s": 1.8035968859912828,
+          "prod_steps": 150,
+          "full_run_s": 270.5395328986924
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 2.0139322295144666,
+          "prod_steps": 150,
+          "full_run_s": 302.08983442717
+        },
+        "shots=1000": {
+          "per_step_s": 2.0092282189871185,
+          "prod_steps": 150,
+          "full_run_s": 301.38423284806777
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 2.0155333264847286,
+          "prod_steps": 150,
+          "full_run_s": 302.3299989727093
+        },
+        "shots=1000": {
+          "per_step_s": 2.0101749304740224,
+          "prod_steps": 150,
+          "full_run_s": 301.52623957110336
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 2.0309047299961094,
+          "prod_steps": 150,
+          "full_run_s": 304.6357094994164
+        },
+        "shots=1000": {
+          "per_step_s": 2.016798305994598,
+          "prod_steps": 150,
+          "full_run_s": 302.51974589918973
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 2.0212849495001137,
+          "prod_steps": 150,
+          "full_run_s": 303.19274242501706
+        },
+        "shots=1000": {
+          "per_step_s": 2.01761038650875,
+          "prod_steps": 150,
+          "full_run_s": 302.64155797631247
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 2.0217025265155826,
+          "prod_steps": 150,
+          "full_run_s": 303.2553789773374
+        },
+        "shots=1000": {
+          "per_step_s": 2.011155239510117,
+          "prod_steps": 150,
+          "full_run_s": 301.67328592651756
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 2.015527896990534,
+          "prod_steps": 150,
+          "full_run_s": 302.3291845485801
+        },
+        "shots=1000": {
+          "per_step_s": 2.018415267491946,
+          "prod_steps": 150,
+          "full_run_s": 302.7622901237919
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 8.177787681488553,
+          "prod_steps": 150,
+          "full_run_s": 1226.668152223283
+        },
+        "shots=1000": {
+          "per_step_s": 8.203917022503447,
+          "prod_steps": 150,
+          "full_run_s": 1230.587553375517
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 1.9752142159850337,
+          "prod_steps": 150,
+          "full_run_s": 296.28213239775505
+        },
+        "shots=1000": {
+          "per_step_s": 2.025599651999073,
+          "prod_steps": 150,
+          "full_run_s": 303.83994779986097
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 2.024391161510721,
+          "prod_steps": 150,
+          "full_run_s": 303.6586742266081
+        },
+        "shots=1000": {
+          "per_step_s": 2.01059980050195,
+          "prod_steps": 150,
+          "full_run_s": 301.5899700752925
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 2.008596873987699,
+          "prod_steps": 150,
+          "full_run_s": 301.28953109815484
+        },
+        "shots=1000": {
+          "per_step_s": 2.00727846098016,
+          "prod_steps": 150,
+          "full_run_s": 301.091769147024
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 1.7689733099832665,
+          "prod_steps": 150,
+          "full_run_s": 265.34599649749
+        },
+        "shots=1000": {
+          "per_step_s": 1.808816309494432,
+          "prod_steps": 150,
+          "full_run_s": 271.3224464241648
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 1.0318985369813163,
+          "prod_steps": 150,
+          "full_run_s": 154.78478054719744
+        },
+        "shots=1000": {
+          "per_step_s": 1.0407273140153848,
+          "prod_steps": 150,
+          "full_run_s": 156.10909710230771
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 1.0403418765054084,
+          "prod_steps": 150,
+          "full_run_s": 156.05128147581127
+        },
+        "shots=1000": {
+          "per_step_s": 1.0344043904915452,
+          "prod_steps": 150,
+          "full_run_s": 155.16065857373178
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.9165398585028015,
+          "prod_steps": 150,
+          "full_run_s": 137.48097877542023
+        },
+        "shots=1000": {
+          "per_step_s": 0.9236568975029513,
+          "prod_steps": 150,
+          "full_run_s": 138.5485346254427
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.0843249805038795,
+          "prod_steps": 150,
+          "full_run_s": 162.64874707558192
+        },
+        "shots=1000": {
+          "per_step_s": 1.0723318665113766,
+          "prod_steps": 150,
+          "full_run_s": 160.8497799767065
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 1.0731666509818751,
+          "prod_steps": 150,
+          "full_run_s": 160.97499764728127
+        },
+        "shots=1000": {
+          "per_step_s": 1.074554350489052,
+          "prod_steps": 150,
+          "full_run_s": 161.1831525733578
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.0543134885083418,
+          "prod_steps": 150,
+          "full_run_s": 158.14702327625128
+        },
+        "shots=1000": {
+          "per_step_s": 1.061685104505159,
+          "prod_steps": 150,
+          "full_run_s": 159.25276567577384
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 1.059414494491648,
+          "prod_steps": 150,
+          "full_run_s": 158.9121741737472
+        },
+        "shots=1000": {
+          "per_step_s": 1.0618111089861486,
+          "prod_steps": 150,
+          "full_run_s": 159.2716663479223
+        }
+      }
+    },
+    "vqe_overparam_heis": {
+      "GD": {
+        "analytic": {
+          "per_step_s": 0.00979986900347285,
+          "prod_steps": 150,
+          "full_run_s": 1.4699803505209275
+        },
+        "shots=1000": {
+          "per_step_s": 1.1534707814862486,
+          "prod_steps": 150,
+          "full_run_s": 173.0206172229373
+        }
+      },
+      "Adam": {
+        "analytic": {
+          "per_step_s": 0.00974760201643221,
+          "prod_steps": 150,
+          "full_run_s": 1.4621403024648316
+        },
+        "shots=1000": {
+          "per_step_s": 1.1826678180077579,
+          "prod_steps": 150,
+          "full_run_s": 177.40017270116368
+        }
+      },
+      "QNG_block": {
+        "analytic": {
+          "per_step_s": 0.494659510004567,
+          "prod_steps": 150,
+          "full_run_s": 74.19892650068505
+        },
+        "shots=1000": {
+          "per_step_s": 1.396913847507676,
+          "prod_steps": 150,
+          "full_run_s": 209.53707712615142
+        }
+      },
+      "QNG_block_lr01": {
+        "analytic": {
+          "per_step_s": 0.48989152850117534,
+          "prod_steps": 150,
+          "full_run_s": 73.4837292751763
+        },
+        "shots=1000": {
+          "per_step_s": 1.3825668874778785,
+          "prod_steps": 150,
+          "full_run_s": 207.38503312168177
+        }
+      },
+      "QNG_block_lr02": {
+        "analytic": {
+          "per_step_s": 0.48624482299783267,
+          "prod_steps": 150,
+          "full_run_s": 72.9367234496749
+        },
+        "shots=1000": {
+          "per_step_s": 1.3858307909977157,
+          "prod_steps": 150,
+          "full_run_s": 207.87461864965735
+        }
+      },
+      "MomentumQNG_block": {
+        "analytic": {
+          "per_step_s": 0.488190869014943,
+          "prod_steps": 150,
+          "full_run_s": 73.22863035224145
+        },
+        "shots=1000": {
+          "per_step_s": 1.4226453450100962,
+          "prod_steps": 150,
+          "full_run_s": 213.39680175151443
+        }
+      },
+      "QNGAdam_v1_block": {
+        "analytic": {
+          "per_step_s": 0.493982841988327,
+          "prod_steps": 150,
+          "full_run_s": 74.09742629824905
+        },
+        "shots=1000": {
+          "per_step_s": 1.3918128380028065,
+          "prod_steps": 150,
+          "full_run_s": 208.77192570042098
+        }
+      },
+      "QNGAdam_v2_block": {
+        "analytic": {
+          "per_step_s": 0.4927034839929547,
+          "prod_steps": 150,
+          "full_run_s": 73.90552259894321
+        },
+        "shots=1000": {
+          "per_step_s": 1.3918497714912519,
+          "prod_steps": 150,
+          "full_run_s": 208.77746572368778
+        }
+      },
+      "QNG_full": {
+        "analytic": {
+          "per_step_s": 6.804755359509727,
+          "prod_steps": 150,
+          "full_run_s": 1020.713303926459
+        },
+        "shots=1000": {
+          "per_step_s": 8.50564816451515,
+          "prod_steps": 150,
+          "full_run_s": 1275.8472246772726
+        }
+      },
+      "RQNG_torus_block": {
+        "analytic": {
+          "per_step_s": 0.49406061400077306,
+          "prod_steps": 150,
+          "full_run_s": 74.10909210011596
+        },
+        "shots=1000": {
+          "per_step_s": 1.425848152517574,
+          "prod_steps": 150,
+          "full_run_s": 213.8772228776361
+        }
+      },
+      "RQNG_sphere_block": {
+        "analytic": {
+          "per_step_s": 0.5000777699751779,
+          "prod_steps": 150,
+          "full_run_s": 75.01166549627669
+        },
+        "shots=1000": {
+          "per_step_s": 1.4071827690058853,
+          "prod_steps": 150,
+          "full_run_s": 211.0774153508828
+        }
+      },
+      "ProjQNG_sphere": {
+        "analytic": {
+          "per_step_s": 0.4959356310137082,
+          "prod_steps": 150,
+          "full_run_s": 74.39034465205623
+        },
+        "shots=1000": {
+          "per_step_s": 1.402834823995363,
+          "prod_steps": 150,
+          "full_run_s": 210.42522359930445
+        }
+      },
+      "ProjAdam_sphere": {
+        "analytic": {
+          "per_step_s": 0.00987813450046815,
+          "prod_steps": 150,
+          "full_run_s": 1.4817201750702225
+        },
+        "shots=1000": {
+          "per_step_s": 1.1569609895232134,
+          "prod_steps": 150,
+          "full_run_s": 173.544148428482
+        }
+      },
+      "ProjQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.313855489512207,
+          "prod_steps": 150,
+          "full_run_s": 47.07832342683105
+        },
+        "shots=1000": {
+          "per_step_s": 0.7383288395067211,
+          "prod_steps": 150,
+          "full_run_s": 110.74932592600817
+        }
+      },
+      "RQNGAdam_v1_sphere": {
+        "analytic": {
+          "per_step_s": 0.3051676375034731,
+          "prod_steps": 150,
+          "full_run_s": 45.77514562552096
+        },
+        "shots=1000": {
+          "per_step_s": 0.7806825065053999,
+          "prod_steps": 150,
+          "full_run_s": 117.10237597580999
+        }
+      },
+      "ProjAdam_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.03714859898900613,
+          "prod_steps": 150,
+          "full_run_s": 5.57228984835092
+        },
+        "shots=1000": {
+          "per_step_s": 0.6393751809955575,
+          "prod_steps": 150,
+          "full_run_s": 95.90627714933362
+        }
+      },
+      "ProjQNG_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.31122613648767583,
+          "prod_steps": 150,
+          "full_run_s": 46.683920473151375
+        },
+        "shots=1000": {
+          "per_step_s": 0.761162423499627,
+          "prod_steps": 150,
+          "full_run_s": 114.17436352494406
+        }
+      },
+      "RQNG_hyperbolic_block": {
+        "analytic": {
+          "per_step_s": 0.30987070649280213,
+          "prod_steps": 150,
+          "full_run_s": 46.48060597392032
+        },
+        "shots=1000": {
+          "per_step_s": 0.7579559784790035,
+          "prod_steps": 150,
+          "full_run_s": 113.69339677185053
+        }
+      },
+      "ProjQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.3626554340007715,
+          "prod_steps": 150,
+          "full_run_s": 54.398315100115724
+        },
+        "shots=1000": {
+          "per_step_s": 0.780650004016934,
+          "prod_steps": 150,
+          "full_run_s": 117.0975006025401
+        }
+      },
+      "RQNGAdam_v1_hyperbolic": {
+        "analytic": {
+          "per_step_s": 0.3175557115173433,
+          "prod_steps": 150,
+          "full_run_s": 47.633356727601495
+        },
+        "shots=1000": {
+          "per_step_s": 0.7652691389957909,
+          "prod_steps": 150,
+          "full_run_s": 114.79037084936863
+        }
+      }
+    }
+  }
+}
