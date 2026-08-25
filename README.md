@@ -60,8 +60,11 @@ python run_all_parallel.py --tasks manifold_sphere --optimizers sphere_concept \
 
 The runner uses every available core; cap it with `--workers N`. On Slurm,
 `run.sbatch` wraps the same command and exposes `TASKS` / `OPTS` / `SEEDS` /
-`SHOTS` / `TITLE` as environment variables — edit the `cd` and conda paths at
-the top of that script for your cluster first, then:
+`SHOTS` / `TITLE` as environment variables. Submit it from the repo and it
+picks up the repo path and your active conda install automatically; override
+with `REPO_DIR` / `CONDA_SH` / `CONDA_ENV` if not. The `#SBATCH` account,
+partition, and nodelist lines at the top are UMD-specific — change those for
+your cluster.
 
 ```bash
 TASKS=manifold_sphere OPTS=sphere_concept sbatch run.sbatch

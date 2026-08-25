@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-04-26T23:56:44",
   "last_run_started": "2026-04-26T23:46:41",
-  "host": "cbcb30.umiacs.umd.edu",
+  "host": "cbcb30",
   "warmup_steps": 1,
   "timed_steps": 2,
   "modes": [

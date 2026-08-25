@@ -30,10 +30,30 @@ echo "  Partition: $SLURM_JOB_PARTITION"
 echo "  Start    : $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================================================"
 
-cd /nfshomes/aysingha/workspace/quantum-manifold-optimization
+# Repo and conda locations are configurable so this script isn't tied to
+# one account or cluster. Defaults: run from the directory you submitted
+# from (which is the repo if you `sbatch run.sbatch` inside it), and find
+# conda from $CONDA_SH, falling back to whatever `conda` is on PATH.
+#   REPO_DIR=/path/to/repo CONDA_SH=/path/to/conda.sh sbatch run.sbatch
+REPO_DIR="${REPO_DIR:-${SLURM_SUBMIT_DIR:-$PWD}}"
+CONDA_ENV="${CONDA_ENV:-qng-baseline}"
 
-source /fs/nexus-scratch/aysingha/conda/miniconda3/etc/profile.d/conda.sh
-conda activate qng-baseline
+cd "$REPO_DIR"
+
+if [ -z "${CONDA_SH:-}" ]; then
+    if command -v conda >/dev/null 2>&1; then
+        CONDA_SH="$(conda info --base)/etc/profile.d/conda.sh"
+    else
+        echo "ERROR: conda not found on PATH. Point CONDA_SH at your install:" >&2
+        echo "  CONDA_SH=/path/to/miniconda3/etc/profile.d/conda.sh sbatch run.sbatch" >&2
+        exit 1
+    fi
+fi
+source "$CONDA_SH"
+conda activate "$CONDA_ENV"
+
+echo "  Repo     : $REPO_DIR"
+echo "  Conda    : $CONDA_SH  (env: $CONDA_ENV)"
 
 echo "  Python   : $(which python) ($(python --version 2>&1))"
 echo "  PennyLane: $(python -c 'import pennylane; print(pennylane.__version__)')"

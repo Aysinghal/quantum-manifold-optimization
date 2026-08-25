@@ -81,6 +81,17 @@ MODES = [
 ]
 
 
+
+def _short_host():
+    """Hostname without the site domain.
+
+    The bench JSON is committed to a public repo, so we record only the
+    short node name (which is what makes timings comparable) and not the
+    fully-qualified internal hostname.
+    """
+    return platform.node().split(".")[0]
+
+
 def fmt_seconds(s):
     if s is None:
         return "  --  "
@@ -242,7 +253,7 @@ def main():
     print("=" * 90)
     print(f"  Full-cartesian bench: {len(full_tasks)} tasks x {len(full_opts)} "
           f"optimizers x {len(MODES)} modes = {n_combos_full} combos")
-    print(f"  warmup={WARMUP_STEPS}  timed={TIMED_STEPS}  host={platform.node()}")
+    print(f"  warmup={WARMUP_STEPS}  timed={TIMED_STEPS}  host={_short_host()}")
     if existing and not args.force:
         cached_at = existing.get("generated_at", "?")
         print(f"  Cache: loaded from {args.output} (generated_at={cached_at})")
@@ -340,7 +351,7 @@ def _write_payload(path, estimates, tasks, opts, failures, wall_total_s, started
     payload = {
         "generated_at":     datetime.now().isoformat(timespec="seconds"),
         "last_run_started": started_at.isoformat(timespec="seconds"),
-        "host":             platform.node(),
+        "host":             _short_host(),
         "warmup_steps":     WARMUP_STEPS,
         "timed_steps":      TIMED_STEPS,
         "modes":            [m[0] for m in MODES],
