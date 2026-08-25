@@ -19,16 +19,17 @@ The ``LOSS_TOL`` is per-manifold:
     they descend by O(0.1)-O(1) over 5 steps; any positive delta beyond
     numerical slack is a regression.
   - Hyperbolic: 1.0. The Hyperbolic retract clips the per-step Minkowski
-    geodesic distance to ``Hyperbolic.max_step`` (default 0.05) to keep
-    the exp-map in its linear-tangential regime; this caps per-step
-    descent at O(max_step * ||grad alignment||). Over 5 steps, even a
+    geodesic distance to ``Hyperbolic._L_cap = arccosh(1 + max_growth)``
+    (default ``max_growth=0.05``, so ``L_cap ~ 0.31``), bounding the
+    radial inflation per step; this caps per-step descent at
+    O(L_cap * ||grad alignment||). Over 5 steps, even a
     well-behaved hyperbolic optimizer may produce only O(0.1) net
     descent and small per-step oscillations from the residual radial
     bias of the projection can dominate that signal. We loosen the
     threshold to 1.0 to filter blowups (cosh overflow took the failed
     runs to delta = +5e-1 or NaN before the clip was tightened) while
     accepting slow or oscillating convergence as a runtime
-    characteristic of Lorentz-c=1 on PQC angles, not a bug. The
+    characteristic of Lorentz-c=0.01 on PQC angles, not a bug. The
     cross-manifold analysis is responsible for surfacing whether any
     given hyperbolic optimizer actually descends meaningfully on
     production-length runs.

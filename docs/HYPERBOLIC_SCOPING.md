@@ -89,7 +89,7 @@ Lorentz is also cleaner to differentiate through.
 
 ## Implementation plan (gated on this doc clearing review)
 
-Per [AGENTS.md](AGENTS.md):
+Per [AGENTS.md](../AGENTS.md):
 
 1. New `Hyperbolic` subclass in [src/manifolds.py](src/manifolds.py) with `name = "hyperbolic"`, `project` (project Euclidean gradient onto Lorentz tangent space at $x$), `retract` (Lorentz exponential map), `init` (sample from a small ball around the origin of the Lorentz model). Wire it into `_OPTIMIZER_MANIFOLDS`.
 2. New optimizers in [run_all_parallel.py](run_all_parallel.py) `OPTIMIZERS` registry: `RQNG_hyperbolic_block`, `ProjQNG_hyperbolic`, `ProjAdam_hyperbolic`. Add to `OPT_PRIORITY` (50 / 50 / 10 respectively, mirroring sphere). Add a `hyperbolic_concept` opt tier.

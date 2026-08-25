@@ -2,7 +2,7 @@
 
 This is the research narrative for the quantum-manifold-optimization project. It's a living document: every chat session can update it. Its job is to make sure a fresh Cursor session can read this top-to-bottom and have the right mental model — what we're chasing, what we've tried, what we've concluded, what's still live, and what's permanently parked.
 
-This file is conceptual. It does not document bug fixes, refactors, registry layouts, or "where things live in the code." For repository mechanics see [AGENTS.md](AGENTS.md). For a light-touch index of the optimizers, tasks, and manifolds that currently exist, see [research_reference.md](research_reference.md).
+This file is conceptual. It does not document bug fixes, refactors, registry layouts, or "where things live in the code." For repository mechanics see [AGENTS.md](../AGENTS.md). For a light-touch index of the optimizers, tasks, and manifolds that currently exist, see [research_reference.md](research_reference.md).
 
 ---
 
@@ -211,7 +211,7 @@ These are non-negotiable for any future chat working in this repo.
 - Manifold-restricting optimizers always ship with projected baselines. No exceptions.
 - Optimizer hyperparameters are fixed at paper defaults across the comparison. If a new optimizer needs different defaults, that's a research finding worth its own writeup.
 - Tasks must declare which optimizer family they're rigged for, even if that family ends up losing on them. This is how we keep the comparison honest.
-- Repository mechanics — how to add an optimizer / task / manifold without breaking the runner — are out of scope for this document. That's [AGENTS.md](AGENTS.md). Refer to it; do not duplicate it here.
+- Repository mechanics — how to add an optimizer / task / manifold without breaking the runner — are out of scope for this document. That's [AGENTS.md](../AGENTS.md). Refer to it; do not duplicate it here.
 - This document is updated as the research moves. After every experiment that produces a conclusion, the relevant chapter (live thread, what-we-believe, parked) gets edited to reflect it. A doc that doesn't drift is a doc that's lying.
 
 ---

@@ -10,7 +10,7 @@ file when registries / cross-file invariants change.
 
 > **Research context:** the conceptual story -- what we're chasing, what we've
 > tried, what we've learned, what's parked -- lives in
-> [RESEARCH_PATH.md](RESEARCH_PATH.md) and [research_reference.md](research_reference.md).
+> [RESEARCH_PATH.md](docs/RESEARCH_PATH.md) and [research_reference.md](docs/research_reference.md).
 > Read those before proposing any new optimizer, task, or manifold direction.
 > This file (`AGENTS.md`) covers the mechanical "where to plug a new thing in";
 > the research files cover "should we be building it at all."
@@ -33,15 +33,20 @@ run.sbatch              Slurm wrapper. Env vars TASKS / OPTS / SEEDS / TITLE
 src/models.py           Circuits, Hamiltonians, init_params_*.
 src/training.py         train_with_data / train_vqe. EVAL_COST and
                         _QNG_FAMILY drive opt-name -> training-path dispatch.
-src/manifolds.py        Manifold ABC + Euclidean / Torus / Sphere +
-                        _OPTIMIZER_MANIFOLDS registry + manifold_for().
+src/manifolds.py        Manifold ABC + Euclidean / Torus / Sphere /
+                        Hyperbolic + _OPTIMIZER_MANIFOLDS registry +
+                        manifold_for().
 src/metrics.py          aggregate_seeds (incl. theta_norms), make_run_dir,
                         _slugify, save_results.
 src/visualization.py    convergence_plot, resource_plot, final_loss_bar,
                         theta_trajectory_plot.
 tests/smoke_all_optimizers.py   5-step regression suite over every optimizer.
 tools/                          One-off plot reorganization helpers.
+docs/                           Research narrative + reference index +
+                                hyperbolic scoping + poster package.
+README.md, LICENSE              Public-facing front page; MIT license.
 results/<stamp>__<slug>/        Per-run output (JSON + plots + run_meta.json).
+                                Gitignored -- results are never committed.
 ```
 
 ## How a run flows (data path you should remember)
@@ -179,9 +184,6 @@ silent gaps in the ETA and missing output blocks at the end of the run.
   (`tests/bench_smoke.py` drops keys not in the current registries). The
   runner side is robust to arbitrary extra keys in the JSON, but won't
   prune for you.
-- `--steps N` globally overrides every task's step count. Bench-derived ETAs
-  are rescaled by `per_step_s * N` rather than the saved `full_run_s`, so a
-  10-step smoke run reports a 10-step ETA, not a production-length one.
 
 ## Output convention
 

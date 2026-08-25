@@ -2,7 +2,7 @@
 
 A light-touch conceptual index of what currently exists in the project — optimizers, tasks, manifolds, and how to invoke them. Companion to [RESEARCH_PATH.md](RESEARCH_PATH.md), which carries the *why*; this file carries the *what*.
 
-This is deliberately high-level. No file paths, no per-task hyperparameter tables, no color/label maps, no code-path branches. If you need any of that, read the code (or the checklists in [AGENTS.md](AGENTS.md)).
+This is deliberately high-level. No file paths, no per-task hyperparameter tables, no color/label maps, no code-path branches. If you need any of that, read the code (or the checklists in [AGENTS.md](../AGENTS.md)).
 
 ---
 
@@ -40,6 +40,8 @@ Riemannian-QNG variants and their projected baselines. These are the live resear
 - **Projected Adam (sphere)** — flat Adam step followed by sphere retraction. The "make Adam aware of the constraint" baseline. Without it, any sphere result is confounded by Adam's larger search space. **In Phase 2 it beat plain `Adam` on the hard physics tasks** (`vqe_xxz` -11.24 vs -10.22, `fit_high_periodic` 0.4578 vs 0.4738), showing that the projection step itself functions as a regularizer — independent of any geometry-aware-optimization claim.
 - **R-QNGAdam (sphere)** — QNGAdam-v1 update done on the tangent space (gradient pre-projected before the Adam moments and FS solve), then geodesic retraction. **Tested (Phase 2.5a).** Did not diverge anywhere; the deepest-stack stability fear from the plan's risk register did not fire. But it loses to `Projected QNGAdam (sphere)` on 7 of 8 tasks and shows ~80× larger seed-to-seed std on `vqe_heis_ring`. Same "geometric machinery null on top of a working projection" pattern as R-QNG-on-sphere, replicated for the QNGAdam family.
 - **Projected QNGAdam (sphere)** — flat QNGAdam-v1 step followed by sphere retraction. The "make our strongest flat optimizer aware of the constraint" baseline. **In Phase 2.5a it beat flat `QNGAdam_v1_block` on 4 of 8 sphere-tier tasks** (`vqe_heis_ring`, `vqe`, `vqe_sk_spinglass`, `vqe_overparam_heis`), tied within seed-noise on three more, lost only on `fit_multifreq1d`. Together with `Projected Adam (sphere) > Adam`, this shows projection-as-regularization is not a "weak optimizers only" effect — it generalizes to the strongest flat optimizer in the comparison.
+
+- **Hyperbolic lineup** (`ProjAdam_hyperbolic`, `ProjQNG_hyperbolic`, `RQNG_hyperbolic_block`, `ProjQNGAdam_v1_hyperbolic`, `RQNGAdam_v1_hyperbolic`). The Phase-2 sphere lineup transplanted onto the hyperboloid, on a shared `lr = 0.05` so the cross-manifold comparison (Euclidean vs. sphere vs. hyperbolic) is apples-to-apples. **Pilot only** — see the Hyperbolic entry in the manifold map below.
 
 Whenever a manifold *restricts the reachable state set* (sphere does, torus does not), the projected-baseline variants are mandatory companions to the R-QNG variant. This is non-negotiable; an unprojected comparison conflates "different update rule" with "different reachable states."
 
@@ -86,16 +88,17 @@ A few task types have been considered and rejected. They are not in the suite, a
 
 ## Manifold map
 
-Three manifolds currently in the codebase, each testing a distinct conceptual claim.
+Four manifolds currently in the codebase, each testing a distinct conceptual claim.
 
 - **Euclidean.** The default; the absence of any constraint. Every flat optimizer lives here.
 - **Torus** (`T^d = (S¹)^d`). Tests the conceptual claim *parameter-space topology coming from gate periodicity is an optimization-relevant structure*. Confirmed false: the FS preconditioner is itself `2π`-periodic in every gate angle and silently absorbs torus topology. The torus is documented in the codebase as a null result, not as an active experiment. Do not propose new torus experiments without a new mechanism.
 - **Sphere** (`S^(d−1)`, one big sphere over the concatenated parameter vector). Tests the conceptual claim *restricting the reachable quantum states changes optimization dynamics*. **Tested (Phase 2 + Phase 2.5a). Partial-null outcome, replicated across two optimizer families:** both the R-QNG-on-sphere and R-QNGAdam-on-sphere geometric machinery are null on every task (including the rigged one), but the projection step alone helps both `Adam` and `QNGAdam_v1_block` on hard physics tasks. The sphere is the first manifold whose effect is *not* implicit in the FS metric, because the FS metric is a property of the state space and cannot know that the parameter space has been restricted — so the partial-null is a real finding about *which component of the manifold-aware construction* (geometry vs. projection) does useful work, not about whether the FS metric absorbs sphere structure. Sphere invariant verified to ~1e-13 max drift across all (task, optimizer) combinations.
 
+- **Hyperbolic** (`H^d`, Lorentz / hyperboloid model, curvature `c = 0.01`). Tests the conceptual claim *negative-curvature parameter geometry suits hierarchical-interaction Hamiltonians*. Implemented in the codebase (five optimizers mirroring the Phase-2 sphere lineup, reachable via the `hyperbolic_concept` optimizer tier). **Run as an exploratory Phase-2.5b pilot only, not as a full arm of the study:** the pilot showed projection-style hyperbolic variants generally stronger than the corresponding Riemannian hyperbolic variants, consistent with the sphere's geometry-vs-projection split, but the outcomes are feasibility evidence rather than performance claims. The retract applies a growth-bounded leash (`max_growth = 0.05`, so geodesic distance is capped at `L_cap ~ 0.31`) to bound per-step radial inflation. Mechanism story still conditional — see [HYPERBOLIC_SCOPING.md](HYPERBOLIC_SCOPING.md). **Distinct from Tran-Dinh 2025 (hyperbolic-NQS for VMC); ours is hyperbolic-on-PQC for VQE.**
+
 Manifolds we have considered and rejected (or deferred indefinitely):
 
 - *Per-layer sphere* (one sphere per circuit layer rather than one big sphere). Live only as a fallback if the global sphere fails uniformly; mixed sphere results would not justify it.
-- *Hyperbolic.* Candidate. Mechanism story conditional on hierarchical-Hamiltonian targets (Heisenberg $J_1 J_2$, $J_1 J_2 J_3$); see [HYPERBOLIC_SCOPING.md](HYPERBOLIC_SCOPING.md). **Distinct from Tran-Dinh 2025 (hyperbolic-NQS for VMC); we propose hyperbolic-on-PQC for VQE.** Untested. Implementation not in the codebase.
 - *Stiefel, Grassmann.* Deferred to a follow-up. Adjacent prior art exists (Hauru/Van Damme/Haegeman 2021 for tensor networks; arXiv:2402.07100 for many-eigenstate VQE) but neither does Stiefel-as-parameter-manifold over a generic ansatz. Out of scope for the symposium.
 - *Product manifolds derived from gate-angle periodicity in any guise.* Same FS-absorbs-topology argument as torus.
 

@@ -17,7 +17,7 @@ Phase 1 ships ``Euclidean`` and ``Torus``; ``Sphere`` lands in Phase 2;
 ``Hyperbolic`` (Lorentz model) lands in Phase 2.5b. Phase 2.5b's R-QNG and
 projected baselines on the hyperboloid mirror the Phase-2 sphere lineup so
 sphere vs. hyperbolic vs. flat is an apples-to-apples cross-manifold
-comparison; see HYPERBOLIC_SCOPING.md for the mechanism story.
+comparison; see docs/HYPERBOLIC_SCOPING.md for the mechanism story.
 """
 
 from abc import ABC, abstractmethod

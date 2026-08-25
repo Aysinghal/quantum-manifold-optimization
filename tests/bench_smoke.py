@@ -12,7 +12,8 @@ Two modes are timed for every combo:
   - "analytic"   shots=None         (adjoint for GD/Adam, parameter-shift for QNG)
   - "shots=1000" shots=1000         (parameter-shift everywhere)
 
-13 tasks x 13 optimizers x 2 modes = 338 timings (current registry size).
+13 tasks x 20 optimizers x 2 modes = 520 timings at the current registry
+size; the script recomputes the real count from the registries at run time.
 Some combos may legitimately fail (a task constructed for one manifold can
 be invalid for an optimizer designed for another); failures are recorded as
 ``null`` entries and skipped by the heartbeat lookup.
@@ -25,7 +26,7 @@ only re-times combos that are
       registry since the last bench run), or
   (b) recorded as ``null`` (previously failed).
 Successful entries are kept as-is so a 5-minute incremental refresh after
-adding one optimizer doesn't trigger a full 338-combo bench.
+adding one optimizer doesn't trigger a full-cartesian bench.
 
 Flags:
   --force              Re-time every combo from scratch, ignoring the cache.

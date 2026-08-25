@@ -55,7 +55,7 @@ SHOTS="${SHOTS:-0}"
 #   TASKS=manifold_sphere OPTS=sphere_concept  sbatch run.sbatch  # Phase 2
 #   TASKS=vqe_stokes_overparam_long OPTS=torus_concept SEEDS=0 sbatch run.sbatch
 #       (single-task, single-seed diagnostic-style run; produces theta plot)
-# Phase 2 job count: 7 opts x 8 tasks x 5 seeds = 280 jobs.
+# Phase 2 job count: 9 opts x 8 tasks x 5 seeds = 360 jobs.
 TASKS="${TASKS:-sanity,qng_advantage}"
 OPTS="${OPTS:-qng_full_sweep}"
 echo "  Shots    : $SHOTS  (0 = analytic noiseless + adjoint; >0 = shot-noisy + parameter-shift)"
