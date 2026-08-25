@@ -31,23 +31,28 @@ pilots, not as a full arm of the study.
 
 ## What is being compared
 
-The headline sweep runs the `manifold_sphere` task tier — 8 variational quantum
-tasks with differing landscape characteristics (VQE on Heisenberg rings, XXZ
-chains, SK spin glasses, Stokes-style overparameterized circuits, plus
-multi-frequency regression) — against the `sphere_concept` optimizer tier, in
-analytic mode (`shots = 0`) with 5 seeds per task.
+The headline sweep is six optimizers spanning three categories, run over 8
+variational quantum tasks with differing landscape characteristics (VQE on
+Heisenberg rings, XXZ chains, SK spin glasses, Stokes-style overparameterized
+circuits, plus multi-frequency regression), in analytic mode (`shots = 0`) with
+5 seeds per task.
 
 | Category | Optimizers | Update rule |
 | --- | --- | --- |
 | Flat-space baselines | `Adam`, `QNG_block`, `QNGAdam_v1_block` | Euclidean parameter space, no constraint |
-| Projection-based | `ProjAdam_sphere`, `ProjQNG_sphere`, `ProjQNGAdam_v1_sphere` | Full ambient step, then retract onto the manifold |
-| Riemannian | `RQNG_sphere_block`, `RQNGAdam_v1_sphere`, `RQNG_torus_block` | Project the gradient to the tangent space, solve with the Fubini–Study metric, then geodesic-retract |
+| Projection-based | `ProjAdam_sphere`, `ProjQNGAdam_v1_sphere` | Full ambient step, then retract onto the sphere |
+| Riemannian | `RQNGAdam_v1_sphere` | Project the gradient to the tangent space, solve with the Fubini–Study metric, then geodesic-retract |
 
 The projected variants are mandatory companions, not extras: the sphere
 restricts the reachable state set, so without them a sphere-vs-flat comparison
-would confound "different update rule" with "different reachable states". The
-full registry (20 optimizer configurations, 13 tasks) lives in
-`run_all_parallel.py`; tiers pick which subset a run schedules.
+would confound "different update rule" with "different reachable states".
+
+Beyond these six, the registry also holds `ProjQNG_sphere`, `RQNG_sphere_block`,
+the torus-constrained `RQNG_torus_block` (a documented null result), and five
+hyperbolic optimizers run as exploratory pilots. All 20 optimizer
+configurations and 13 tasks live in `run_all_parallel.py`; tiers pick which
+subset a run schedules. The `sphere_concept` tier used in the commands below is
+the wider 9-optimizer sphere sweep the six were drawn from.
 
 ## Reproducing a run
 
@@ -102,7 +107,9 @@ Izaac, Killoran & Carleo, [arXiv:1909.02108](https://arxiv.org/abs/1909.02108).
 
 ## Authors
 
-Sumedh Sai Ameti, Aarav Nirmal, Ayush Singhal — UMD QLearn.
+Sumedh Sai Ameti, Aarav Nirmal, Ayush Singhal — UMD QLearn, University of
+Maryland, College Park. Presented as *Testing Quantum Machine Learning
+Optimization on Topological Spaces*.
 
 ## License
 
