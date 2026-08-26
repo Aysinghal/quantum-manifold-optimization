@@ -97,7 +97,7 @@ optimizer still runs and preserves its manifold invariant.
 | `tests/smoke_all_optimizers.py` | 5-step regression suite asserting manifold invariants for every optimizer |
 | `tests/bench_smoke.py` | Incremental task×optimizer×mode timer; writes `bench_smoke_estimates.json` for ETA seeding |
 | `tools/` | One-off plot-reorganization helper |
-| `docs/` | Research narrative, optimizer/task/manifold index, hyperbolic scoping, poster package |
+| `docs/` | Research narrative, optimizer/task/manifold index, hyperbolic scoping, symposium poster |
 | `AGENTS.md` | Checklists for adding an optimizer, task, or manifold without breaking the runner |
 
 Background: [docs/RESEARCH_PATH.md](docs/RESEARCH_PATH.md) for the research
@@ -108,8 +108,8 @@ Izaac, Killoran & Carleo, [arXiv:1909.02108](https://arxiv.org/abs/1909.02108).
 ## Authors
 
 Sumedh Sai Ameti, Aarav Nirmal, Ayush Singhal — UMD QLearn, University of
-Maryland, College Park. Presented as *Testing Quantum Machine Learning
-Optimization on Topological Spaces*.
+Maryland, College Park. Presented as *[Testing Quantum Machine Learning
+Optimization on Topological Spaces](docs/qlearn-symposium-poster.pdf)*.
 
 ## License
 

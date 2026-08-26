@@ -43,7 +43,7 @@ src/visualization.py    convergence_plot, resource_plot, final_loss_bar,
 tests/smoke_all_optimizers.py   5-step regression suite over every optimizer.
 tools/                          One-off plot reorganization helpers.
 docs/                           Research narrative + reference index +
-                                hyperbolic scoping + poster package.
+                                hyperbolic scoping + symposium poster.
 README.md, LICENSE              Public-facing front page; MIT license.
 results/<stamp>__<slug>/        Per-run output (JSON + plots + run_meta.json).
                                 Gitignored -- results are never committed.
