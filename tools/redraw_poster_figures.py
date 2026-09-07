@@ -7,10 +7,15 @@ raw code names, and every std band filled C0 blue regardless of its line. Those
 are fixed in src/visualization.py; this script re-renders the three figures from
 the archived run data so the poster can be updated without touching a cluster.
 
-Reads only the aggregated JSON a run already wrote -- no simulator, no PennyLane.
+Reads only the aggregated JSON a run already wrote -- no simulator, no
+PennyLane. It does need that run output, which is NOT distributed with the
+repo: run_all_parallel.py writes into results/, and results/ is gitignored.
+So a fresh clone cannot regenerate these figures; the committed PNGs under
+docs/poster-figures/ are the archived copies. Point --data-root at wherever
+the two run directories named below actually live.
 
     python tools/redraw_poster_figures.py
-    python tools/redraw_poster_figures.py --data-root "D:/runs" --out-dir build/figs
+    python tools/redraw_poster_figures.py --data-root ~/archive/qlearn-runs
 """
 
 import argparse
@@ -23,7 +28,9 @@ from metrics import load_results  # noqa: E402
 from visualization import convergence_plot  # noqa: E402
 
 
-DEFAULT_DATA_ROOT = r"C:\Ayush\Temp\Qlearn Data"
+# Where run_all_parallel.py writes by default. Override with --data-root when
+# the runs have been archived elsewhere.
+DEFAULT_DATA_ROOT = "results"
 DEFAULT_OUT_DIR = os.path.join("docs", "poster-figures")
 
 SPHERE_RUN = "2026-04-27_033629__poster_sphere_6opt"
@@ -116,7 +123,12 @@ def main():
     for stem, run, task, opts, kwargs in FIGURES:
         path = os.path.join(args.data_root, run, f"{task}.json")
         if not os.path.exists(path):
-            raise SystemExit(f"missing run data: {path}")
+            raise SystemExit(
+                f"missing run data: {path}\n"
+                f"This script needs the archived output of run '{run}', which is "
+                f"not part of the repo (results/ is gitignored).\n"
+                f"Pass --data-root to point at wherever those run directories live."
+            )
         results = load_results(path)
         agg = select(results, opts, path)
 
