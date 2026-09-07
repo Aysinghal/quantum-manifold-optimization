@@ -1857,7 +1857,7 @@ def main():
              **agg},
             os.path.join(results_dir, "vqe.json"),
         )
-        convergence_plot(agg, title=f"VQE Ising {VQE_N_QUBITS}q  (E*={E_exact:.3f})",
+        convergence_plot(agg, title=f"VQE — Ising chain, {VQE_N_QUBITS} qubits (exact: ${E_exact:.2f}$)",
                          ylabel="Energy \u27e8H\u27e9",
                          save_path=task_plot_path(plots_dir, "vqe", "convergence"))
         resource_plot(agg, title="VQE (resource-normalised)",
@@ -2058,14 +2058,14 @@ def main():
             os.path.join(results_dir, "fit_high_periodic.json"),
         )
         convergence_plot(agg,
-                         title="1D High-Periodic Regression: sin(7x) on [-3pi, 3pi]",
+                         title="Regression — sin(7x)",
                          log_y=True,
                          save_path=task_plot_path(plots_dir, "fit_high_periodic", "convergence"))
-        resource_plot(agg, title="1D High-Periodic (resource-normalised)", log_y=True,
+        resource_plot(agg, title="Regression — sin(7x) (resource-normalised)", log_y=True,
                       save_path=task_plot_path(plots_dir, "fit_high_periodic", "resource"))
-        final_loss_bar(agg, title="1D High-Periodic: final MSE",
+        final_loss_bar(agg, title="Regression — sin(7x): final MSE",
                        save_path=task_plot_path(plots_dir, "fit_high_periodic", "final"))
-        theta_trajectory_plot(agg, title="1D High-Periodic: ||theta|| trajectory",
+        theta_trajectory_plot(agg, title="Regression — sin(7x): ||theta|| trajectory",
                               save_path=task_plot_path(plots_dir, "fit_high_periodic", "theta"))
 
     # ── Phase 1: SK spin-glass VQE ───────────────────────────────────────
@@ -2120,7 +2120,7 @@ def main():
             os.path.join(results_dir, "vqe_xxz.json"),
         )
         convergence_plot(agg,
-                         title=f"VQE XXZ chain ({XXZ_N_QUBITS}q x {XXZ_N_LAYERS}L, delta={XXZ_DELTA}, {XXZ_SHOTS} shots)  (E*={E_exact:.3f})",
+                         title=f"VQE — XXZ chain, {XXZ_N_QUBITS} qubits (exact: ${E_exact:.2f}$)",
                          ylabel="Energy \u27e8H\u27e9",
                          save_path=task_plot_path(plots_dir, "vqe_xxz", "convergence"))
         resource_plot(agg, title="VQE XXZ chain (resource-normalised)",

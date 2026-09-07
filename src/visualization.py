@@ -7,37 +7,103 @@ import textwrap
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Categorical palette validated for colorblind separation (protan/deutan/tritan)
+# against a white chart surface. Two encodings carry identity, so no pair of
+# curves relies on hue alone:
+#   hue       = optimizer family (Adam / QNG / QNG-Adam / GD)
+#   linestyle = geometry ("-" flat Euclidean, "--" projected, ":" Riemannian)
+# Hues repeat only across optimizer tiers that never share a plot (see OPT_TIERS
+# in run_all_parallel.py); within every tier the (hue, linestyle) pair is unique.
 COLORS = {
-    "GD": "#1f77b4",
-    "Adam": "#ff7f0e",
-    "QNG_block": "#98df8a",            # light green: lr=0.05 control
-    "QNG_block_lr01": "#2ca02c",       # solid green: lr=0.1
-    "QNG_block_lr02": "#006400",       # dark green: lr=0.2
-    "QNG_full": "#d62728",
-    "MomentumQNG_block": "#9467bd",    # purple
-    "QNGAdam_v1_block":  "#17becf",    # cyan
-    "QNGAdam_v2_block":  "#bcbd22",    # olive
-    "RQNG_torus_block":  "#e377c2",    # pink: Phase 1 R-QNG on the torus
-    # Phase 2 (manifold_sphere) -- distinct hex codes so all three sphere
-    # optimizers are visually separable from each other and from Phase 1.
-    "RQNG_sphere_block": "#8c564b",    # brown: R-QNG on the sphere (ours)
-    "ProjQNG_sphere":    "#7f7f7f",    # gray:  QNG + sphere retract (baseline)
-    "ProjAdam_sphere":   "#ffbb78",    # peach: Adam + sphere retract (baseline)
+    # -- flat / Euclidean baselines --
+    "GD": "#4a3aa7",                          # violet
+    "Adam": "#e34948",                        # red
+    "QNG_block": "#008300",                   # green: lr=0.05 control
+    "QNG_block_lr01": "#4fa64f",              # green, lighter: lr=0.1
+    "QNG_block_lr02": "#00470a",              # green, darker:  lr=0.2
+    "QNG_full": "#e87ba4",                    # magenta
+    "MomentumQNG_block": "#eb6834",           # orange
+    "QNGAdam_v1_block":  "#3fb8a0",           # teal
+    "QNGAdam_v2_block":  "#2a78d6",           # blue
+    # -- Phase 1 (manifold_torus) --
+    "RQNG_torus_block":  "#eb6834",           # orange, dotted
+    # -- Phase 2 / 2.5a (manifold_sphere) --
+    "RQNG_sphere_block": "#e87ba4",           # magenta, dotted
+    "ProjQNG_sphere":    "#008300",           # green, dashed (QNG family)
+    "ProjAdam_sphere":   "#eda100",           # yellow, dashed
+    "ProjQNGAdam_v1_sphere": "#2a78d6",       # blue, dashed
+    "RQNGAdam_v1_sphere":    "#4a3aa7",       # violet, dotted
+    # -- Phase 2.5b (manifold_hyperbolic) -- same family hues as the sphere
+    # tier so a reader can track one optimizer family across both manifolds.
+    "ProjAdam_hyperbolic":       "#eda100",   # yellow, dashed
+    "ProjQNG_hyperbolic":        "#008300",   # green, dashed
+    "RQNG_hyperbolic_block":     "#e87ba4",   # magenta, dotted
+    "ProjQNGAdam_v1_hyperbolic": "#2a78d6",   # blue, dashed
+    "RQNGAdam_v1_hyperbolic":    "#4a3aa7",   # violet, dotted
 }
+
+# Geometry of the update rule, encoded as the line dash pattern. This is the
+# secondary (non-color) channel: at six or more curves no palette separates
+# every pair by hue alone under simulated color-vision deficiency, so identity
+# must not depend on color only.
+SOLID, DASHED, DOTTED = "-", "--", ":"
+LINESTYLES = {
+    "GD": SOLID,
+    "Adam": SOLID,
+    "QNG_block": SOLID,
+    "QNG_block_lr01": SOLID,
+    "QNG_block_lr02": SOLID,
+    "QNG_full": SOLID,
+    "MomentumQNG_block": SOLID,
+    "QNGAdam_v1_block": SOLID,
+    "QNGAdam_v2_block": SOLID,
+    "RQNG_torus_block": DOTTED,
+    "RQNG_sphere_block": DOTTED,
+    "ProjQNG_sphere": DASHED,
+    "ProjAdam_sphere": DASHED,
+    "ProjQNGAdam_v1_sphere": DASHED,
+    "RQNGAdam_v1_sphere": DOTTED,
+    "ProjAdam_hyperbolic": DASHED,
+    "ProjQNG_hyperbolic": DASHED,
+    "RQNG_hyperbolic_block": DOTTED,
+    "ProjQNGAdam_v1_hyperbolic": DASHED,
+    "RQNGAdam_v1_hyperbolic": DOTTED,
+}
+
+# Last-resort color for an optimizer missing from COLORS. Deliberately a
+# neutral gray so an unregistered curve is visibly "unstyled" rather than
+# masquerading as a palette color that belongs to something else.
+_FALLBACK_COLOR = "#8a8a86"
+
+# Legend text. Two rules keep these readable on a poster:
+#   1. The default configuration gets the bare name; only *variants* carry an
+#      annotation ("QNG" vs "QNG (lr=0.1)", "QNG-Adam" vs "QNG-Adam v2"). A
+#      parenthetical that is constant down a whole legend tells a reader
+#      nothing, so the common case should not pay for the rare one.
+#   2. "Projected" and "Riemannian" are spelled out rather than abbreviated,
+#      matching the words the write-up itself uses. The manifold stays in the
+#      label because the same optimizer is run on more than one.
 LABELS = {
-    "GD": "Vanilla GD",
+    "GD": "Gradient Descent",
     "Adam": "Adam",
-    "QNG_block": "QNG block (lr=0.05, ctrl)",
-    "QNG_block_lr01": "QNG block (lr=0.1)",
-    "QNG_block_lr02": "QNG block (lr=0.2)",
-    "QNG_full": "QNG (full)",
-    "MomentumQNG_block": "Momentum-QNG",
-    "QNGAdam_v1_block":  "QNG-Adam v1 (Adam->G^-1)",
-    "QNGAdam_v2_block":  "QNG-Adam v2 (G^-1->Adam)",
-    "RQNG_torus_block":  "R-QNG (torus)",
-    "RQNG_sphere_block": "R-QNG (sphere)",
-    "ProjQNG_sphere":    "Proj-QNG (sphere)",
-    "ProjAdam_sphere":   "Proj-Adam (sphere)",
+    "QNG_block": "QNG",
+    "QNG_block_lr01": "QNG (lr=0.1)",
+    "QNG_block_lr02": "QNG (lr=0.2)",
+    "QNG_full": "QNG (full metric)",
+    "MomentumQNG_block": "Momentum QNG",
+    "QNGAdam_v1_block":  "QNG-Adam",
+    "QNGAdam_v2_block":  "QNG-Adam v2",
+    "RQNG_torus_block":  "Riemannian QNG (torus)",
+    "RQNG_sphere_block": "Riemannian QNG (sphere)",
+    "ProjQNG_sphere":    "Projected QNG (sphere)",
+    "ProjAdam_sphere":   "Projected Adam (sphere)",
+    "ProjQNGAdam_v1_sphere":     "Projected QNG-Adam (sphere)",
+    "RQNGAdam_v1_sphere":        "Riemannian QNG-Adam (sphere)",
+    "ProjAdam_hyperbolic":       "Projected Adam (hyperbolic)",
+    "ProjQNG_hyperbolic":        "Projected QNG (hyperbolic)",
+    "RQNG_hyperbolic_block":     "Riemannian QNG (hyperbolic)",
+    "ProjQNGAdam_v1_hyperbolic": "Projected QNG-Adam (hyperbolic)",
+    "RQNGAdam_v1_hyperbolic":    "Riemannian QNG-Adam (hyperbolic)",
 }
 
 
@@ -111,10 +177,17 @@ def convergence_plot(agg_by_opt, title="", xlabel="Step", ylabel="Loss",
         mean = np.array(agg["mean_losses"])
         std = np.array(agg["std_losses"])
         steps = np.arange(1, len(mean) + 1)
-        color = COLORS.get(opt_name, None)
+        # Never fall through to matplotlib's property cycle: an unregistered
+        # optimizer used to silently reuse a hue already assigned to another
+        # curve, and because fill_between(color=None) does not advance the
+        # patch cycler it painted *every* std band the same C0 blue.
+        color = COLORS.get(opt_name, _FALLBACK_COLOR)
+        linestyle = LINESTYLES.get(opt_name, SOLID)
         label = LABELS.get(opt_name, opt_name)
-        ax.plot(steps, mean, color=color, label=label)
-        ax.fill_between(steps, mean - std, mean + std, alpha=0.2, color=color)
+        ax.plot(steps, mean, color=color, linestyle=linestyle, linewidth=2,
+                label=label)
+        ax.fill_between(steps, mean - std, mean + std, alpha=0.18,
+                        color=color, linewidth=0)
     if log_y:
         ax.set_yscale("log")
     if log_x:
@@ -183,10 +256,17 @@ def theta_trajectory_plot(agg_by_opt, title="", xlabel="Step",
         mean = np.array(agg["mean_theta_norms"])
         std = np.array(agg["std_theta_norms"])
         steps = np.arange(1, len(mean) + 1)
-        color = COLORS.get(opt_name, None)
+        # Never fall through to matplotlib's property cycle: an unregistered
+        # optimizer used to silently reuse a hue already assigned to another
+        # curve, and because fill_between(color=None) does not advance the
+        # patch cycler it painted *every* std band the same C0 blue.
+        color = COLORS.get(opt_name, _FALLBACK_COLOR)
+        linestyle = LINESTYLES.get(opt_name, SOLID)
         label = LABELS.get(opt_name, opt_name)
-        ax.plot(steps, mean, color=color, label=label)
-        ax.fill_between(steps, mean - std, mean + std, alpha=0.2, color=color)
+        ax.plot(steps, mean, color=color, linestyle=linestyle, linewidth=2,
+                label=label)
+        ax.fill_between(steps, mean - std, mean + std, alpha=0.18,
+                        color=color, linewidth=0)
     if log_y:
         ax.set_yscale("log")
     if log_x:

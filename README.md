@@ -16,12 +16,12 @@ complex geometry-aware optimizers. On the 8-task sphere sweep, `ProjAdam_sphere`
 `RQNG_sphere_block` on every task in the tier — including `vqe_overparam_heis`,
 the task deliberately constructed for the sphere intervention to pay off — and
 the pattern replicated one family up, with `ProjQNGAdam_v1_sphere` beating
-`RQNGAdam_v1_sphere` on 7 of 8 tasks.
+`RQNGAdam_v1_sphere` on 6 of 8 tasks.
 
 Projection also helped the flat optimizers it wraps rather than merely
 constraining them: `ProjAdam_sphere` improved on plain `Adam` on the hard
 physics tasks, and `ProjQNGAdam_v1_sphere` improved on flat `QNGAdam_v1_block`
-on 4 of 8. But no single optimizer dominated every setting — flat
+on 6 of 8. But no single optimizer dominated every setting — flat
 `QNGAdam_v1_block` remains strongest on several tasks. An earlier
 torus-constrained arm was a clean null: torus-QNG and flat QNG are
 loss-identical to ~1e-15, because the Fubini–Study preconditioner is already
@@ -34,8 +34,9 @@ pilots, not as a full arm of the study.
 The headline sweep is six optimizers spanning three categories, run over 8
 variational quantum tasks with differing landscape characteristics (VQE on
 Heisenberg rings, XXZ chains, SK spin glasses, Stokes-style overparameterized
-circuits, plus multi-frequency regression), in analytic mode (`shots = 0`) with
-5 seeds per task.
+circuits, plus multi-frequency regression), with 5 seeds per task. Runs are
+analytic (`shots = 0`) except `vqe_xxz` and `vqe_sk_spinglass`, which hardcode
+1000 shots each (see `XXZ_SHOTS` / `SK_SHOTS` in `run_all_parallel.py`).
 
 | Category | Optimizers | Update rule |
 | --- | --- | --- |
@@ -78,6 +79,9 @@ TASKS=manifold_sphere OPTS=sphere_concept sbatch run.sbatch
 `--tasks` and `--optimizers` accept tier names, individual names, or any
 comma-separated mix. `--shots 0` is analytic (adjoint for GD/Adam,
 parameter-shift for the QNG family); a positive value gives a shot-noisy run.
+Note that `vqe_xxz` and `vqe_sk_spinglass` set their own shot count (1000) in
+the production path, so `--shots` does not override them — those two tasks are
+shot-noisy even under `--shots 0`.
 Each run writes `results/<timestamp>__<slug>/` with one JSON per task,
 `plots/<task>/{convergence,resource,final,theta}.png`, and a `run_meta.json`
 recording the full CLI, host, and seeds; `results/latest` points at the newest
