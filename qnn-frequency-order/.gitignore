@@ -1,0 +1,14 @@
+# Environment and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# The repo root ignores every results/ folder; this project commits
+# results/summary.json as its baseline record, so re-include the folder here.
+!results/
+
+# Raw experiment arrays (~21 MB); regenerate with `python run_all.py` (~20 s).
+# results/summary.json and figures/ are committed.
+results/*.npz

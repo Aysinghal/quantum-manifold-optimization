@@ -1,0 +1,7 @@
+# Direct dependencies, pinned to the versions that produced the committed results.
+# Tested with Python 3.14.6. For the full environment, see requirements-lock.txt.
+numpy==2.5.4
+jax==0.12.0.1
+jaxlib==0.12.0.1
+matplotlib==3.11.2
+pytest==9.2.0
