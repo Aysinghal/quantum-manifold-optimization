@@ -1,4 +1,4 @@
-"""Runs experiments 1-3, writes results/ and figures/, and fills the acceptance table in README.md."""
+"""Runs experiments 1-5, writes results/ and figures/, and fills the acceptance table in README.md."""
 import json
 import os
 import re
@@ -24,7 +24,7 @@ def fmt(v, p=3):
     return f"{v:.{p}g}"
 
 
-def acceptance(e1, binary, ternary, dom):
+def acceptance(e1, binary, ternary, dom, gap, dp):
     checks, extra = [], {}
 
     def add(n, name, expected, measured, ok):
@@ -104,6 +104,80 @@ def acceptance(e1, binary, ternary, dom):
     add(12, "Exp 3: relative-error crossing time of ω = 5", "falls from 94 to 69",
         f"{fmt(ce[k])} → {fmt(cd[k])}", cd_f[k] < ce_f[k])
 
+    # --- Experiment 4
+    def mean_rel_err(enc, key):
+        return float(np.mean(np.abs(gap[f"{enc}_{key}"] / gap[f"{enc}_half_life"] - 1)))
+
+    err2 = [mean_rel_err(e, "half_life_2mom") for e in ("binary", "ternary")]
+    err_avg = [mean_rel_err(e, "half_life_avg") for e in ("binary", "ternary")]
+    add(13, "Exp 4: two-moment prediction vs measured half-life, mean |relative error| "
+            "(binary, ternary)", "5.5%, 6.1% (averaged kernel: 21%, 35%)",
+        f"{100 * err2[0]:.1f}%, {100 * err2[1]:.1f}% (averaged kernel: "
+        f"{100 * err_avg[0]:.0f}%, {100 * err_avg[1]:.0f}%)",
+        max(err2) <= 0.10 and all(a < b for a, b in zip(err2, err_avg)))
+
+    gred = gap["ternary_r1"]
+    def group_ratio(key):
+        return [float(np.mean((gap[f"ternary_{key}"] / gap["ternary_half_life_avg"])[gred == R]))
+                for R in (4, 2, 1)]
+    diag_g, meas_g = group_ratio("half_life_diag"), group_ratio("half_life")
+    add(14, "Exp 4 ternary: half-life / averaged-kernel prediction, each seed's own G_ww only "
+            "vs measured (R = 4, 2, 1)", "1.04, 1.14, 1.38 vs 1.16, 1.49, 2.19",
+        ", ".join(f"{x:.2f}" for x in diag_g) + " vs " + ", ".join(f"{x:.2f}" for x in meas_g),
+        all(1 <= a < b for a, b in zip(diag_g, meas_g)))
+
+    err_spec = [mean_rel_err(e, "half_life_spec") for e in ("binary", "ternary")]
+    add(15, "Exp 4: phase-averaged per-seed kernel vs measured half-life, mean |relative error| "
+            "(binary, ternary)", "4.4%, 6.0%",
+        f"{100 * err_spec[0]:.1f}%, {100 * err_spec[1]:.1f}%", max(err_spec) <= 0.10)
+
+    # --- Experiment 5
+    keys = [k for k, *_ in ex.DEPTH_CONFIGS]
+    m1r = np.concatenate([dp[f"{k}_m1"] / dp[f"{k}_g_pred"] for k in keys])
+    naive_r = {k: dp[f"{k}_m1"] / dp[f"{k}_g_naive"] for k in keys}
+    naive_max = max(float(np.max(np.maximum(v, 1 / v))) for v in naive_r.values())
+    add(16, "Exp 5: seed-mean kernel diagonal / corrected prediction, every ω, all depth configs "
+            "(naive R(ω), matched at ω = 1, for contrast)", "0.95–1.28 (naive: off by up to 2.96×)",
+        f"{m1r.min():.2f}–{m1r.max():.2f} (naive: off by up to {naive_max:.2f}×)",
+        m1r.min() >= 0.8 and m1r.max() <= 1.4 and naive_max > 1.5)
+
+    def ranks(x):
+        return np.argsort(np.argsort(x)).astype(float)
+
+    def spearman(x, y):
+        return float(np.corrcoef(ranks(x), ranks(y))[0, 1])
+
+    hl5 = dp["ternary3_L2_half_life"]
+    ok5 = ~np.isnan(hl5)
+    sp_c = spearman(hl5[ok5], dp["ternary3_L2_half_life_avg"][ok5])
+    sp_w = spearman(hl5[ok5], dp["ternary3_L2_omega"][ok5])
+    add(17, "Exp 5 ternary(3), L = 2: rank correlation of measured half-lives with the corrected "
+            "prediction, and with ω", "0.99, 0.97", f"{sp_c:.2f}, {sp_w:.2f}", sp_c >= 0.95)
+
+    l1_max = float(np.max(gap["ternary_half_life"] / gap["ternary_half_life_avg"]))
+    gap5 = [float(np.nanmax(dp[f"{k}_half_life"] / dp[f"{k}_half_life_avg"])) for k in keys]
+    add(18, "Exp 5: largest measured / averaged-kernel half-life (pauli(1) L = 3, binary(2) L = 2, "
+            "ternary(3) L = 2; L = 1 largest: 2.5)", "4.3, 8.1, 4.4",
+        ", ".join(f"{x:.1f}" for x in gap5) + f" (L = 1: {l1_max:.1f})",
+        all(x > 1.2 * l1_max for x in gap5))
+
+    def spec_err(k):
+        hl, sp = dp[f"{k}_half_life"], dp[f"{k}_half_life_spec"]
+        m = ~np.isnan(hl) & ~np.isnan(sp)
+        return float(np.mean(np.abs(sp[m] / hl[m] - 1)))
+
+    errs5 = [spec_err(k) for k in keys]
+    add(19, "Exp 5: each run's frozen kernel (phase-averaged) vs measured half-life, mean |relative "
+            "error| per config", "8.7%, 3.5%, 5.2%", ", ".join(f"{100 * x:.1f}%" for x in errs5),
+        max(errs5) <= 0.15)
+
+    lk = [("binary2_L2", 6), ("ternary3_L2", 25)]
+    leak = [(float(dp[f"{k}_leak_weight"][w - 1]), float(dp[f"{k}_leak_m1_share"][w - 1])) for k, w in lk]
+    add(20, "Exp 5: slowest learned frequency (binary(2) L = 2 ω = 6; ternary(3) L = 2 ω = 25): share of "
+            "local weight on fast modes / share of E[G_ωω] they carry", "2.2% / 49%; 2.0% / 47%",
+        "; ".join(f"{100 * a:.1f}% / {100 * b:.0f}%" for a, b in leak),
+        all(a < 0.05 and b > 0.3 for a, b in leak))
+
     Gd = ternary["G_diag"]
     rel_std = Gd.std(0) / Gd.mean(0)
     extra.update(
@@ -115,6 +189,22 @@ def acceptance(e1, binary, ternary, dom):
         frozen_kernel_max_error=frozen_err,
         exp3_half_life_equal=ht, exp3_half_life_dominant=dom["half_life"],
         exp3_rel_cross_equal=ce, exp3_rel_cross_dominant=cd,
+        exp4_two_moment_rel_err=dict(binary=err2[0], ternary=err2[1]),
+        exp4_avg_kernel_rel_err=dict(binary=err_avg[0], ternary=err_avg[1]),
+        exp4_spectral_rel_err=dict(binary=err_spec[0], ternary=err_spec[1]),
+        exp4_ternary_slowdown_diag_only=dict(zip(["R=4", "R=2", "R=1"], diag_g)),
+        exp4_ternary_slowdown_measured=dict(zip(["R=4", "R=2", "R=1"], meas_g)),
+        exp4_ternary_spread_share_of_log_slowdown=dict(
+            zip(["R=4", "R=2", "R=1"], [float(np.log(a) / np.log(b)) for a, b in zip(diag_g, meas_g)])),
+        exp4_k_diag=dict(binary=gap["binary_k_diag"], ternary=gap["ternary_k_diag"]),
+        exp4_half_life_2mom=dict(binary=gap["binary_half_life_2mom"], ternary=gap["ternary_half_life_2mom"]),
+        exp5_m1_over_corrected=m1r, exp5_naive_max_error=naive_max,
+        exp5_ternary_L2_spearman=dict(corrected=sp_c, omega=sp_w),
+        exp5_max_slowdown=dict(zip(keys, gap5)), exp5_spectral_rel_err=dict(zip(keys, errs5)),
+        exp5_leak=dict((f"{k} w={w}", dict(weight=a, rate_share=b)) for (k, w), (a, b) in zip(lk, leak)),
+        exp5_half_life={k: dp[f"{k}_half_life"] for k in keys},
+        exp5_half_life_avg={k: dp[f"{k}_half_life_avg"] for k in keys},
+        exp5_frozen_err={k: float(dp[f"{k}_frozen_err"]) for k in keys},
         init_output_max_abs=max(float(binary["f0_max"]), float(ternary["f0_max"]), float(dom["f0_max"])),
     )
     return checks, extra
@@ -172,14 +262,18 @@ def main():
     e1 = timed("experiment 1: theory check", ex.theory_check)
     binary, ternary = timed("experiment 2: learning order", ex.learning_order)
     dom = timed("experiment 3: amplitude", ex.amplitude)
+    gap = timed("experiment 4: kernel gap", lambda: ex.kernel_gap(binary, ternary))
+    dp = timed("experiment 5: depth", ex.depth)
 
     np.savez_compressed(os.path.join(RESULTS, "exp1_theory.npz"), **e1)
     np.savez_compressed(os.path.join(RESULTS, "exp2_binary.npz"), **binary)
     np.savez_compressed(os.path.join(RESULTS, "exp2_ternary.npz"), **ternary)
     np.savez_compressed(os.path.join(RESULTS, "exp3_amplitude.npz"), **dom)
+    np.savez_compressed(os.path.join(RESULTS, "exp4_kernel_gap.npz"), **gap)
+    np.savez_compressed(os.path.join(RESULTS, "exp5_depth.npz"), **dp)
 
     paths = timed("figures", lambda: figures.make_all(RESULTS, FIGURES))
-    checks, extra = acceptance(e1, binary, ternary, dom)
+    checks, extra = acceptance(e1, binary, ternary, dom, gap, dp)
     runtime = time.time() - t0
 
     summary = dict(config=dict(eta=ex.ETA, T=ex.T, seeds=[int(ex.SEEDS[0]), int(ex.SEEDS[-1])]),

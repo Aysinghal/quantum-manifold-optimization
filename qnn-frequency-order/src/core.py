@@ -177,3 +177,43 @@ def fourier_kernel(J):
     N = J.shape[-2]
     Jc = np.fft.fft(J, axis=-2) / N
     return Jc @ np.conj(np.swapaxes(Jc, -1, -2))
+
+
+# ------------------------------------------------- kernel gap (experiment 4)
+def local_spectral_rho(G, idx, eta, T):
+    """Seed- and phase-averaged projected residual under each seed's frozen kernel.
+
+    In Fourier space the frozen dynamics are r <- (I - eta G) r. With target phases uniform and
+    independent across omega, E_phase[rho_w(t)] = [(I - eta G)^t]_ww = sum_n |U_wn|^2 (1 - eta l_n)^t,
+    a mixture of decays weighted by the local spectral measure of G at w.
+
+    G (S, N, N) Hermitian, idx (K,) Fourier indices. Returns rho (T, K) averaged over seeds, and the
+    first two moments of the seed-averaged local spectral measure, m1 = E[G_ww], m2 = E[(G^2)_ww].
+    """
+    lam, U = np.linalg.eigh(G)
+    wt = np.abs(U[:, idx, :]) ** 2                                       # (S, K, N)
+    decay = (1 - eta * lam)[:, :, None] ** np.arange(T)[None, None, :]   # (S, N, T)
+    rho = np.einsum("skn,snt->tk", wt, decay) / G.shape[0]
+    m1 = np.einsum("skn,sn->k", wt, lam) / G.shape[0]
+    m2 = np.einsum("skn,sn->k", wt, lam**2) / G.shape[0]
+    return rho, m1, m2
+
+
+def two_moment_half_life(m1, m2, eta):
+    """Half-life of a Gamma mixture of exponential decays whose rates have mean m1 and second
+    moment m2: (1 + kappa t / k)^-k = 1/2 with shape k = m1^2 / (m2 - m1^2). The mean per-step
+    decay rate is taken in discrete time, kappa = -log(1 - eta m1), to match gradient descent."""
+    k = m1**2 / (m2 - m1**2)
+    return k * (2 ** (1 / k) - 1) / -np.log1p(-eta * m1)
+
+
+def fast_mode_share(G, idx, factor=10):
+    """For each frequency in idx: the seed-averaged share of its local spectral weight, and of its
+    mean rate E[G_ww], that sits on 'fast' eigenmodes, those with eigenvalue > factor * E[G_ww]."""
+    lam, U = np.linalg.eigh(G)
+    wt = np.abs(U[:, idx, :]) ** 2                                       # (S, K, N)
+    m1 = np.einsum("skn,sn->k", wt, lam) / G.shape[0]
+    fast = lam[:, None, :] > factor * m1[None, :, None]                  # (S, K, N)
+    weight = (wt * fast).sum((0, 2)) / wt.sum((0, 2))
+    m1_share = (wt * fast * lam[:, None, :]).sum((0, 2)) / (wt * lam[:, None, :]).sum((0, 2))
+    return weight, m1_share

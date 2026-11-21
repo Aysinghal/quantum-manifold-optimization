@@ -20,6 +20,20 @@ def first_below(curve, thr=0.5):
     return t
 
 
+def crossing_time(curve, thr=0.5):
+    """Continuous time at which curve[:, k] first falls below thr, interpolating log(curve)
+    linearly between the two bracketing steps. NaN if it never happens."""
+    t1 = first_below(curve, thr)
+    out = np.full(curve.shape[1], np.nan)
+    for k, t in enumerate(t1):
+        if np.isnan(t) or t == 0:
+            out[k] = t
+            continue
+        a, b = np.log(curve[int(t) - 1, k]), np.log(curve[int(t), k])
+        out[k] = t - 1 + (a - np.log(thr)) / (a - b)
+    return out
+
+
 def projected_residual(r):
     """rho_w(t) = Re(r_w(t) conj(r_w(0))) / |r_w(0)|^2, per seed. r (S, T, K)."""
     r0 = r[:, :1, :]
@@ -86,14 +100,15 @@ def theory_check():
 
 
 # ------------------------------------------- experiments 2 and 3: training
-def run_training(lam, amps_of_K, with_frozen=False):
-    """Train seeds 0-99 at L = 1. amps_of_K(K) -> amplitudes of length K+1 (index 0 unused)."""
-    L = L_TRAIN
+def run_training(lam, amps_of_K, with_frozen=False, L=L_TRAIN, steps=T, keep_G=False):
+    """Train seeds 0-99 with L encoding layers for `steps` GD steps (defaults: L = 1, T).
+    amps_of_K(K) -> amplitudes of length K+1 (index 0 unused)."""
     d = len(lam)
-    K = int(lam.max() - lam.min())
+    W = int(lam.max() - lam.min())
+    K = L * W
     N = 2 * K + 3
     amps = amps_of_K(K)
-    tr = core.make_trainer(lam, L, N, ETA, T)
+    tr = core.make_trainer(lam, L, N, ETA, steps)
 
     drawn = [core.draw_seed(int(s), L, d, K) for s in SEEDS]
     Vs = np.stack([v for v, _ in drawn])
@@ -105,18 +120,22 @@ def run_training(lam, amps_of_K, with_frozen=False):
 
     omega = np.arange(1, K + 1)
     G_pred = core.kernel_diag_prediction(lam, L)[1:]
-    res = dict(omega=omega, amps=amps[1:], r=r, r1=core.r1(lam)[K + 1:],
+    r1 = np.zeros(K)
+    r1[:W] = core.r1(lam)[W + 1:]                                       # zero above W when L > 1
+    res = dict(omega=omega, amps=amps[1:], r=r, r1=r1, R=core.predictions(lam, L)[1][1:],
                rate_pred=ETA * G_pred, half_life_pred=np.log(2) / (ETA * G_pred),
                f0_max=np.abs(fs[:, 0]).max())
     res.update(summarise(r))
 
     if with_frozen:
         J = np.asarray(tr.jac0_batch(jnp.array(Vs)))                    # (S, N, m)
-        e = core.frozen_kernel_trajectory(J, ys, ETA, T)
+        e = core.frozen_kernel_trajectory(J, ys, ETA, steps)
         res["r_frozen"] = (np.fft.fft(e, axis=-1) / N)[:, :, 1:K + 1]
         G = core.fourier_kernel(J)                                      # (S, N, N)
         res["G_diag"] = np.real(np.einsum("sii->si", G))[:, 1:K + 1]    # per seed
         res["G_mean_abs"] = np.abs(G.mean(0))[1:K + 1, 1:K + 1]
+        if keep_G:
+            res["G"] = G
     return res
 
 
@@ -140,3 +159,88 @@ def learning_order():
 
 def amplitude():
     return run_training(core.eig_ternary(3), dominant_amps(0.002, 5, 9.0))
+
+
+# ------------------------------------------------ experiment 4: kernel gap
+def _kernel_gap_one(lam, trained):
+    """Half-lives under successively finer kernel approximations, for one encoding.
+
+    Uses the same seeds (hence the same V_l) as run_training; needs no training of its own.
+    """
+    L = L_TRAIN
+    d = len(lam)
+    K = int(lam.max() - lam.min())
+    N = 2 * K + 3
+    tr = core.make_trainer(lam, L, N, ETA, T)
+    Vs = np.stack([core.draw_seed(int(s), L, d, K)[0] for s in SEEDS])
+    G = core.fourier_kernel(np.asarray(tr.jac0_batch(jnp.array(Vs))))   # (S, N, N)
+    idx = np.arange(1, K + 1)
+
+    Gd = np.real(G[:, idx, idx])                                         # (S, K)
+    rho_diag = ((1 - ETA * Gd)[:, None, :] ** np.arange(T)[None, :, None]).mean(0)
+    rho_spec, m1, m2 = core.local_spectral_rho(G, idx, ETA, T)
+    g_pred = trained["rate_pred"] / ETA                                 # theory E[G_ww]
+    # All half-lives here are continuous crossing times of discrete-time GD curves, so that
+    # whole-step rounding (up to 20% at 5 steps) does not masquerade as a slowdown.
+    return dict(
+        omega=idx, r1=trained["r1"],
+        half_life=crossing_time(trained["rho_mean"]),               # measured (training)
+        half_life_avg=np.log(0.5) / np.log(1 - ETA * g_pred),       # averaged kernel, theory
+        half_life_diag=crossing_time(rho_diag),                     # each seed's own diagonal
+        half_life_spec=crossing_time(rho_spec),                     # each seed's full kernel
+        half_life_2mom=core.two_moment_half_life(m1, m2, ETA),
+        rho_diag=rho_diag, rho_spec=rho_spec, m1=m1, m2=m2,
+        k_diag=Gd.mean(0) ** 2 / Gd.var(0),                 # Gamma shape of seed-to-seed spread
+    )
+
+
+def kernel_gap(binary, ternary):
+    """Experiment 4. Splits the gap between averaged-kernel and measured half-lives into
+    seed-to-seed spread of G_ww and mixing between frequencies within each seed's kernel."""
+    out = {}
+    for name, lam, trained in [("binary", core.eig_binary(3), binary),
+                               ("ternary", core.eig_ternary(3), ternary)]:
+        out.update({f"{name}_{k}": v for k, v in _kernel_gap_one(lam, trained).items()})
+    return out
+
+
+# ------------------------------------------------------ experiment 5: depth
+# (name, encoding, L, GD steps). Steps cover the slowest learnable frequency; the top frequency
+# of ternary(3) at L = 2 (predicted half-life ~1300, measured several times that) is not reached.
+DEPTH_CONFIGS = [
+    ("pauli1_L3", "pauli(1), L = 3", core.eig_pauli(1), 3, 350),
+    ("binary2_L2", "binary(2), L = 2", core.eig_binary(2), 2, 1600),
+    ("ternary3_L2", "ternary(3), L = 2", core.eig_ternary(3), 2, 2000),
+]
+LEAK_FACTOR = 10   # a mode counts as "fast" for frequency w if its eigenvalue exceeds 10 E[G_ww]
+
+
+def depth():
+    """Experiment 5. Train with L >= 2 and compare half-lives to the corrected averaged kernel,
+    the naive count R(omega), and each run's own frozen kernel; measure the fast-mode leak."""
+    out = {}
+    for key, _, lam, L, steps in DEPTH_CONFIGS:
+        res = run_training(lam, equal_amps(0.002), with_frozen=True, L=L, steps=steps, keep_G=True)
+        G, K = res["G"], len(res["omega"])
+        idx = np.arange(1, K + 1)
+        g_pred = res["rate_pred"] / ETA
+        rho_spec, m1, m2 = core.local_spectral_rho(G, idx, ETA, steps)
+        Gd = np.real(G[:, idx, idx])
+        rho_diag = ((1 - ETA * Gd)[:, None, :] ** np.arange(steps)[None, :, None]).mean(0)
+        leak_w, leak_m1 = core.fast_mode_share(G, idx, LEAK_FACTOR)
+        a = res["amps"][0]
+        out.update({f"{key}_{k}": v for k, v in dict(
+            omega=res["omega"], R=res["R"], steps=steps,
+            g_pred=g_pred, g_naive=g_pred[0] * res["R"] / res["R"][0],   # naive, matched at w = 1
+            m1=m1, m2=m2,
+            rho_mean=res["rho_mean"], rho_spec=rho_spec,
+            half_life=crossing_time(res["rho_mean"]),
+            half_life_avg=np.log(0.5) / np.log(1 - ETA * g_pred),
+            half_life_diag=crossing_time(rho_diag),
+            half_life_spec=crossing_time(rho_spec),
+            half_life_2mom=core.two_moment_half_life(m1, m2, ETA),
+            leak_weight=leak_w, leak_m1_share=leak_m1,
+            frozen_err=(np.abs(res["r"] - res["r_frozen"]).mean(0) / a).max(),
+            f0_max=res["f0_max"],
+        ).items()})
+    return out
